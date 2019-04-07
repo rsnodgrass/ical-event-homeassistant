@@ -10,14 +10,14 @@ an event for each day of the week:
 
 ```
 sensor:
-- platform: ical_status
-  name: "Day of the Week"
-  url: "https://raw.githubusercontent.com/rsnodgrass/ical-status-homeassistant/master/examples/day-of-week.ics"
+  - platform: ical_status
+    name: "Day of the Week"
+    url: "https://raw.githubusercontent.com/rsnodgrass/ical-status-homeassistant/master/examples/day-of-week.ics"
 ```
 
 # Installation
 
-Copy (ical_status/sensor.py) to config/custom_components/ical_status/sensor.py on your Home Assistant instance.
+Copy (ical_status/sensor.py) to config/custom_components/ical_status/ on your Home Assistant instance.
 
 ## Automatic Updates
 
@@ -36,6 +36,3 @@ custom_updater:
 * a calendar of special days that trigger different light combinations (e.g. Valentine's Day)
 * a calendar that returns the day of the week
 * a calendar sensor which allows scheduling of triggers based on some calendar value
-
-
-
