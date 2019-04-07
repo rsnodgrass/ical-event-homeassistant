@@ -1,0 +1,10 @@
+{
+    "sensor.ical-event": {
+      "updated_at": "2019-04-07",
+      "version": "0.0.1",
+      "local_location": "/custom_components/ical-event/sensor.py",
+      "remote_location": "https://github.com/rsnodgrass/ical-event-homeassistant/releases/download/0.0.1/ical-event.py",
+      "visit_repo": "https://github.com/rsnodgrass/ical-event-homeassistant/",
+      "changelog": "https://github.com/rsnodgrass/ical-event-homeassistant/releases/latest"
+    }
+}
