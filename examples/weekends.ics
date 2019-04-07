@@ -1,6 +1,7 @@
 BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//hass/ical-status/weekends//NONSGML v1.0//EN
+X-HA-SENSOR-NAME:ical_weekends
 NAME:Weekends
 
 BEGIN:VEVENT
