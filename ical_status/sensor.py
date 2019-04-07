@@ -4,6 +4,7 @@ Returns the current active iCal calendar event (if any) as the sensor value.
 import logging
 import datetime as dt
 from datetime import datetime, timedelta
+from icalevents.icalevents import events
 
 import requests
 
@@ -97,7 +98,7 @@ class ICalEventSensor(Entity):
             event = events[0]
             self._state = event.summary
             self._attributes['start'] = event.start.datetime
-            self._attributes['end'] = event.end.datetim
+            self._attributes['end'] = event.end.datetime
             self._attributes['remaining'] = event.time_left.total_seconds()
 
             # if > one event, include the number of overlapping in the attributes
@@ -124,8 +125,6 @@ class ICalData(object):
     # FUTURE: make the throttle interval configurable, based on refresh_interval in HA
     @Throttle(timedelta(seconds=120)) # return cached data if updated < 2 minutes ago
     def update(self):
-        import icalevents
-
         self.events = []
         try: 
             # NOTE: default_span= is not currently exposed by events() interface,

@@ -1,4 +1,6 @@
 BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//hass/ical-status/weekends//NONSGML v1.0//EN
 NAME:Weekends
 
 BEGIN:VEVENT

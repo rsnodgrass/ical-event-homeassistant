@@ -1,4 +1,5 @@
 BEGIN:VCALENDAR
+PRODID:-//hass/ical-status/day-of-week//NONSGML v1.0//EN
 VERSION:2.0
 CALSCALE:GREGORIAN
 NAME:Day of the Week

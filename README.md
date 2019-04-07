@@ -65,7 +65,9 @@ custom_updater:
 * sensor schedule to only have triggers active during weekends
 * sensor managed by your own Google calendar iCal feed
 * sensor schedule based on AirBNB or rental occupancy calendar
+* sensor schedule based on local community events
 
 # See Also
 
+* [iCal Validator](https://icalendar.org/validator.html)
 * [Reoccuring Rule Generator](https://www.textmagic.com/free-tools/rrule-generator)

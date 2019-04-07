@@ -1,4 +1,6 @@
 BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//hass/ical-status/empty//NONSGML v1.0//EN
 NAME:Empty Calendar
 X-COMMENT:This calendar is for testing and intentionally empty.
 X-HA-SENSOR-NAME:empty_calendar
