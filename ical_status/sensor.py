@@ -3,7 +3,7 @@ Returns the current active iCal calendar event (if any) as the sensor value.
 """
 import logging
 import datetime as dt
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 import requests
 
@@ -11,113 +11,57 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
-REQUIREMENTS = ['icalendar', 'requests', 'arrow>=0.10.0']
+REQUIREMENTS = ['icalevents', 'icalendar', 'requests', 'arrow>=0.10.0']
 
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 ICON = 'mdi:calendar'
 PLATFORM = 'ical_status'
 SCAN_INTERVAL = timedelta(minutes=1)
 DEFAULT_NAME = 'Unknown Calendar'
+DEFAULT_STATE = 'Unknown'
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Setup the sensor"""
-    url  = config.get('url')
 
-    if url is None:
-        _LOGGER.error('Missing required variable: "url"')
+    # sanity check the HASS configuration
+    url = config.get('url')
+    file = config.get('file')
+    if (url is None) and (file is None):
+        _LOGGER.error("Missing required configuration 'url' or 'file'")
         return False
 
-    ical_data = ICalData(url)
-    ical_data.update()
-
-    if ical_data.events is None:
-        _LOGGER.error('Unable to fetch iCal url')
-        return False
-
-    default_name = DEFAULT_NAME
-    if ical_data.name:
-        default_name = ical_data.name
-    name = config.get('name', default_name)
-
-    default_state = config.get('default', 'None')
+    sensor_name = config.get('name', DEFAULT_NAME)
 
     sensors = []
-    sensors.append(ICalEventSensor(hass, ical_data, name, default_state))
+    sensors.append(ICalEventSensor(hass, sensor_name))
     add_entities(sensors)
 
-def filter_only_active_events(calendar, current_timestamp):
-    """
-    Given a calendar and timestamp, returns a list of events which the timestamp is within
-    (sorted based on the shortest duration remaining).
-    """
-    import arrow
-
-# FIXME: need to support re-occuring rules!
-
-# recurring_rule = ical.get('RRULE')
-# rules = rrule.rruleset()
-#first_rule = rrule.rrulestr(recurring_rule, dtstart=start_time_dt)
-#rules.rrule(first_rule)
-#for s in rules.between(now - event_delta, now + datetime.timedelta(minutes=1)):
-#    print(s)
-
-    events = []
-    for item in calendar.walk('VEVENT'):
-
-        if isinstance(item['DTSTART'].dt, dt.date):
-            start = arrow.get(item['DTSTART'].dt)
-            start = start.replace(tzinfo='local')
-        else:
-            start = item['DTSTART'].dt
-
-        if isinstance(item['DTEND'].dt, dt.date):
-            end = arrow.get(item['DTEND'].dt)
-            end = start.replace(tzinfo='local')
-        else:
-            end = item['DTEND'].dt
-
-        # skip if start date is in the future
-        if start.date() > current_timestamp.date():
-            continue
-
-        # skip if end date is in the past
-        if end.date() < current_timestamp.date():
-            continue
-
-        remaining = end - current_timestamp
-
-        event_dict = {
-            'name'      : event['SUMMARY'],
-            'start'     : start,
-            'end'       : end,
-            'remaining' : remaining
-        }
-
-        events.append(event_dict)
-
-    # sort based on the duration of the event remaining
-    sorted_events = sorted(events, key=lambda k: k['remaining'])
-    _LOGGER.debug(sorted_events)
-    return sorted_events
+DEFAULT_ATTRIBUTES = {
+    'start': None,
+    'end': None,
+    'remaining': None
+}
 
 # pylint: disable=too-few-public-methods
 class ICalEventSensor(Entity):
     """
     Implementation of an iCal event sensor
     """
-    def __init__(self, hass, ical_data, sensor_name, default_state):
+    def __init__(self, hass, config, sensor_name):
         """
-        Initialize the sensor.
+        Initialize the iCal event HASS sensor.
         """
         self._hass = hass
+        self._config = config
         self._name = sensor_name
+        self._events = []
 
-        self._state = default_state
-        self._default_state = default_state
+        self._default_state = config('default', DEFAULT_STATE)
+        self._state = self._default_state
+        self._attributes = DEFAULT_ATTRIBUTES
 
-        self._ical_data = ical_data
-        self._event_attributes = {}
-
+        # trigger an update from the iCal source
+        self._ical_data = ICalData(config):
         self.update()
 
     @property
@@ -132,61 +76,84 @@ class ICalEventSensor(Entity):
 
     @property
     def state(self):
-        """Return the title of the event (if any) as the state."""
+        """Return the state of the sensor."""
         return self._state
 
     @property
     def device_state_attributes(self):
-        """Details about the event."""
-        return self._event_attributes
+        """Return sensor attributes."""
+        return self._attributes
 
     def update(self):
-        """Get the latest update and set the state and attributes."""
+        """Update the state and attributes for this sensor."""
 
-        self._state = self._default_state
-        self._event_attributes = {
-            'start': None,
-            'end': None
-        }
+        self._ical_data.update() # blocking call
 
-        self._ical_data.update() # refresh the iCal data (note: may be cached)
+        events = self._ical_data.events
+        if events and events[0]:
+            event = events[0]
+            self._state = event.summary
+            self._attributes['start'] = event.start.datetime
+            self._attributes['end'] = event.end.datetim
+            self._attributes['remaining'] = event.time_left.total_seconds()
 
-        event_list = self._ical_data.events
-        if event_list:
-            val = event_list[0]
-            self._state = val.get('name', self._default_state)
-            self._event_attributes['start'] = val['start'].datetime
-            self._event_attributes['end'] = val['end'].datetime
+            # if > one event, include the number of overlapping in the attributes
+            if len(events) > 1:
+                self._attributes['overlapping'] = len(events)
+
+        else:
+            self._state = self._default_state
+            self._attributes = DEFAULT_ATTRIBUTES
 
 # pylint: disable=too-few-public-methods
 class ICalData(object):
     """
-    iCal data retrieved with 'events' field containing the list of active events
+    Maintains the currently active events from the provided iCal source.
     """
-    def __init__(self, resource):
-        self._request = requests.Request('GET', resource).prepare()
-        self.name = None
-        self.events = None
+    def __init__(self, config):
+        self.events  = []
+        self._url    = config.get('url')
+        self._file   = config.get('file')
 
+        # optional flag to fix non-standard Apple iCal format
+        self._fix_apple_format = self.config.get('fix_apple_format', False)
+
+    # FUTURE: make the throttle interval configurable, based on refresh_interval in HA
     @Throttle(timedelta(seconds=120)) # return cached data if updated < 2 minutes ago
     def update(self):
-        import arrow
-        import icalendar
+        import icalevents
 
         self.events = []
+        try: 
+            # NOTE: default_span= is not currently exposed by events() interface,
+            # or we could shorten this to just providing the timedelta(minutes=1)
+            start_time = datetime.now(UTC)
+            end_time = start_time + timedelta(minutes=1)
 
-        try:
-            with requests.Session() as sess:
-                response = sess.send(self._request, timeout=10)
+            # FUTURE:
+            #  - use events_async() to do the update asynchronously to not block the
+            #    Home Assistant event loop
+            #  - use X-HA-SENSOR-NAME as the sensor's name, if supplied
+            #  - use X-HA-DEFAULT-VALUE as the sensor's default value, if supplied
 
-            cal = icalendar.Calendar.from_ical(response.text)
-            self.events = filter_only_active_events(cal, arrow.utcnow())
+            if self._file:
+                es = events(file=self._file,
+                            start=start_time, end=end_time,
+                            fix_apple=self._fix_apple_format)
+                if es is None:
+                    _LOGGER.error('Unable to fetch iCal data from %s', self._file)
+                    return False
 
-            # set the name of the calendar (if any)
-            name = cal.get('NAME')
-            if name:
-                self.name = name
+            if self._url:
+                es = events(url=self._url,
+                            start=start_time, end=end_time,
+                            fix_apple=self._fix_apple_format)
+                if es is None:
+                    _LOGGER.error('Unable to fetch iCal data from %s', self._url)
+                    return False
+
+            self.events = es
 
         except requests.exceptions.RequestException:
-            _LOGGER.error("Error fetching data: %s", self._request)
-            self.events = None
+            _LOGGER.error("Error fetching data from url=%s / file=%s", self._url, self._file)
+            self.events = []

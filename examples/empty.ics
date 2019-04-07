@@ -1,3 +1,5 @@
 BEGIN:VCALENDAR
 NAME:Empty Calendar
+X-COMMENT:This calendar is for testing and intentionally empty.
+X-HA-SENSOR-NAME:empty_calendar
 END:VCALENDAR
