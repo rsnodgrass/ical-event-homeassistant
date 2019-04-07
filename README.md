@@ -1,4 +1,4 @@
-# season-ical-homeassistant
+# iCal Event Sensor for Home Assistant
 
 Sensor for Home Assistant that returns the currently scheduled event as the sensor status. If there
 are multiple overlapping events, the most restrictive (shortest duration) one is returned.
