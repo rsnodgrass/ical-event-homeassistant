@@ -16,7 +16,7 @@ REQUIREMENTS = ['icalendar', 'requests', 'arrow>=0.10.0']
 VERSION = "0.0.1"
 ICON = 'mdi:calendar'
 PLATFORM = 'ical-event'
-SCAN_INTERVAL = timedelta(minutes=5)
+SCAN_INTERVAL = timedelta(minutes=1)
 DEFAULT_NAME = 'Unknown Calendar'
 
 def setup_platform(hass, config, add_entities, discovery_info=None):

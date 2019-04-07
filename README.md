@@ -12,7 +12,7 @@ an event for each day of the week:
 sensor:
 - platform: ical_events
   name: "Day of the Week"
-  url: "https://raw.githubusercontent.com/rsnodgrass/ical-event-homeassistant/master/examples/day-of-week.json"
+  url: "https://raw.githubusercontent.com/rsnodgrass/ical-event-homeassistant/master/examples/day-of-week.ics"
 ```
 
 # Installation
