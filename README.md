@@ -1,28 +1,43 @@
 # iCal Status Sensor for Home Assistant
 
-Sensor for Home Assistant that returns any currently scheduled event as the sensor status. If there
-are multiple overlapping events, the most restrictive (shortest duration left) event is selected.
-
-NOTE: This does not currently support RRULE reoccuring iCal events.
+Sensor for Home Assistant that returns any currently scheduled event from a provided
+iCal as the sensor status. If there are multiple overlapping events, the most
+restrictive (shortest duration left) event is selected.
 
 # Configuration
 
-Example Home Assistant yaml sensor configuration, in this case it point to a calendar which contains
-an event for each day of the week:
+Example Home Assistant yaml sensor configuration:
 
 ```
 sensor:
   - platform: ical_status
-    name: "Day of the Week"
-    url: "https://raw.githubusercontent.com/rsnodgrass/ical-status-homeassistant/master/examples/day-of-week.ics"
+    name: "Fun Days"
+    url: "https://raw.githubusercontent.com/rsnodgrass/ical-status-homeassistant/master/examples/fundays.ics"
 ```
 
 ### Advanced:
 
-Additionally, you can set the default state value if no events are active:
+Additional configurable entities:
 
 ```
-   default: "Unknown"
+   file: ...
+   default: "Happy"
+   fix_apple: True
+```
+
+## Example trigger based on the iCal events:
+
+```
+- alias: "St Patrick's Day"
+  trigger:
+    platform: state
+    entity_id: sensor.fun_days
+    to: "St Patrick's Day"
+  action:
+    - service: lights.set_color
+      data:
+        entity_id: group.all_lights
+	color: green
 ```
 
 # Installation
