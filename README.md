@@ -6,7 +6,7 @@ restrictive (shortest duration left) event is selected.
 
 # Configuration
 
-Example Home Assistant yaml sensor configuration:
+Example sensor configuration:
 
 ```
 sensor:
@@ -22,22 +22,22 @@ Additional configurable entities:
 ```
    file: ...
    default: "Happy"
-   fix_apple: True
+   fix_apple_format: True
 ```
 
-## Example trigger based on the iCal events:
+### Example trigger based on a scheduled iCal event:
 
 ```
-- alias: "St Patrick's Day"
-  trigger:
-    platform: state
-    entity_id: sensor.fun_days
-    to: "St Patrick's Day"
-  action:
-    - service: lights.set_color
-      data:
-        entity_id: group.all_lights
-	color: green
+  - alias: "St Patrick's Day"
+    trigger:
+      platform: state
+      entity_id: sensor.fun_days
+      to: "St Patrick's Day"
+    action:
+      - service: lights.set_color
+        data:
+          entity_id: group.all_lights
+          color: green
 ```
 
 # Installation
@@ -65,3 +65,7 @@ custom_updater:
 * sensor schedule to only have triggers active during weekends
 * sensor managed by your own Google calendar iCal feed
 * sensor schedule based on AirBNB or rental occupancy calendar
+
+# See Also
+
+* [Reoccuring Rule Generator](https://www.textmagic.com/free-tools/rrule-generator)

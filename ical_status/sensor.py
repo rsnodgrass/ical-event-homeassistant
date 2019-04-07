@@ -119,7 +119,7 @@ class ICalData(object):
         self._file   = config.get('file')
 
         # optional flag to fix non-standard Apple iCal format
-        self._fix_apple_format = self.config.get('fix_apple_format', False)
+        self._fix_apple_format = config.get('fix_apple_format', False)
 
     # FUTURE: make the throttle interval configurable, based on refresh_interval in HA
     @Throttle(timedelta(seconds=120)) # return cached data if updated < 2 minutes ago
@@ -138,6 +138,8 @@ class ICalData(object):
             #    Home Assistant event loop
             #  - use X-HA-SENSOR-NAME as the sensor's name, if supplied
             #  - use X-HA-DEFAULT-VALUE as the sensor's default value, if supplied
+            #  - use X-HA-ATTRIBUTES to define additional attributes for the calendar
+            #    event, such as "color=green", that apply to a specific event
 
             if self._file:
                 es = events(file=self._file,
