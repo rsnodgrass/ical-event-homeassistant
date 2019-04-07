@@ -18,7 +18,7 @@ VERSION = "0.0.2"
 ICON = 'mdi:calendar'
 PLATFORM = 'ical_status'
 SCAN_INTERVAL = timedelta(minutes=1)
-DEFAULT_NAME = 'Unknown Calendar'
+DEFAULT_NAME = 'iCal Unknown Calendar'
 DEFAULT_STATE = 'Unknown'
 
 # FIXME: switch to async_setup_platform, see
