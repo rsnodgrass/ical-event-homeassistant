@@ -52,6 +52,8 @@ def filter_only_active_events(calendar, current_timestamp):
     """
     import arrow
 
+# FIXME: need to support re-occuring rules!
+
 # recurring_rule = ical.get('RRULE')
 # rules = rrule.rruleset()
 #first_rule = rrule.rrulestr(recurring_rule, dtstart=start_time_dt)

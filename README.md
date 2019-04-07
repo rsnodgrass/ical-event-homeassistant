@@ -3,6 +3,8 @@
 Sensor for Home Assistant that returns any currently scheduled event as the sensor status. If there
 are multiple overlapping events, the most restrictive (shortest duration left) event is selected.
 
+NOTE: This does not currently support RRULE reoccuring iCal events.
+
 # Configuration
 
 Example Home Assistant yaml sensor configuration, in this case it point to a calendar which contains
