@@ -10,14 +10,14 @@ an event for each day of the week:
 
 ```
 sensor:
-- platform: ical-event
+- platform: ical_events
   name: "Day of the Week"
   url: "https://raw.githubusercontent.com/rsnodgrass/ical-event-homeassistant/master/examples/day-of-week.json"
 ```
 
 # Installation
 
-Copy (ical-event.json) to the config/custom_components/ical-event on your Home Assistant instance.
+Copy (ical_events/sensor.py) to config/custom_components/ical_events/sensor.py on your Home Assistant instance.
 
 ## Automatic Updates
 
