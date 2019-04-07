@@ -20,6 +20,8 @@ SCAN_INTERVAL = timedelta(minutes=1)
 DEFAULT_NAME = 'Unknown Calendar'
 DEFAULT_STATE = 'Unknown'
 
+# FIXME: switch to async_setup_platform, see
+#  https://developers.home-assistant.io/docs/en/asyncio_working_with_async.html
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Setup the sensor"""
 
@@ -33,7 +35,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     sensor_name = config.get('name', DEFAULT_NAME)
 
     sensors = []
-    sensors.append(ICalEventSensor(hass, sensor_name))
+    sensors.append(ICalEventSensor(hass, config, sensor_name))
     add_entities(sensors)
 
 DEFAULT_ATTRIBUTES = {
@@ -56,12 +58,12 @@ class ICalEventSensor(Entity):
         self._name = sensor_name
         self._events = []
 
-        self._default_state = config('default', DEFAULT_STATE)
+        self._default_state = config.get('default', DEFAULT_STATE)
         self._state = self._default_state
         self._attributes = DEFAULT_ATTRIBUTES
 
         # trigger an update from the iCal source
-        self._ical_data = ICalData(config):
+        self._ical_data = ICalData(config)
         self.update()
 
     @property
@@ -84,8 +86,9 @@ class ICalEventSensor(Entity):
         """Return sensor attributes."""
         return self._attributes
 
+    # FUTURE: implement async def async_update(self)
     def update(self):
-        """Update the state and attributes for this sensor."""
+        """Update the latest state and attributes for this sensor."""
 
         self._ical_data.update() # blocking call
 
