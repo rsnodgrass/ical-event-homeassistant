@@ -41,6 +41,10 @@ custom_updater:
 
 # Useful Examples
 
-* a calendar of special days that trigger different light combinations (e.g. Valentine's Day)
-* a calendar that returns the day of the week
-* a calendar sensor which allows scheduling of triggers based on some calendar value
+* sensor of special days that trigger different light combinations (e.g. Valentine's Day, St Patty's Day)
+* sensor which allows scheduling of triggers based on some calendar value
+* sensor schedule that returns the day of the week
+* sensor schedule to trigger backups at various times during the week
+* sensor schedule to only have triggers active during weekends
+* sensor managed by your own Google calendar iCal feed
+* sensor schedule based on AirBNB or rental occupancy calendar
