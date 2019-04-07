@@ -1,5 +1,5 @@
 """
-Returns the current iCal event name (if any) as the sensor value.
+Returns the current active iCal calendar event (if any) as the sensor value.
 """
 import logging
 import datetime as dt
@@ -15,7 +15,7 @@ REQUIREMENTS = ['icalendar', 'requests', 'arrow>=0.10.0']
 
 VERSION = "0.0.1"
 ICON = 'mdi:calendar'
-PLATFORM = 'ical-event'
+PLATFORM = 'ical_status'
 SCAN_INTERVAL = timedelta(minutes=1)
 DEFAULT_NAME = 'Unknown Calendar'
 

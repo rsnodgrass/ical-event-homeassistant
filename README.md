@@ -1,7 +1,7 @@
-# iCal Event Sensor for Home Assistant
+# iCal Status Sensor for Home Assistant
 
-Sensor for Home Assistant that returns the currently scheduled event as the sensor status. If there
-are multiple overlapping events, the most restrictive (shortest duration) one is returned.
+Sensor for Home Assistant that returns any currently scheduled event as the sensor status. If there
+are multiple overlapping events, the most restrictive (shortest duration left) event is selected.
 
 # Configuration
 
@@ -10,14 +10,14 @@ an event for each day of the week:
 
 ```
 sensor:
-- platform: ical_events
+- platform: ical_status
   name: "Day of the Week"
-  url: "https://raw.githubusercontent.com/rsnodgrass/ical-event-homeassistant/master/examples/day-of-week.ics"
+  url: "https://raw.githubusercontent.com/rsnodgrass/ical-status-homeassistant/master/examples/day-of-week.ics"
 ```
 
 # Installation
 
-Copy (ical_events/sensor.py) to config/custom_components/ical_events/sensor.py on your Home Assistant instance.
+Copy (ical_status/sensor.py) to config/custom_components/ical_status/sensor.py on your Home Assistant instance.
 
 ## Automatic Updates
 
@@ -28,7 +28,7 @@ custom_updater:
   track:
     - components
   component_urls:
-    - https://raw.githubusercontent.com/rsnodgrass/ical-event-homeassistant/master/custom_updater.json
+    - https://raw.githubusercontent.com/rsnodgrass/ical-status-homeassistant/master/custom_updater.json
 ```
 
 # Useful Examples
