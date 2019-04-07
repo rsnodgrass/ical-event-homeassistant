@@ -52,6 +52,13 @@ def filter_only_active_events(calendar, current_timestamp):
     """
     import arrow
 
+# recurring_rule = ical.get('RRULE')
+# rules = rrule.rruleset()
+#first_rule = rrule.rrulestr(recurring_rule, dtstart=start_time_dt)
+#rules.rrule(first_rule)
+#for s in rules.between(now - event_delta, now + datetime.timedelta(minutes=1)):
+#    print(s)
+
     events = []
     for item in calendar.walk('VEVENT'):
 
