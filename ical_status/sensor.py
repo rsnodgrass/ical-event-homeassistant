@@ -11,7 +11,7 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
-REQUIREMENTS = ['icalevents', 'icalendar', 'requests', 'arrow>=0.10.0']
+REQUIREMENTS = ['icalevents', 'requests', 'arrow>=0.10.0']
 
 VERSION = "0.0.2"
 ICON = 'mdi:calendar'
