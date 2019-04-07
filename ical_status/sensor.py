@@ -39,8 +39,10 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
         default_name = ical_data.name
     name = config.get('name', default_name)
 
+    default_state = config.get('default', 'None')
+
     sensors = []
-    sensors.append(ICalEventSensor(hass, ical_data, name))
+    sensors.append(ICalEventSensor(hass, ical_data, name, default_state))
     add_entities(sensors)
 
 def filter_only_active_events(calendar, current_timestamp):
@@ -94,12 +96,16 @@ class ICalEventSensor(Entity):
     """
     Implementation of an iCal event sensor
     """
-    def __init__(self, hass, ical_data, sensor_name):
+    def __init__(self, hass, ical_data, sensor_name, default_state):
         """
         Initialize the sensor.
         """
         self._hass = hass
         self._name = sensor_name
+
+        self._state = default_state
+        self._default_state = default_state
+
         self._ical_data = ical_data
         self._event_attributes = {}
 
@@ -128,7 +134,7 @@ class ICalEventSensor(Entity):
     def update(self):
         """Get the latest update and set the state and attributes."""
 
-        self._state = 'None'
+        self._state = self._default_state
         self._event_attributes = {
             'start': None,
             'end': None
@@ -139,7 +145,7 @@ class ICalEventSensor(Entity):
         event_list = self._ical_data.events
         if event_list:
             val = event_list[0]
-            self._state = val.get('name', 'None')
+            self._state = val.get('name', self._default_state)
             self._event_attributes['start'] = val['start'].datetime
             self._event_attributes['end'] = val['end'].datetime
 

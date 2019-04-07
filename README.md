@@ -15,6 +15,14 @@ sensor:
     url: "https://raw.githubusercontent.com/rsnodgrass/ical-status-homeassistant/master/examples/day-of-week.ics"
 ```
 
+### Advanced:
+
+Additionally, you can set the default state value if no events are active:
+
+```
+   default: "Unknown"
+```
+
 # Installation
 
 Copy (ical_status/sensor.py) to config/custom_components/ical_status/ on your Home Assistant instance.
