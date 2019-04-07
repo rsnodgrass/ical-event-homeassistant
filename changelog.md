@@ -1,3 +1,3 @@
-## 0.0.1
+## 0.0.1 
 
-Initial release
+Initial release on 2019-04-07
