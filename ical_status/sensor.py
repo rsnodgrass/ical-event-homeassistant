@@ -130,7 +130,7 @@ class ICalData(object):
         try: 
             # NOTE: default_span= is not currently exposed by events() interface,
             # or we could shorten this to just providing the timedelta(minutes=1)
-            start_time = datetime.now(UTC)
+            start_time = datetime.utcnow()
             end_time = start_time + timedelta(minutes=1)
 
             # FUTURE:
