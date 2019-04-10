@@ -15,16 +15,15 @@ _LOGGER = logging.getLogger(__name__)
 REQUIREMENTS = ['icalevents', 'requests', 'arrow>=0.10.0']
 
 VERSION = "0.0.2"
-ICON = 'mdi:calendar'
 PLATFORM = 'ical_status'
-SCAN_INTERVAL = timedelta(minutes=1)
-DEFAULT_NAME = 'iCal Unknown Calendar'
+DEFAULT_SENSOR_NAME = 'Unknown iCal Status'
 DEFAULT_STATE = 'Unknown'
+SCAN_INTERVAL = timedelta(minutes=1)
 
 # FIXME: switch to async_setup_platform, see
 #  https://developers.home-assistant.io/docs/en/asyncio_working_with_async.html
 def setup_platform(hass, config, add_entities, discovery_info=None):
-    """Setup the sensor"""
+    """Initialize the sensor defaults"""
 
     # sanity check the HASS configuration
     url = config.get('url')
@@ -33,7 +32,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
         _LOGGER.error("Missing required configuration 'url' or 'file'")
         return False
 
-    sensor_name = config.get('name', DEFAULT_NAME)
+    sensor_name = config.get('name', DEFAULT_SENSOR_NAME)
 
     sensors = []
     sensors.append(ICalEventSensor(hass, config, sensor_name))
@@ -41,8 +40,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 
 DEFAULT_ATTRIBUTES = {
     'start': None,
-    'end': None,
-    'remaining': None
+    'end': None
 }
 
 # pylint: disable=too-few-public-methods
@@ -52,7 +50,7 @@ class ICalEventSensor(Entity):
     """
     def __init__(self, hass, config, sensor_name):
         """
-        Initialize the iCal event HASS sensor.
+        Initialize the iCal status HASS sensor.
         """
         self._hass = hass
         self._config = config
@@ -69,29 +67,29 @@ class ICalEventSensor(Entity):
 
     @property
     def name(self):
-        """Return the sensor's name."""
+        """Return the sensor's name"""
         return self._name
 
     @property
     def icon(self):
-        """Return the icon."""
-        return ICON
+        """Return the sensor's icon"""
+        return 'mdi:calendar'
 
     @property
     def state(self):
-        """Return the state of the sensor."""
+        """Return the sensor's state"""
         return self._state
 
     @property
     def device_state_attributes(self):
-        """Return sensor attributes."""
+        """Return the sensor's attributes"""
         return self._attributes
 
     # FUTURE: implement async def async_update(self)
     def update(self):
         """Update the latest state and attributes for this sensor."""
 
-        self._ical_data.update() # blocking call
+        self._ical_data.update() # blocking call, convert to async in future
 
         events = self._ical_data.events
         if events and events[0]:
@@ -99,7 +97,6 @@ class ICalEventSensor(Entity):
             self._state = event.summary
             self._attributes['start'] = event.start.datetime
             self._attributes['end'] = event.end.datetime
-            self._attributes['remaining'] = event.time_left.total_seconds()
 
             # if > one event, include the number of overlapping in the attributes
             if len(events) > 1:
@@ -108,6 +105,8 @@ class ICalEventSensor(Entity):
         else:
             self._state = self._default_state
             self._attributes = DEFAULT_ATTRIBUTES
+
+        _LOGGER.info("Updated iCal sensor '%s' to '%s'", self_.name, self_.state)
 
 # pylint: disable=too-few-public-methods
 class ICalData(object):
@@ -141,23 +140,24 @@ class ICalData(object):
             #    event, such as "color=green", that apply to a specific event
 
             if self._file:
+                source = self._file
                 es = events(file=self._file,
                             start=start_time, end=end_time,
                             fix_apple=self._fix_apple_format)
-                if es is None:
-                    _LOGGER.error('Unable to fetch iCal data from %s', self._file)
-                    return False
-
-            if self._url:
+            else if self._url:
+                source = self._url
                 es = events(url=self._url,
                             start=start_time, end=end_time,
                             fix_apple=self._fix_apple_format)
-                if es is None:
-                    _LOGGER.error('Unable to fetch iCal data from %s', self._url)
-                    return False
 
+            if es is None:
+                _LOGGER.error('Unable to fetch iCal data from %s', source)
+                self.events = []
+                return False
+
+            _LOGGER.info("Fetched iCal data from %s", source)
             self.events = es
 
         except requests.exceptions.RequestException:
-            _LOGGER.error("Error fetching data from url=%s / file=%s", self._url, self._file)
+            _LOGGER.error("Error fetching data from %s", source)
             self.events = []
