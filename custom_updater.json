@@ -5,6 +5,6 @@
       "local_location": "/custom_components/ical_status/sensor.py",
       "remote_location": "https://raw.githubusercontent.com/rsnodgrass/ical-status-homeassistant/master/ical_status/sensor.py",
       "visit_repo": "https://github.com/rsnodgrass/ical-status-homeassistant/ical_status",
-      "changelog": "https://github.com/rsnodgrass/ical-status-homeassistant/ical_status"
+      "changelog": "https://raw.githubusercontent.com/rsnodgrass/ical-status-homeassistant/master/ical_status/changelog.md"
     }
 }
