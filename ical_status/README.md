@@ -46,7 +46,7 @@ Copy (sensor.py) to config/custom_components/ical_status/ on your Home Assistant
 
 ## Automatic Updates
 
-For easy updateswhenever a new version is released, use the [Home Assistant custom_updater component](https://github.com/custom-components/custom_updater/wiki/Installation) and [Tracker card](https://github.com/custom-cards/tracker-card). Once those are setup, add the following custom_updater config:
+For easy updates whenever a new version is released, use the [Home Assistant custom_updater component](https://github.com/custom-components/custom_updater/wiki/Installation) and [Tracker card](https://github.com/custom-cards/tracker-card). Once those are setup, add the following custom_updater config:
 
 ``` 
 custom_updater:

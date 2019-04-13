@@ -102,7 +102,7 @@ class ICalEventSensor(Entity):
             self._state = self._default_state
             self._attributes = DEFAULT_ATTRIBUTES
 
-        _LOGGER.info("Updated iCal sensor '%s' to '%s'", self_.name, self_.state)
+        _LOGGER.info("Updated sensor '%s' to '%s'", self_.name, self_.state)
 
 # pylint: disable=too-few-public-methods
 class ICalData(object):
