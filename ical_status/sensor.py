@@ -134,6 +134,8 @@ class ICalData(object):
             # FUTURE:
             #  - use events_async() to do the update asynchronously to not block the
             #    Home Assistant event loop
+            #  - use X-HA-REFRESH-INTERVAL to set the default refresh interval (in seconds)
+            #  - use X-HA-MIN-REFRESH-INTERVAL to set the minimum refresh interval (in seconds)
             #  - use X-HA-SENSOR-NAME as the sensor's name, if supplied
             #  - use X-HA-DEFAULT-VALUE as the sensor's default value, if supplied
             #  - use X-HA-ATTRIBUTES to define additional attributes for the calendar
@@ -144,7 +146,7 @@ class ICalData(object):
                 es = events(file=self._file,
                             start=start_time, end=end_time,
                             fix_apple=self._fix_apple_format)
-            else if self._url:
+            elif self._url:
                 source = self._url
                 es = events(url=self._url,
                             start=start_time, end=end_time,
