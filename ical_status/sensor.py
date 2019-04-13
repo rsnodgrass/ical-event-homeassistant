@@ -1,5 +1,5 @@
 """
-Returns the current active iCal calendar event (if any) as the sensor value.
+Returns any currently active iCal calendar event title as the sensor's value.
 """
 import logging
 import datetime as dt
@@ -16,7 +16,7 @@ REQUIREMENTS = ['icalevents', 'requests', 'arrow>=0.10.0']
 
 VERSION = "0.0.2"
 PLATFORM = 'ical_status'
-DEFAULT_SENSOR_NAME = 'Unknown iCal Status'
+DEFAULT_SENSOR_NAME = 'ical_status'
 DEFAULT_STATE = 'Unknown'
 SCAN_INTERVAL = timedelta(minutes=1)
 
@@ -45,12 +45,9 @@ DEFAULT_ATTRIBUTES = {
 
 # pylint: disable=too-few-public-methods
 class ICalEventSensor(Entity):
-    """
-    Implementation of an iCal event sensor
-    """
     def __init__(self, hass, config, sensor_name):
         """
-        Initialize the iCal status HASS sensor.
+        Initialize the Home Assistant iCal status sensor.
         """
         self._hass = hass
         self._config = config
@@ -88,7 +85,6 @@ class ICalEventSensor(Entity):
     # FUTURE: implement async def async_update(self)
     def update(self):
         """Update the latest state and attributes for this sensor."""
-
         self._ical_data.update() # blocking call, convert to async in future
 
         events = self._ical_data.events
