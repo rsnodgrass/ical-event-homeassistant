@@ -1,0 +1,8 @@
+{
+  "domain": "ical_status",
+  "name": "iCal Status",
+  "documentation": "https://github.com/rsnodgrass/ical-status-homeassistant/",
+  "dependencies": [""],
+  "codeowners": ["@rsnodgrass"],
+  "requirements": ["arrow>=0.10.0","icalevents>=0.1.19"]
+}

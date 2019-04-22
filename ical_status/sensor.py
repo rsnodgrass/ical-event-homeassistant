@@ -28,6 +28,8 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     # sanity check the HASS configuration
     url = config.get('url')
     file = config.get('file')
+
+    _LOGGER.error("URL=%s, FILE=%s", url, file)
     if (url is None) and (file is None):
         _LOGGER.error("Missing required configuration 'url' or 'file'")
         return False
@@ -137,15 +139,15 @@ class ICalData(object):
             #  - use X-HA-ATTRIBUTES to define additional attributes for the calendar
             #    event, such as "color=green", that apply to a specific event
 
+            _LOGGER.error('TEST!! %s', source)
+
             if self._file:
                 source = self._file
-                es = events(file=self._file,
-                            start=start_time, end=end_time,
+                es = events(file=self._file, start=start_time, end=end_time,
                             fix_apple=self._fix_apple_format)
             elif self._url:
                 source = self._url
-                es = events(url=self._url,
-                            start=start_time, end=end_time,
+                es = events(url=self._url, start=start_time, end=end_time,
                             fix_apple=self._fix_apple_format)
 
             if es is None:

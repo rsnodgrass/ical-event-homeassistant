@@ -1,0 +1,8 @@
+{
+  "domain": "groupme",
+  "name": "GroupMe",
+  "documentation": "https://github.com/rsnodgrass/groupme/",
+  "dependencies": [""],
+  "codeowners": ["@rsnodgrass"],
+  "requirements": ["GroupyAPI>=0.10.3","arrow>=0.10.0"]
+}
