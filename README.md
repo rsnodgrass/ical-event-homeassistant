@@ -2,7 +2,7 @@
 
 * [ical_status](ical_status/): sensor state is based on current iCal calendar event titles
 
-* [groupme](groupme/): sensor tracking new GroupMe messages being posted (DOES NOT WORK)
+* [groupme](groupme/): sensor tracking new GroupMe messages being posted *DOES NOT WORK*
 
 ### Automatic Updates with Custom Updater (Optional)
 
