@@ -13,5 +13,5 @@ custom_updater:
   track:
     - components
   component_urls:
-    - https://raw.githubusercontent.com/rsnodgrass/ical-status-homeassistant/master/custom_updater.json
+    - https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/custom_updater.json
 ```

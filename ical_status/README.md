@@ -12,7 +12,7 @@ Example sensor configuration:
 sensor:
   - platform: ical_status
     name: "Fun Days"
-    url: "https://raw.githubusercontent.com/rsnodgrass/ical-status-homeassistant/master/ical_status/examples/fundays.ics"
+    url: "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/ical_status/examples/fundays.ics"
 ```
 
 ### Advanced:
@@ -53,7 +53,7 @@ custom_updater:
   track:
     - components
   component_urls:
-    - https://raw.githubusercontent.com/rsnodgrass/ical-status-homeassistant/master/custom_updater.json
+    - https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/custom_updater.json
 ```
 
 # Useful Examples
