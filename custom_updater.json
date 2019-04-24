@@ -5,7 +5,8 @@
       "local_location": "/custom_components/ical_status/sensor.py",
       "remote_location": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/ical_status/sensor.py",
       "visit_repo": "https://github.com/rsnodgrass/hass-integrations/",
-      "changelog": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/ical_status/changelog.md"
+      "changelog": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/ical_status/changelog.md",
+      "resources": []
     },
 
     "groupme": {
@@ -14,7 +15,8 @@
       "local_location": "/custom_components/groupme/sensor.py",
       "remote_location": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/groupme/sensor.py",
       "visit_repo": "https://github.com/rsnodgrass/hass-integrations",
-      "changelog": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/groupme/changelog.md"
+      "changelog": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/groupme/changelog.md",
+      "resources": []
     }
 
 }
