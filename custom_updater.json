@@ -1,5 +1,5 @@
 {
-    "sensor.ical_status": {
+    "ical_status": {
       "updated_at": "2019-04-07",
       "version": "0.0.1",
       "local_location": "/custom_components/ical_status/sensor.py",
@@ -8,7 +8,7 @@
       "changelog": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/ical_status/changelog.md"
     },
 
-    "sensor.groupme": {
+    "groupme": {
       "updated_at": "2019-04-13",
       "version": "0.0.1",
       "local_location": "/custom_components/groupme/sensor.py",
