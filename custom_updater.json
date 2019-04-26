@@ -2,21 +2,25 @@
     "ical_status": {
       "updated_at": "2019-04-07",
       "version": "0.0.1",
-      "local_location": "/custom_components/ical_status/sensor.py",
+      "local_location": "/custom_components/ical_status/__init__.py",
       "remote_location": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/ical_status/sensor.py",
       "visit_repo": "https://github.com/rsnodgrass/hass-integrations/",
       "changelog": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/ical_status/changelog.md",
-      "resources": []
+      "resources": [
+        "/custom_components/ical_status/sensor.py"
+      ]
     },
 
     "groupme": {
       "updated_at": "2019-04-13",
       "version": "0.0.1",
-      "local_location": "/custom_components/groupme/sensor.py",
+      "local_location": "/custom_components/groupme/__init__.py",
       "remote_location": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/groupme/sensor.py",
       "visit_repo": "https://github.com/rsnodgrass/hass-integrations",
       "changelog": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/groupme/changelog.md",
-      "resources": []
+      "resources": [
+        "/custom_components/groupme/sensor.py"
+      ]
     }
 
 }
