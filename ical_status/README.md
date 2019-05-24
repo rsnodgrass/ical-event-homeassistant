@@ -11,8 +11,8 @@ Example sensor configuration:
 ```
 sensor:
   - platform: ical_status
-    name: "Fun Days"
-    url: "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/ical_status/examples/fundays.ics"
+    name: "Lighting Days"
+    url: "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/ical_status/examples/lighting-days.ics"
 ```
 
 ### Advanced:
@@ -31,7 +31,7 @@ Additional configurable entities:
   - alias: "St Patrick's Day"
     trigger:
       platform: state
-      entity_id: sensor.fun_days
+      entity_id: sensor.lighting_days
       to: "St Patrick's Day"
     action:
       - service: lights.set_color
