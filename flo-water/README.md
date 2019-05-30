@@ -1,6 +1,6 @@
 # Flo Water Sensor for Home Assistant
 
-Support for Flo Smart Home Water Security System for Home Assistant.
+Support for [Flo Smart Home Water Security System](https://amzn.to/2WBn8tW?tag=rynoshark-20) for Home Assistant.
 
 NOTE: This is a stub out only...and NOT yet implemented.
 
