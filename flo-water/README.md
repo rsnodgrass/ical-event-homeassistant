@@ -23,9 +23,7 @@ sensor.py
 manifest.json
 ```
 
-### Step 2: Initial Configuration
-
-### Step 3: Add sensors to Home Assistant's configuration
+### Step 2: Add sensors to Home Assistant's configuration
 
 Example configuration:
 
@@ -36,7 +34,7 @@ sensor:
     password: your_flo_password
 ```
 
-### Step 5: Automatic Updates with Custom Updater (Optional)
+### Step 3: Automatic Updates with Custom Updater (Optional)
 
 
 For easy updates whenever a new version is released, use the [Home Assistant custom_updater component](https://github.com/custom-components/custom_updater/wiki/Installation) and [Tracker card](https://github.com/custom-cards/tracker-card). Once those are setup, add the following custom_updater config:
