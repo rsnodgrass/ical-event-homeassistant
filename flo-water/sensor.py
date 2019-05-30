@@ -47,19 +47,20 @@ def setup_platform(hass, config, add_entities_callback, discovery_info=None):
 
 class FloService():
     def __init__(self, username, password, refresh_interval):
-
+        
         self._auth_token = None
         self._username = username
         self._password = password
-
+        
         self._refresh_interval = refresh_interval
         self._last_update_timestamp = 0
-
+        
         self._hass_sensors = {}
-
+        self._initialize_sensors()
+        
     def _get_authentication_token(self):
         if not self._token:
-
+            
             # authenticate to the Flo API
             #   POST https://api.meetflo.com/api/v1/users/auth
             #   Payload: {username: "your@email.com", password: "1234"}
@@ -86,10 +87,9 @@ class FloService():
     def trigger_update(self):
         elapsed_time = datetime.datetime.now() - self._last_update_timestamp
 
-        # only refresh the Flo data if the refresh interval has passed
-        if elapsed_time.total_seconds() >= self._refresh_interval:
-            self._update_state_from_service()
-            self._last_update_timestamp = datetime.datetime.now()
+        # only refresh data if the refresh interval has passed
+        return if elapsed_time.total_seconds() < self._refresh_interval
+        self._update_sensors()
 
     def _flo_get_request(self, url)
          headers = { 'authorization': auth_token }
@@ -97,7 +97,7 @@ class FloService():
          _LOGGER.info("Flo GET %s : %s", url, response.content)
          return response
 
-    def _update_state_from_service(self):
+    def _initialize_sensors(self):
         token = self._get_authentication_token()
 
         response = self._flo_get_request('https://api.meetflo.com/api/v1/icds/me')
@@ -113,10 +113,14 @@ class FloService():
         self._update_sensors()
 
     def _update_sensors(self, sensor)
+       # for each Flo device, request the latest data for the last 30 minutes
+       self._last_update_timestamp = datetime.datetime.now()
+       utc_timestamp = int(time.time()) - ( 60 * 30 )
+
        for id, sensor in self._hass_sensors:
-           # for each Flo device, request the latest data
-           # FIXME: does it require from=? add from= based on timeNow returned from auth?  or is this UTC timestamp?
-           waterflow_url = 'https://api.meetflo.com/api/v1/waterflow/measurement/icd/' + sensor.flo_id() + '/last_day?from=1559246263815'
+           # FIXME: does API require from=? perhaps default behavior is better
+           waterflow_url = 'https://api.meetflo.com/api/v1/waterflow/measurement/icd/' + sensor.flo_id() + '/last_day?from=' + utc_timestamp
+
            response = self._flo_get_request(waterflow_url)
            # Response: [ {
            #               "average_flowrate": 0,
@@ -135,10 +139,6 @@ class FloService():
            pressure = current_state['average_pressure']
            
            sensor.update_state(pressure)
-
-    # return all Home Assistant sensors
-    def hass_hass_sensors(self):
-        return self._hass_sensors.values()
 
 # pylint: disable=too-many-instance-attributes
 class FloSensor(Entity):
