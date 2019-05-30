@@ -1,0 +1,8 @@
+{
+  "domain": "flo-water",
+  "name": "Flo Water Security System",
+  "documentation": "https://github.com/rsnodgrass/hass-integrations/",
+  "dependencies": [""],
+  "codeowners": ["@rsnodgrass"],
+  "requirements": []
+}
