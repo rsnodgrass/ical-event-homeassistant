@@ -1,12 +1,27 @@
 # Flo Water Sensor for Home Assistant
 
-Support for [Flo Smart Home Water Security System](https://amzn.to/2WBn8tW?tag=rynoshark-20) for Home Assistant.
+Support for [Flo Smart Home Water Security System](https://amzn.to/2WBn8tW?tag=rynoshark-20) for Home Assistant. Flo is typically installed on the main water supply line and allows monitoring of flow rate, pressure, and temperature as well as shut off capabilities. Water shut off can be done remotely as well as automated by Flo's emergency monitoring service when a leak is detected.
 
-NOTE: This is a stub out only...and NOT yet implemented.
+FUTURE:
+
+- support on/off switch for main water supply
+- support alerts like leaks detected
+- support multiple Flo devices and locations
+- support forcing a system test of a Flo device
+- support Flo's new data on the types of usage (e.g. toilets, etc)
+
+See (Changelog)[changelog.md]
 
 ## Installation
 
 ### Step 1: Copy the scripts!
+
+```
+mkdir /config/custom_components/flo
+__init__.py 
+sensor.py
+manifest.json
+```
 
 ### Step 2: Initial Configuration
 
