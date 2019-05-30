@@ -1,15 +1,32 @@
 """
-Sensor for Flo Water Security System
+Home Assistant sensor for Flo Water Security System
 
 SENSORS:
-flow (gpm)
+flowrate (gpm)
 pressure (psi)
 temp (F)
+total_flow (cumulative for day)
 last health test timestamp
 
 SWITCHES:
 mode (home/away/sleep)
 water status (on/off)
+
+Example:
+
+https://api.meetflo.com/api/v1/waterflow/measurement/icd/6ade7fa6-38ea-3663-7d1b-43298a09ece8/last_day?from=1559242674632
+
+[
+  {
+    "average_flowrate": 0,
+    "average_pressure": 86.0041294012751,
+    "average_temperature": 68,
+    "did": "606405bfe487",
+    "total_flow": 0,
+    "time": "2019-05-30T07:00:00.000Z"
+  },
+  {},...
+]
 """
 import logging
 
