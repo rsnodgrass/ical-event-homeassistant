@@ -108,10 +108,12 @@ class FloService():
         json = response.json()
  
         # FIXME: support multiple devices!
-        self._sensor = FloSensor(icd_id, json)
-        self._sensors[ json['device_id'] = self._sensor
-        
-        self._update_sensor( self._sensor )
+        flo_icd_id = json['id']
+        sensor = FloSensor(flo_icd_id, json)
+        self._sensors[ flo_icd_id ] = sensor
+
+        self._sensors.values().map!(&:self._update_sensor)
+#        self._update_sensor( sensor )
 
     def _update_sensor(self, sensor)
         # for each Flo device, request the latest data
@@ -129,10 +131,13 @@ class FloService():
         #             }, {}, ... ]
         json = response.json()
 
-                       # FIXME
+        # FIXME: do we have separate sensors for EACH flowrate/pressure/temp, or make these attributes and the
+        # state is whether the water system is OK.... e.g. on, alerts, or off?
 
-        self._sensor.update_state(state, last_activity_timestamp)
+        current_state = json[0]
+        pressure = current_state['average_pressure']
 
+        sensor.update_state(pressure)
 
     # return all the known sensors
     def sensors(self):
