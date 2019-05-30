@@ -4,19 +4,18 @@ Support for Flo Smart Home Water Security System for Home Assistant.
 
 NOTE: This is a stub out only...and NOT yet implemented.
 
-## Configuration
+## Installation
 
-Example sensor configuration:
+Example configuration:
 
 ```
 sensor:
   - platform: flo-water
-    username: xxx
-    password: xxx
+    username: your@email.com
+    password: your_flo_password
 ```
-
-## Installation
 
 ## See Also
 
+* https://community.home-assistant.io/t/flo-water-sensor/10160/149
 * Buy [Flo by Moen](https://amzn.to/2WBn8tW?tag=rynoshark-20) Smart Home Water Security System
