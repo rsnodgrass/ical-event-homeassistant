@@ -25,7 +25,7 @@ from homeassistant.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
-FLO_HASS_SLUG = 'flowater'
+FLO_HASS_SLUG = 'flo'
 
 # pylint: disable=unused-argument
 def setup_platform(hass, config, add_entities_callback, discovery_info=None):
@@ -36,7 +36,7 @@ def setup_platform(hass, config, add_entities_callback, discovery_info=None):
     password = config[CONF_PASSWORD]
 
     flo_service = FloService(username, password, 30)
-    sensors = FloService.hass_sensors()
+    sensors = FloService.hass_hass_sensors()
 
     # execute any callback after entities have been created
     add_entities_callback(sensors)
@@ -55,7 +55,7 @@ class FloService():
         self._refresh_interval = refresh_interval
         self._last_update_timestamp = 0
 
-        self._sensors = {}
+        self._hass_sensors = {}
 
     def _get_authentication_token(self):
         if not self._token:
@@ -107,41 +107,38 @@ class FloService():
         #             "location_id":"e7b2833a-f2cb-a4b1-ace2-36c21075d493" }
         json = response.json()
  
-        # FIXME: support multiple devices!
+        # FIXME: *actually* support multiple devices from above!
         flo_icd_id = json['id']
-        sensor = FloSensor(flo_icd_id, json)
-        self._sensors[ flo_icd_id ] = sensor
+        self._hass_sensors[ flo_icd_id ] = FloSensor(flo_icd_id, json)
+        self._update_sensors()
 
-        self._sensors.values().map!(&:self._update_sensor)
-#        self._update_sensor( sensor )
+    def _update_sensors(self, sensor)
+       for id, sensor in self._hass_sensors:
+           # for each Flo device, request the latest data
+           # FIXME: does it require from=? add from= based on timeNow returned from auth?  or is this UTC timestamp?
+           waterflow_url = 'https://api.meetflo.com/api/v1/waterflow/measurement/icd/' + sensor.flo_id() + '/last_day?from=1559246263815'
+           response = self._flo_get_request(waterflow_url)
+           # Response: [ {
+           #               "average_flowrate": 0,
+           #               "average_pressure": 86.0041294012751,
+           #               "average_temperature": 68,
+           #               "did": "606405bfe487",
+           #               "total_flow": 0,
+           #               "time": "2019-05-30T07:00:00.000Z"
+           #             }, {}, ... ]
+           json = response.json()
 
-    def _update_sensor(self, sensor)
-        # for each Flo device, request the latest data
-        # FIXME: does it require from=? add from= based on timeNow returned from auth?  or is this UTC timestamp?
-        waterflow_url = 'https://api.meetflo.com/api/v1/waterflow/measurement/icd/' + 
-                        sensor.flo_id() + '/last_day?from=1559246263815'
-        response = self._flo_get_request(waterflow_url)
-        # Response: [ {
-        #               "average_flowrate": 0,
-        #               "average_pressure": 86.0041294012751,
-        #               "average_temperature": 68,
-        #               "did": "606405bfe487",
-        #               "total_flow": 0,
-        #               "time": "2019-05-30T07:00:00.000Z"
-        #             }, {}, ... ]
-        json = response.json()
+           # FIXME: do we have separate sensors for EACH flowrate/pressure/temp, or make these attributes and the
+           # state is whether the water system is OK.... e.g. on, alerts, or off?
 
-        # FIXME: do we have separate sensors for EACH flowrate/pressure/temp, or make these attributes and the
-        # state is whether the water system is OK.... e.g. on, alerts, or off?
+           current_state = json[0]
+           pressure = current_state['average_pressure']
+           
+           sensor.update_state(pressure)
 
-        current_state = json[0]
-        pressure = current_state['average_pressure']
-
-        sensor.update_state(pressure)
-
-    # return all the known sensors
-    def sensors(self):
-        return self._sensors.values()
+    # return all Home Assistant sensors
+    def hass_hass_sensors(self):
+        return self._hass_sensors.values()
 
 # pylint: disable=too-many-instance-attributes
 class FloSensor(Entity):
