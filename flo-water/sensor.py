@@ -12,6 +12,8 @@ SWITCHES:
 mode (home/away/sleep)
 water status (on/off)
 
+NOTE: must first get token from logging in and https://api.meetflo.com/api/v1/usertokens/me
+
 Example:
 
 https://api.meetflo.com/api/v1/waterflow/measurement/icd/6ade7fa6-38ea-3663-7d1b-43298a09ece8/last_day?from=1559242674632
