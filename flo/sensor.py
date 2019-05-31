@@ -65,7 +65,7 @@ class FloRateSensor(FloEntity):
     def __init__(self, flo_service, flo_icd_id):
         self._flo_icd_id = flo_icd_id
         self._name = 'Flo Water Flow Rate'
-        self._state = '0'
+        self._state = 0.0
         self._attrs = {}
         super().__init__(flo_service)
 
@@ -99,9 +99,9 @@ class FloRateSensor(FloEntity):
 
         # FIXME: add sanity checks on response
 
-        self._state = json['average_flowrate']
+        self._state = float(json['average_flowrate'])
         self._attrs.update({
-            ATTR_TOTAL_FLOW  : json['total_flow']
+            ATTR_TOTAL_FLOW  : float(json['total_flow'])
         })
 
 class FloTempSensor(FloEntity):
@@ -110,7 +110,7 @@ class FloTempSensor(FloEntity):
     def __init__(self, flo_service, flo_icd_id):
         self._flo_icd_id = flo_icd_id
         self._name = 'Flo Water Temperature'
-        self._state = 0
+        self._state = 0.0
         super().__init__(flo_service)
 
     @property
@@ -138,7 +138,7 @@ class FloTempSensor(FloEntity):
 
         # FIXME: add sanity checks on response
 
-        self._state = json['average_temperature']
+        self._state = float(json['average_temperature'])
 
 class FloPressureSensor(FloEntity):
     """Water pressure sensor for a Flo device"""
@@ -146,7 +146,7 @@ class FloPressureSensor(FloEntity):
     def __init__(self, flo_service, flo_icd_id):
         self._flo_icd_id = flo_icd_id
         self._name = 'Flo Water Pressure'
-        self._state = 0
+        self._state = 0.0
         super().__init__(flo_service)
 
     @property
@@ -175,4 +175,4 @@ class FloPressureSensor(FloEntity):
 
         # FIXME: add sanity checks on response
 
-        self._state = json['average_pressure']
+        self._state = float(json['average_pressure'])
