@@ -13,7 +13,6 @@ from . import FloService, FloEntity
 
 _LOGGER = logging.getLogger(__name__)
 
-ATTR_PRESSURE   = 'pressure'
 ATTR_TOTAL_FLOW = 'total_flow'
 
 # pylint: disable=unused-argument
@@ -102,7 +101,6 @@ class FloRateSensor(FloEntity):
 
         self._state = json['average_flowrate']
         self._attrs.update({
-            ATTR_PRESSURE    : json['average_pressure'],
             ATTR_TOTAL_FLOW  : json['total_flow']
         })
 
