@@ -4,5 +4,5 @@
   "documentation": "https://github.com/rsnodgrass/hass-integrations/flo/",
   "requirements": [],
   "dependencies": [],
-  "codeowners": ["@rsnodgrass"],
+  "codeowners": ["@rsnodgrass"]
 }

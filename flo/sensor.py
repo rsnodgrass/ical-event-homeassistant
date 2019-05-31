@@ -34,12 +34,15 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
     json = response.json()
 
     # FUTURE: support multiple devices (and locations)
+    sensors = []
 
     flo_icd_id = json['id']
     sensor = FloRateSensor(flo_service, flo_icd_id)
     sensor.update()  # FIXME: this may be unnecessary
+    sensors.append( sensor )
 
-    sensors = []
+    sensor = FloTempSensor(flo_service, flo_icd_id)
+    sensor.update()  # FIXME: this may be unnecessary
     sensors.append( sensor )
 
     # execute callback to add new entities
@@ -54,7 +57,7 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
 
 # pylint: disable=too-many-instance-attributes
 class FloRateSensor(FloEntity):
-    """Sensor for a Flo water inflow control device"""
+    """Water flow rate sensor for a Flo device"""
 
     def __init__(self, flo_service, flo_icd_id):
         self._flo_icd_id = flo_icd_id
@@ -99,3 +102,39 @@ class FloRateSensor(FloEntity):
             ATTR_TEMPERATURE : json['average_temperature'],
             ATTR_TOTAL_FLOW  : json['total_flow']
         })
+
+class FloTempSensor(FloEntity):
+    """Water temp sensor for a Flo device"""
+
+    def __init__(self, flo_service, flo_icd_id):
+        self._flo_icd_id = flo_icd_id
+        self._name = 'Water Temperature'
+        self._state = 0
+        super().__init__(flo_service)
+
+    @property
+    def name(self):
+        """Return the display name for this sensor"""
+        return self._name
+
+    @property
+    def unit_of_measurement(self):
+        return TEMP_FAHRENHEIT # FIXME: use correct unit based on Flo device's config
+
+    @property
+    def state(self):
+        """Water temperature"""
+        return self._state
+
+    @property
+    def icon(self):
+        return 'mdi:thermometer'
+
+    def update(self):
+        """Update sensor state"""
+        # FIXME: cache results so that for each sensor don't update multiple times
+        json = self._flo_service.get_waterflow_measurement(self._flo_icd_id)
+
+        # FIXME: add sanity checks on response
+
+        self._state = json['average_temperature']
