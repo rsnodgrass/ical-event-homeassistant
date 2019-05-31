@@ -13,8 +13,6 @@ _LOGGER = logging.getLogger(__name__)
 # pylint: disable=unused-argument
 def setup_platform(hass, config, add_switches_callback, discovery_info=None):
     """Setup the Flo Water Security System integration."""
-    if discovery_info is None:
-        return
 
     switches = []
     switches.append( FloControlSwitch(None) ) # FIXME

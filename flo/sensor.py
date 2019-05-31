@@ -19,15 +19,12 @@ ATTR_TOTAL_FLOW = 'total_flow'
 # pylint: disable=unused-argument
 def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
     """Setup the Flo water inflow control sensor"""
-    _LOGGER.info("Attempting to initialize the Flo sensors")
-
-    if discovery_info is None:
-        return
+    _LOGGER.debug("Initializing the Flo sensors")
 
     flo_service = FloService(config)
 
     # get a list of all Flo inflow control devices
-    response = flo_sevice.get_request('/icds/me')
+    response = flo_service.get_request('/icds/me')
     # Example response:
     #   { "is_paired": true,
     #     "device_id": "a0b405bfe487",
