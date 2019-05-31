@@ -1,8 +1,7 @@
 """
-Support for Flo water inflow control devices
+Support for Flo water inflow monitoring and control devices
 
 FUTURE:
-- total_flow (cumulative for day)
 - last health test timestamp
 - add switchable mode (home/away/sleep)
 - convert to async

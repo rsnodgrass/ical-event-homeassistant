@@ -11,6 +11,7 @@ Support for [Flo Smart Home Water Security System](https://amzn.to/2WBn8tW?tag=r
 ### Future Improvements
 
 - support on/off switch for main water supply
+- support for the automated monitoring mode (home, away, sleep)
 - support alerts like leaks detected
 - support multiple Flo devices and locations
 - support forcing a system test of a Flo device
