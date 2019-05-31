@@ -5,6 +5,7 @@ FUTURE:
 - last health test timestamp
 - add switchable mode (home/away/sleep)
 - convert to async
+- most recent alert
 """
 import logging
 
@@ -17,7 +18,9 @@ ATTR_TOTAL_FLOW = 'total_flow'
 
 # pylint: disable=unused-argument
 def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
-    """Setup the Flo Water Security System integration"""
+    """Setup the Flo water inflow control sensor"""
+    _LOGGER.info("Attempting to initialize the Flo sensors")
+
     if discovery_info is None:
         return
 
@@ -45,8 +48,12 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
     sensors.append( sensor )
 
     sensor = FloPressureSensor(flo_service, flo_icd_id)
-    sensor.update()  # FIXME: this may be unnecessary
     sensors.append( sensor )
+
+    sensor = FloModeSensor(flo_service, flo_icd_id)
+    sensors.append( sensor )
+
+    _LOGGER.info("Initialized the Flo sensors")
 
     # execute callback to add new entities
     add_sensors_callback(sensors)
@@ -68,11 +75,6 @@ class FloRateSensor(FloEntity):
         self._state = 0.0
         self._attrs = {}
         super().__init__(flo_service)
-
-    @property
-    def name(self):
-        """Return the display name for this sensor"""
-        return self._name
 
     @property
     def unit_of_measurement(self):
@@ -104,6 +106,8 @@ class FloRateSensor(FloEntity):
             ATTR_TOTAL_FLOW  : float(json['total_flow'])
         })
 
+        _LOGGER.info("Updated Flo sensors! (4x https requests)")
+
 class FloTempSensor(FloEntity):
     """Water temp sensor for a Flo device"""
 
@@ -112,11 +116,6 @@ class FloTempSensor(FloEntity):
         self._name = 'Flo Water Temperature'
         self._state = 0.0
         super().__init__(flo_service)
-
-    @property
-    def name(self):
-        """Return the display name for this sensor"""
-        return self._name
 
     @property
     def unit_of_measurement(self):
@@ -140,6 +139,7 @@ class FloTempSensor(FloEntity):
 
         self._state = float(json['average_temperature'])
 
+
 class FloPressureSensor(FloEntity):
     """Water pressure sensor for a Flo device"""
 
@@ -148,11 +148,6 @@ class FloPressureSensor(FloEntity):
         self._name = 'Flo Water Pressure'
         self._state = 0.0
         super().__init__(flo_service)
-
-    @property
-    def name(self):
-        """Return the display name for this sensor"""
-        return self._name
 
     @property
     def unit_of_measurement(self):
@@ -176,3 +171,34 @@ class FloPressureSensor(FloEntity):
         # FIXME: add sanity checks on response
 
         self._state = float(json['average_pressure'])
+
+
+class FloModeSensor(FloEntity):
+    """Sensor returning current monitoring mode for the Flo device"""
+
+    def __init__(self, flo_service, flo_icd_id):
+        self._flo_icd_id = flo_icd_id
+        self._name = 'Flo Water Monitoring'
+        self._state = 'Away'
+        super().__init__(flo_service)
+
+    @property
+    def unit_of_measurement(self):
+        """Mode: Home, Away, Sleep"""
+        return 'mode'
+
+    @property
+    def state(self):
+        """Flo water monitoring mode"""
+        return self._state
+
+    @property
+    def icon(self):
+        return 'mdi:gauge'
+
+    def update(self):
+        """Update sensor state"""
+    
+        # FIXME: cache results so that for each sensor don't update multiple times
+        json = self._flo_service.get_request('/icdalarmnotificationdeliveryrules/scan')
+        _LOGGER.info("Flo alarm notification: " + json)
