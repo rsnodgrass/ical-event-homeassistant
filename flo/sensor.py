@@ -89,14 +89,15 @@ class FloService():
 
         return self._auth_token
 
-    def _flo_get_request(self, url):
+    def _flo_get_request(self, url_path):
          headers = { 'authorization': self._get_flo_authentication_token() }
+         url = 'https://api.meetflo.com/api/v1' + url_path
          response = requests.Request('GET', url, headers=headers).prepare()
          _LOGGER.info("Flo GET %s : %s", url, response.content)
          return response
 
     def _initialize_sensors(self):
-        response = self._flo_get_request('https://api.meetflo.com/api/v1/icds/me')
+        response = self._flo_get_request('/icds/me')
         # Response: { "is_paired":true,
         #             "device_id":"a0b405bfe487",
         #             "id":"2faf8cd6-a8eb-4b63-bd1a-33298a26eca8",
@@ -106,6 +107,7 @@ class FloService():
         # FIXME: *actually* support multiple devices (and locations)
         flo_icd_id = json['id']
         self._hass_sensors[ flo_icd_id ] = FloSensor(self, flo_icd_id, json)
+
         self._update_all_sensors()
 
     def _update_sensor(self, sensor):
@@ -113,7 +115,7 @@ class FloService():
         utc_timestamp = int(time.time()) - ( 60 * 30 )
 
         # FIXME: does API require from=? perhaps default behavior is better
-        waterflow_url = 'https://api.meetflo.com/api/v1/waterflow/measurement/icd/' + sensor.flo_id() + '/last_day?from=' + utc_timestamp
+        waterflow_url = '/waterflow/measurement/icd/' + sensor.flo_id() + '/last_day?from=' + utc_timestamp
         response = self._flo_get_request(waterflow_url)
         # Response: [ {
         #               "average_flowrate": 0,
