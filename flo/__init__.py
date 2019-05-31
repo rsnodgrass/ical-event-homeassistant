@@ -14,6 +14,7 @@ FUTURE APIS:
 - https://api.meetflo.com/api/v1/userdetails/me
 """
 import logging
+import time
 
 from homeassistant.helpers.entity import Entity
 from homeassistant.const import ( CONF_USERNAME, CONF_PASSWORD, CONF_NAME )
