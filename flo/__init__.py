@@ -16,7 +16,7 @@ FUTURE APIS:
 import logging
 
 from homeassistant.helpers.entity import Entity
-from homeassistant.const import CONF_USERNAME, CONF_PASSWORD, CONF_NAME
+from homeassistant.const import ( CONF_USERNAME, CONF_PASSWORD, CONF_NAME )
 #from homeassistant.components.sensor import ( PLATFORM_SCHEMA )
 
 _LOGGER = logging.getLogger(__name__)
@@ -34,10 +34,7 @@ def setup(hass, config):
 
     # FIXME: move the initial authentication to the server here
     # FIXME: we need to reauthenticate every N hours based on auth token details
-
-    username = config[CONF_USERNAME]
-    password = config[CONF_PASSWORD]
-
+    
 #    for component in FLO_COMPONENTS:
 #        load_platform(hass, component, FLO_DOMAIN, {}, flo_service)
 
