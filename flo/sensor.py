@@ -14,28 +14,23 @@ water status (on/off)
 
 FUTURE:
 - convert to async
+
+NOTE: I believe "icd" is an "inflow control device"
 """
 import logging
 
-from homeassistant.components.sensor import ( DOMAIN, PLATFORM_SCHEMA )
+from homeassistant.components.sensor import ( PLATFORM_SCHEMA )
 from homeassistant.const import (
     CONF_USERNAME, CONF_PASSWORD, CONF_NAME, TEMP_FAHRENHEIT, STATE_ON, ATTR_TEMPERATURE
 )
-from homeassistant.helpers.entity import Entity
+from . import FloEntity
 
 _LOGGER = logging.getLogger(__name__)
 
 FLO_HASS_SLUG = 'flo'
 
-ATTR_FLOWRATE   = 'flowrate'
 ATTR_PRESSURE   = 'pressure'
 ATTR_TOTAL_FLOW = 'total_flow'
-
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
-    vol.Required(CONF_USERNAME): cv.string,
-    vol.Required(CONF_PASSWORD): cv.string,
-    vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string
-})
 
 # pylint: disable=unused-argument
 def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
@@ -59,6 +54,7 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
 #    hass.data[FLO_HASS_SLUG]['sensors'] = []
 #    hass.data[FLO_HASS_SLUG]['sensors'].extend(sensors)
 
+# FIXME: move FloService to __init__.py so it can be shared with switch
 class FloService():
     def __init__(self, username, password):
         self._auth_token = None
@@ -93,7 +89,7 @@ class FloService():
 
         return self._auth_token
 
-    def _flo_get_request(self, url_path):
+    def _api_get_request(self, url_path):
         headers = { 'authorization': self._flo_authentication_token() }
         url = 'https://api.meetflo.com/api/v1' + url_path
         response = requests.Request('GET', url, headers=headers).prepare()
@@ -101,7 +97,7 @@ class FloService():
         return response
 
     def _initialize_sensors(self):
-        response = self._flo_get_request('/icds/me')
+        response = self._api_get_request('/icds/me')
         # Response: { "is_paired":true,
         #             "device_id":"a0b405bfe487",
         #             "id":"2faf8cd6-a8eb-4b63-bd1a-33298a26eca8",
@@ -110,18 +106,22 @@ class FloService():
  
         # FIXME: *actually* support multiple devices (and locations)
         flo_icd_id = json['id']
+
+        # FIXME: instantiate one of each type of sensor for a Flo icd device
         sensor = FloRateSensor(self, flo_icd_id, json)
         self._hass_sensors.append( sensor )
 
         self.update_all_sensors()
 
-    def update_sensor(self, sensor):
-        # request the latest data for the last 30 minutes
+    def get_waterflow_measurement(self, flo_icd_id):
+        """Fetch latest state for a Flo inflow control device"""
+
+        # request data for the last 30 minutes
         utc_timestamp = int(time.time()) - ( 60 * 30 )
 
         # FIXME: does API require from=? perhaps default behavior is better
-        waterflow_url = '/waterflow/measurement/icd/' + sensor.flo_id() + '/last_day?from=' + utc_timestamp
-        response = self._flo_get_request(waterflow_url)
+        waterflow_url = '/waterflow/measurement/icd/' + flo_icd_id + '/last_day?from=' + utc_timestamp
+        response = self._api_get_request(waterflow_url)
         # Response: [ {
         #               "average_flowrate": 0,
         #               "average_pressure": 86.0041294012751,
@@ -131,6 +131,8 @@ class FloService():
         #               "time": "2019-05-30T07:00:00.000Z"
         #             }, {}, ... ]
         json = response.json()
+
+        # FIXME: return only the latest data point
         return json[0]
 
     def update_all_sensors(self):
@@ -150,19 +152,19 @@ class FloService():
 #   device_class = pressure /  unit_of_measurement = 'psi'
 
 # pylint: disable=too-many-instance-attributes
-class FloRateSensor(Entity):
-    """Sensor for a Flo Water Security System"""
+class FloRateSensor(FloEntity):
+    """Sensor for a Flo water inflow control device"""
 
     def __init__(self, flo_service, flo_icd_id, sensor_details_json):
-        self._flow_service = flo_service
         self._flo_icd_id = flo_icd_id
         self._sensor_details = sensor_details_json
         self._name = 'Flo ' + flo_icd_id
         self._state = '0'
+        super().__init__(flo_service)
 
     @property
     def name(self):
-        """Return the display name of this sensor"""
+        """Return the display name for this sensor"""
         return self._name
 
     @property
@@ -182,7 +184,7 @@ class FloRateSensor(Entity):
 
     def update(self):
         """Update sensor state"""
-        json = self._flo_service.update_sensor(self)
+        json = self._flo_service.get_waterflow_measurement(self._flo_icd_id)
         self._state = json['average_flowrate']
         self._attrs.update({
             ATTR_PRESSURE    : json['average_pressure'],
