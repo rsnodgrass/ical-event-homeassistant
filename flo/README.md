@@ -8,17 +8,6 @@ Support for [Flo Smart water monitoring and control device](https://amzn.to/2WBn
 - water pressure (psi)
 - water temperature (F)
 
-### Future Improvements
-
-- support on/off switch for main water supply
-- support for the automated monitoring mode (home, away, sleep)
-- support alerts like leaks detected
-- support multiple Flo devices and locations within a single Home Assistant instance
-- support triggering the system test of a Flo device
-- support Flo's new data on the types of usage (e.g. toilets, etc)
-
-See (Changelog)[changelog.md]
-
 ## Installation
 
 ### Step 1: Copy the scripts!
@@ -49,6 +38,7 @@ For easy updates whenever a new version is released, use the [Home Assistant cus
 custom_updater:
   track:
     - components
+
   component_urls:
     - https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/custom_updater.json
 ```
@@ -58,3 +48,14 @@ custom_updater:
 
 * https://community.home-assistant.io/t/flo-water-sensor/10160/149
 * Buy [Flo by Moen](https://amzn.to/2WBn8tW?tag=rynoshark-20) Smart Home Water Security System
+
+## Future Improvements
+
+Ideas for future improvements:
+
+- support on/off switch for main water supply
+- support for the automated monitoring mode (home, away, sleep)
+- support alerts like leaks detected
+- support multiple Flo devices and locations within a single Home Assistant instance
+- support triggering the system test of a Flo device
+- support Flo's new data on the types of usage (e.g. toilets, etc)
