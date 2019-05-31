@@ -14,9 +14,9 @@ water status (on/off)
 """
 import logging
 
-from homeassistant.components.sensor import DOMAIN
+from homeassistant.components.sensor import ( DOMAIN, PLATFORM_SCHEMA )
 from homeassistant.const import (
-    CONF_USERNAME, CONF_PASSWORD, CONF_NAME, CONF_TIMEOUT
+    CONF_USERNAME, CONF_PASSWORD, CONF_NAME, TEMP_FAHRENHEIT, STATE_ON, ATTR_TEMPERATURE
 )
 from homeassistant.helpers.entity import Entity
 
@@ -26,41 +26,45 @@ FLO_HASS_SLUG = 'flo'
 
 ATTR_FLOWRATE   = 'flowrate'
 ATTR_PRESSURE   = 'pressure'
-ATTR_TEMP       = 'temperature'
 ATTR_TOTAL_FLOW = 'total_flow'
+
+PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
+    vol.Required(CONF_USERNAME): cv.string,
+    vol.Required(CONF_PASSWORD): cv.string,
+    vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string
+})
 
 # pylint: disable=unused-argument
 def setup_platform(hass, config, add_entities_callback, discovery_info=None):
     """Setup the Flo Water Security System integration."""
+    if discovery_info is None:
+        return
 
-    name     = config[CONF_NAME]
+    name     = config.get(CONF_NAME, 'Flo Water Monitor')
     username = config[CONF_USERNAME]
     password = config[CONF_PASSWORD]
 
-    flo_service = FloService(username, password, 30)
+    flo_service = FloService(username, password)
     sensors = flo_service.hass_sensors()
 
     # execute any callback after entities have been created
     add_entities_callback(sensors)
 
-    hass.data[FLO_HASS_SLUG] = {}
-    hass.data[FLO_HASS_SLUG]['sensors'] = []
-    hass.data[FLO_HASS_SLUG]['sensors'].extend(sensors)
+#    hass.data[FLO_HASS_SLUG] = {}
+#    hass.data[FLO_HASS_SLUG]['sensors'] = []
+#    hass.data[FLO_HASS_SLUG]['sensors'].extend(sensors)
 
 class FloService():
-    def __init__(self, username, password, refresh_interval):
+    def __init__(self, username, password):
         
         self._auth_token = None
         self._username = username
         self._password = password
-        
-        self._refresh_interval = refresh_interval
-        self._last_update_timestamp = 0
-        
+                
         self._hass_sensors = {}
         self._initialize_sensors()
         
-    def _get_authentication_token(self):
+    def _get_flo_authentication_token(self):
         if not self._auth_token:
             # authenticate to the Flo API
             #   POST https://api.meetflo.com/api/v1/users/auth
@@ -85,22 +89,13 @@ class FloService():
 
         return self._auth_token
 
-    def trigger_update(self):
-#        elapsed_time = datetime.datetime.now() - self._last_update_timestamp
-
-        # only refresh data if the refresh interval has passed
-#        if ( elapsed_time.total_seconds() >= self._refresh_interval )
-        self._update_sensors()
-
     def _flo_get_request(self, url):
-         headers = { 'authorization': self._auth_token }
+         headers = { 'authorization': self._get_flo_authentication_token() }
          response = requests.Request('GET', url, headers=headers).prepare()
          _LOGGER.info("Flo GET %s : %s", url, response.content)
          return response
 
     def _initialize_sensors(self):
-        token = self._get_authentication_token()
-
         response = self._flo_get_request('https://api.meetflo.com/api/v1/icds/me')
         # Response: { "is_paired":true,
         #             "device_id":"a0b405bfe487",
@@ -108,38 +103,33 @@ class FloService():
         #             "location_id":"e7b2833a-f2cb-a4b1-ace2-36c21075d493" }
         json = response.json()
  
-        # FIXME: *actually* support multiple devices from above!
+        # FIXME: *actually* support multiple devices (and locations)
         flo_icd_id = json['id']
-        self._hass_sensors[ flo_icd_id ] = FloSensor(flo_icd_id, json)
-        self._update_sensors()
+        self._hass_sensors[ flo_icd_id ] = FloSensor(self, flo_icd_id, json)
+        self._update_all_sensors()
 
-    def _update_sensors(self, sensor):
+    def _update_sensor(self, sensor):
+        # request the latest data for the last 30 minutes
+        utc_timestamp = int(time.time()) - ( 60 * 30 )
+
+        # FIXME: does API require from=? perhaps default behavior is better
+        waterflow_url = 'https://api.meetflo.com/api/v1/waterflow/measurement/icd/' + sensor.flo_id() + '/last_day?from=' + utc_timestamp
+        response = self._flo_get_request(waterflow_url)
+        # Response: [ {
+        #               "average_flowrate": 0,
+        #               "average_pressure": 86.0041294012751,
+        #               "average_temperature": 68,
+        #               "did": "606405bfe487",
+        #               "total_flow": 0,
+        #               "time": "2019-05-30T07:00:00.000Z"
+        #             }, {}, ... ]
+        json = response.json()
+        sensor.update_state(json[0])
+
+    def _update_all_sensors(self):
        # for each Flo device, request the latest data for the last 30 minutes
-       self._last_update_timestamp = datetime.datetime.now()
-       utc_timestamp = int(time.time()) - ( 60 * 30 )
-
        for id, sensor in self._hass_sensors:
-           # FIXME: does API require from=? perhaps default behavior is better
-           waterflow_url = 'https://api.meetflo.com/api/v1/waterflow/measurement/icd/' + sensor.flo_id() + '/last_day?from=' + utc_timestamp
-
-           response = self._flo_get_request(waterflow_url)
-           # Response: [ {
-           #               "average_flowrate": 0,
-           #               "average_pressure": 86.0041294012751,
-           #               "average_temperature": 68,
-           #               "did": "606405bfe487",
-           #               "total_flow": 0,
-           #               "time": "2019-05-30T07:00:00.000Z"
-           #             }, {}, ... ]
-           json = response.json()
-
-           # FIXME: do we have separate sensors for EACH flowrate/pressure/temp, or make these attributes and the
-           # state is whether the water system is OK.... e.g. on, alerts, or off?
-
-           current_state = json[0]
-           pressure = current_state['average_pressure']
-           
-           sensor.update_state(pressure)
+           self._update_sensor(sensor)
 
     def hass_sensors(self):
         return self._hass_sensors
@@ -148,9 +138,10 @@ class FloService():
 class FloSensor(Entity):
     """Sensor representation of a Flo Water Security System"""
 
-    def __init__(self, flo_icd_id, json):
+    def __init__(self, flo_service, flo_icd_id, json):
+        self._flow_service = flo_service
         self._flo_icd_id = flo_icd_Id
-        self._json = json
+        self._sensor_json = json
         self._name = 'Flo ' + flo_icd_id
         self._area_name = None
 
@@ -161,9 +152,13 @@ class FloSensor(Entity):
 
     @property
     def unique_id(self) -> str:
-        """Return a unique ID."""
-        return flo_icd_id
+        """Return a unique identifier for this entity."""
+        return 'flo.' + flo_icd_id
 
+    @property
+    def should_poll(self):
+        """Return the polling state."""
+        return True
 
     @property
     def flo_id(self) -> str:
@@ -188,14 +183,17 @@ class FloSensor(Entity):
         """State of the device"""
         return self._state
 
+    def update(self):
+        self._flo_service._update_sensor(self)
+
     def update_state(self, json):
         """Update state"""
-        self._state = 'On' # FIXME
+        self._state = STATE_ON
         self._attrs.update({
-            ATTR_FLOWRATE   : json['average_flowrate'],
-            ATTR_PRESSURE   : json['average_pressure'],
-            ATTR_TEMP       : json['average_temperature'],
-            ATTR_TOTAL_FLOW : json['total_flow']
+            ATTR_FLOWRATE    : json['average_flowrate'],
+            ATTR_PRESSURE    : json['average_pressure'],
+            ATTR_TEMPERATURE : json['average_temperature'],
+            ATTR_TOTAL_FLOW  : json['total_flow']
         })
 
     #async def async_update(self):
