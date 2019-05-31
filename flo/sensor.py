@@ -64,7 +64,7 @@ class FloRateSensor(FloEntity):
 
     def __init__(self, flo_service, flo_icd_id):
         self._flo_icd_id = flo_icd_id
-        self._name = 'Water Flow'
+        self._name = 'Flo Water Flow'
         self._state = '0'
         self._attrs = {}
         super().__init__(flo_service)
@@ -109,7 +109,7 @@ class FloTempSensor(FloEntity):
 
     def __init__(self, flo_service, flo_icd_id):
         self._flo_icd_id = flo_icd_id
-        self._name = 'Water Temperature'
+        self._name = 'Flo Water Temperature'
         self._state = 0
         super().__init__(flo_service)
 
@@ -145,7 +145,7 @@ class FloPressureSensor(FloEntity):
 
     def __init__(self, flo_service, flo_icd_id):
         self._flo_icd_id = flo_icd_id
-        self._name = 'Water Pressure'
+        self._name = 'Flo Water Pressure'
         self._state = 0
         super().__init__(flo_service)
 
