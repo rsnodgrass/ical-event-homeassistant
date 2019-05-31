@@ -11,6 +11,9 @@ last health test timestamp
 SWITCHES:
 mode (home/away/sleep)
 water status (on/off)
+
+FUTURE:
+- convert to async
 """
 import logging
 
@@ -35,19 +38,22 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 })
 
 # pylint: disable=unused-argument
-def setup_platform(hass, config, add_entities_callback, discovery_info=None):
+def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
     """Setup the Flo Water Security System integration."""
     if discovery_info is None:
         return
+
     name     = config.get(CONF_NAME, 'Flo Water Monitor')
     username = config[CONF_USERNAME]
     password = config[CONF_PASSWORD]
 
+    sensors = []
     flo_service = FloService(username, password)
 
     # execute callback to add new entities
     sensors = flo_service.hass_sensors()
-    add_entities_callback(sensors)
+
+    add_sensors_callback(sensors)
 
 #    hass.data[FLO_HASS_SLUG] = {}
 #    hass.data[FLO_HASS_SLUG]['sensors'] = []
@@ -104,12 +110,12 @@ class FloService():
  
         # FIXME: *actually* support multiple devices (and locations)
         flo_icd_id = json['id']
-        sensor = FloSensor(self, flo_icd_id, json)
+        sensor = FloRateSensor(self, flo_icd_id, json)
         self._hass_sensors.append( sensor )
 
-        self._update_all_sensors()
+        self.update_all_sensors()
 
-    def _update_sensor(self, sensor):
+    def update_sensor(self, sensor):
         # request the latest data for the last 30 minutes
         utc_timestamp = int(time.time()) - ( 60 * 30 )
 
@@ -125,46 +131,34 @@ class FloService():
         #               "time": "2019-05-30T07:00:00.000Z"
         #             }, {}, ... ]
         json = response.json()
-        sensor.update_state(json[0])
+        return json[0]
 
-    def _update_all_sensors(self):
+    def update_all_sensors(self):
         # for each Flo device, request the latest data for the last 30 minutes
         for sensor in self.hass_sensors():
-            self._update_sensor(sensor)
+            self._update()
 
     def hass_sensors(self):
         return self._hass_sensors
 
+# FIXME:
+# implement a separate sensor for each value vs attributes?
+#  https://developers.home-assistant.io/docs/en/entity_sensor.html
+#   e.g..  
+#   device_class = temperature / unit_of_measurement = 'F'
+#   device_class = ....    flow /  unit_of_measurement = 'gpm'
+#   device_class = pressure /  unit_of_measurement = 'psi'
+
 # pylint: disable=too-many-instance-attributes
-class FloSensor(Entity):
-    """Sensor representation of a Flo Water Security System"""
+class FloRateSensor(Entity):
+    """Sensor for a Flo Water Security System"""
 
-    def __init__(self, flo_service, flo_icd_id, json):
+    def __init__(self, flo_service, flo_icd_id, sensor_details_json):
         self._flow_service = flo_service
-        self._flo_icd_id = flo_icd_Id
-        self._sensor_json = json
+        self._flo_icd_id = flo_icd_id
+        self._sensor_details = sensor_details_json
         self._name = 'Flo ' + flo_icd_id
-        self._area_name = None
-
-    @property
-    def integration(self):
-        """Return the Integration ID"""
-        return self._integration
-
-    @property
-    def unique_id(self) -> str:
-        """Return a unique identifier for this entity."""
-        return 'flo.' + flo_icd_id
-
-    @property
-    def should_poll(self):
-        """Return the polling state."""
-        return True
-
-    @property
-    def flo_id(self) -> str:
-        """Return Flo sensor id."""
-        return flo_icd_id
+        self._state = '0'
 
     @property
     def name(self):
@@ -172,30 +166,26 @@ class FloSensor(Entity):
         return self._name
 
     @property
-    def device_state_attributes(self):
-        """Return device specific state attributes"""
-        attr = {ATTR_INTEGRATION_ID: self._integration}
-        if self._area_name:
-            attr[ATTR_AREA_NAME] = self._area_name
-        return attr
+    def unit_of_measurement(self):
+        """Gallons per minute (gpm)"""
+        return 'gpm'
 
     @property
     def state(self):
-        """State of the device"""
+        """Water flow rate for recent period"""
         return self._state
 
-    def update(self):
-        self._flo_service._update_sensor(self)
+    @property
+    def icon(self):
+        """Icon for flow rate"""
+        return 'mdi:water-pump'
 
-    def update_state(self, json):
-        """Update state"""
-        self._state = STATE_ON
+    def update(self):
+        """Update sensor state"""
+        json = self._flo_service.update_sensor(self)
+        self._state = json['average_flowrate']
         self._attrs.update({
-            ATTR_FLOWRATE    : json['average_flowrate'],
             ATTR_PRESSURE    : json['average_pressure'],
             ATTR_TEMPERATURE : json['average_temperature'],
             ATTR_TOTAL_FLOW  : json['total_flow']
         })
-
-    #async def async_update(self):
-    #"""Update the sensor"""
