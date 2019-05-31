@@ -64,7 +64,7 @@ class FloRateSensor(FloEntity):
 
     def __init__(self, flo_service, flo_icd_id):
         self._flo_icd_id = flo_icd_id
-        self._name = 'Flo Water Flow'
+        self._name = 'Flo Water Flow Rate'
         self._state = '0'
         self._attrs = {}
         super().__init__(flo_service)
