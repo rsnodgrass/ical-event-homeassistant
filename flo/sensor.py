@@ -28,12 +28,12 @@ FLO_HASS_SLUG = 'flo'
 def setup_platform(hass, config, add_entities_callback, discovery_info=None):
     """Setup the Flo Water Security System integration."""
 
-    name = config[CONF_NAME]
+    name     = config[CONF_NAME]
     username = config[CONF_USERNAME]
     password = config[CONF_PASSWORD]
 
     flo_service = FloService(username, password, 30)
-    sensors = FloService.hass_hass_sensors()
+    sensors = flo_service.hass_sensors()
 
     # execute any callback after entities have been created
     add_entities_callback(sensors)
@@ -136,6 +136,9 @@ class FloService():
            
            sensor.update_state(pressure)
 
+    def hass_sensors(self):
+        return self._hass_sensors
+
 # pylint: disable=too-many-instance-attributes
 class FloSensor(Entity):
     """Sensor representation of a Flo Water Security System"""
@@ -143,6 +146,7 @@ class FloSensor(Entity):
     def __init__(self, flo_icd_id, json):
         self._flo_icd_id = flo_icd_Id
         self._json = json
+        self._name = 'Flo ' + flo_icd_id
         self._area_name = None
 
     @property
