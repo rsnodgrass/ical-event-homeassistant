@@ -3,13 +3,9 @@ Support for Flo Water Security System inflow control device valve on/off switche
 
 SWITCHES:
 mode (home/away/sleep) ... not a switch
-water status (on/off)
 """
 import logging
 
-from homeassistant.const import (
-    CONF_USERNAME, CONF_PASSWORD, CONF_NAME, TEMP_FAHRENHEIT, STATE_ON, ATTR_TEMPERATURE
-)
 from . import FloEntity
 
 _LOGGER = logging.getLogger(__name__)
