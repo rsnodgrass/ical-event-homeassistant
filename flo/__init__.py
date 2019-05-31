@@ -32,7 +32,7 @@ def setup(hass, config):
     return True
 
 class FloEntity(Entity):
-    """Base class for Flo Entity"""
+    """Base Entity class for Flo water inflow control device"""
 
     def __init__(self, flo_service):
         """Store service upon init."""
