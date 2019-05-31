@@ -4,6 +4,14 @@ See https://github.com/rsnodgrass/hass-integrations/flo
 
 For good example of update, see Leaf sensor/switch:
 https://github.com/home-assistant/home-assistant/blob/dev/homeassistant/components/nissan_leaf/__init__.py
+
+FUTURE APIS:
+- https://api.meetflo.com/api/v1/icds/me
+- https://api.meetflo.com/api/v1/alerts/icd/{flo_icd_id}?size=1
+- https://api.meetflo.com/api/v1/alerts/icd/{flo_icd_id}?page=1&size=10
+- https://api.meetflo.com/api/v1/locations/me
+- https://api.meetflo.com/api/v1/users/me
+- https://api.meetflo.com/api/v1/userdetails/me
 """
 
 from homeassistant.helpers.entity import Entity
