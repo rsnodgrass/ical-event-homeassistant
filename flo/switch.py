@@ -1,5 +1,5 @@
 """
-Support for Flo Water Security System
+Support for Flo Water Security System inflow control device valve on/off switches
 
 SWITCHES:
 mode (home/away/sleep) ... not a switch
@@ -21,7 +21,7 @@ def setup_platform(hass, config, add_switches_callback, discovery_info=None):
         return
 
     switches = []
-    # FIXME: implement
+    switches.append( FloControlSwitch(None) ) # FIXME
     add_switches_callback(switches)
 
 class FloControlSwitch(FloEntity, ToggleEntity):
@@ -29,10 +29,10 @@ class FloControlSwitch(FloEntity, ToggleEntity):
 
     @property
     def name(self):
-        """Switch name."""
-        return "{} {}".format("Flo", "Water Control Valve")
+        """Inflow control valve switch name"""
+        return "{} {}".format("Flo", "Water Control Valve") # FIXME
    
     @property
     def is_on(self):
         """Return true if Flo control valve is on."""
-        return False
+        return True # FIXME

@@ -1,18 +1,11 @@
 """
-Support for Flo Water Security System
-
-SENSORS:
-total_flow (cumulative for day)
-last health test timestamp
-
-SWITCHES:
-mode (home/away/sleep)
-water status (on/off)
+Support for Flo water inflow control devices
 
 FUTURE:
+- total_flow (cumulative for day)
+- last health test timestamp
+- add switchable mode (home/away/sleep)
 - convert to async
-
-NOTE: I believe "icd" is an "inflow control device"
 """
 import logging
 
@@ -28,7 +21,7 @@ ATTR_TOTAL_FLOW = 'total_flow'
 
 # pylint: disable=unused-argument
 def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
-    """Setup the Flo Water Security System integration."""
+    """Setup the Flo Water Security System integration"""
     if discovery_info is None:
         return
 
