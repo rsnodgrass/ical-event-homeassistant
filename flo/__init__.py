@@ -13,12 +13,13 @@ FUTURE APIS:
 - https://api.meetflo.com/api/v1/users/me
 - https://api.meetflo.com/api/v1/userdetails/me
 """
+import logging
 
 from homeassistant.helpers.entity import Entity
 from homeassistant.const import CONF_USERNAME, CONF_PASSWORD, CONF_NAME
 #from homeassistant.components.sensor import ( PLATFORM_SCHEMA )
 
-#_LOGGER = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 FLO_DOMAIN = 'flo'
 FLO_COMPONENTS = [ 'sensor', 'switch' ]
