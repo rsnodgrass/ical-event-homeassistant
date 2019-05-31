@@ -1,11 +1,12 @@
 # GroupMe Message Sensor for Home Assistant
 
 Sensor for Home Assistant that returns true if any 'recent' messages
-have been posted to the group that have been favorited. This uses the
+match a set of provided patterns. This uses the
 [GroupMe API](https://dev.groupme.com).
 
+
 Use case: this monitors a whale watching GroupMe group for new messages
-to raise the sensor when whales have been sighted.
+to raise the sensor when whales have been sighted in a certain area.
 
 # Configuration
 
@@ -15,6 +16,7 @@ Example sensor configuration:
 sensor:
   - platform: groupme
     name: "Whale Watch"
+    keywords: [ "orcas", "lopez" ]
 ```
 
 ### Example trigger:

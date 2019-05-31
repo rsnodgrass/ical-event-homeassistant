@@ -2,7 +2,7 @@
   "domain": "groupme",
   "name": "GroupMe",
   "documentation": "https://github.com/rsnodgrass/hass-integrations/",
-  "dependencies": [""],
+  "dependencies": [],
   "codeowners": ["@rsnodgrass"],
   "requirements": ["GroupyAPI>=0.10.3","arrow>=0.10.0"]
 }
