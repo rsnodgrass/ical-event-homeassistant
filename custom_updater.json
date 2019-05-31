@@ -1,4 +1,16 @@
 {
+    "flo": {
+      "updated_at": "2019-05-30",
+      "version": "0.0.1",
+      "local_location": "/custom_components/foo/__init__.py",
+      "remote_location": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/flo-water/flo/sensor.py",
+      "visit_repo": "https://github.com/rsnodgrass/hass-integrations/",
+      "changelog": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/flo-water/changelog.md",
+      "resources": [
+        "/custom_components/flo/sensor.py"
+      ]
+    },
+
     "ical_status": {
       "updated_at": "2019-04-07",
       "version": "0.0.1",
