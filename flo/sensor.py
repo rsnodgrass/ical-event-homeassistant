@@ -2,9 +2,6 @@
 Support for Flo Water Security System
 
 SENSORS:
-flowrate (gpm)
-pressure (psi)
-temp (F)
 total_flow (cumulative for day)
 last health test timestamp
 
@@ -19,15 +16,12 @@ NOTE: I believe "icd" is an "inflow control device"
 """
 import logging
 
-from homeassistant.components.sensor import ( PLATFORM_SCHEMA )
 from homeassistant.const import (
     CONF_USERNAME, CONF_PASSWORD, CONF_NAME, TEMP_FAHRENHEIT, STATE_ON, ATTR_TEMPERATURE
 )
 from . import FloEntity
 
 _LOGGER = logging.getLogger(__name__)
-
-FLO_HASS_SLUG = 'flo'
 
 ATTR_PRESSURE   = 'pressure'
 ATTR_TOTAL_FLOW = 'total_flow'
@@ -49,10 +43,6 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
     sensors = flo_service.hass_sensors()
 
     add_sensors_callback(sensors)
-
-#    hass.data[FLO_HASS_SLUG] = {}
-#    hass.data[FLO_HASS_SLUG]['sensors'] = []
-#    hass.data[FLO_HASS_SLUG]['sensors'].extend(sensors)
 
 # FIXME: move FloService to __init__.py so it can be shared with switch
 class FloService():

@@ -2,7 +2,13 @@
 
 Support for [Flo Smart Home Water Security System](https://amzn.to/2WBn8tW?tag=rynoshark-20) inflow control devices for Home Assistant. Flo is typically installed on the main water supply line and allows monitoring of flow rate, pressure, and temperature as well as shut off capabilities. Water shut off can be done remotely as well as automated by Flo's emergency monitoring service when a leak is detected.
 
-FUTURE:
+### Supported Sensors
+
+- water flow rate (gpm)
+- water pressure (psi)
+- water temperature (F)
+
+### Future Improvements
 
 - support on/off switch for main water supply
 - support alerts like leaks detected

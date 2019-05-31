@@ -8,10 +8,11 @@ https://github.com/home-assistant/home-assistant/blob/dev/homeassistant/componen
 
 from homeassistant.helpers.entity import Entity
 from homeassistant.const import CONF_USERNAME, CONF_PASSWORD, CONF_NAME
+#from homeassistant.components.sensor import ( PLATFORM_SCHEMA )
 
 _LOGGER = logging.getLogger(__name__)
 
-DOMAIN = 'flo'
+FLO_DOMAIN = 'flo'
 FLO_COMPONENTS = [ 'sensor', 'switch' ]
 
 #PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
@@ -27,7 +28,7 @@ def setup(hass, config):
     # FIXME: we need to possibly reauthenticate every N hours based on auth token details
 
 #    for component in FLO_COMPONENTS:
-#        load_platform(hass, component, DOMAIN, {}, flo_icd_config)
+#        load_platform(hass, component, FLO_DOMAIN, {}, flo_icd_config)
 
     return True
 
