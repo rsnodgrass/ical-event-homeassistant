@@ -25,8 +25,7 @@ FLO_COMPONENTS = [ 'sensor', 'switch' ]
 
 #PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 #    vol.Required(CONF_USERNAME): cv.string,
-#    vol.Required(CONF_PASSWORD): cv.string,
-#    vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string
+#    vol.Required(CONF_PASSWORD): cv.string
 #})
 
 def setup(hass, config):
@@ -39,7 +38,7 @@ def setup(hass, config):
     password = config[CONF_PASSWORD]
 
 #    for component in FLO_COMPONENTS:
-#        load_platform(hass, component, FLO_DOMAIN, {}, flo_icd_config)
+#        load_platform(hass, component, FLO_DOMAIN, {}, flo_service)
 
     return True
 

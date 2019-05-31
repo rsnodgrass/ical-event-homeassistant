@@ -9,10 +9,7 @@ FUTURE:
 """
 import logging
 
-from homeassistant.const import ( 
-    CONF_USERNAME, CONF_PASSWORD, CONF_NAME,
-    TEMP_FAHRENHEIT, STATE_ON, ATTR_TEMPERATURE
-)
+from homeassistant.const import ( TEMP_FAHRENHEIT, ATTR_TEMPERATURE )
 from . import FloService, FloEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -28,9 +25,6 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
 
     flo_service = FloService(config)
 
-    name     = config.get(CONF_NAME, 'Flo Water Monitor')
-    sensors = []
-
     # get a list of all Flo inflow control devices
     response = flo_sevice.get_request('/icds/me')
     # Example response:
@@ -39,11 +33,14 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
     #     "id": "2faf8cd6-a8eb-4b63-bd1a-33298a26eca8",
     #     "location_id": "e7b2833a-f2cb-a4b1-ace2-36c21075d493" }
     json = response.json()
- 
-    # FIXME: *actually* support multiple devices (and locations)
+
+    # FUTURE: support multiple devices (and locations)
+
     flo_icd_id = json['id']
-    sensor = FloRateSensor(flo_service, flo_icd_id, json)
+    sensor = FloRateSensor(flo_service, flo_icd_id)
     sensor.update()  # FIXME: this may be unnecessary
+
+    sensors = []
     sensors.append( sensor )
 
     # execute callback to add new entities
@@ -54,18 +51,17 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
 #  https://developers.home-assistant.io/docs/en/entity_sensor.html
 #   e.g..  
 #   device_class = temperature / unit_of_measurement = 'F'
-#   device_class = ....    flow /  unit_of_measurement = 'gpm'
 #   device_class = pressure /  unit_of_measurement = 'psi'
 
 # pylint: disable=too-many-instance-attributes
 class FloRateSensor(FloEntity):
     """Sensor for a Flo water inflow control device"""
 
-    def __init__(self, flo_service, flo_icd_id, sensor_details_json):
+    def __init__(self, flo_service, flo_icd_id):
         self._flo_icd_id = flo_icd_id
-        self._sensor_details = sensor_details_json
-        self._name = 'Flo ' + flo_icd_id
+        self._name = 'Water Flow'
         self._state = '0'
+        self._attrs = {}
         super().__init__(flo_service)
 
     @property
@@ -80,17 +76,24 @@ class FloRateSensor(FloEntity):
 
     @property
     def state(self):
-        """Water flow rate for recent period"""
+        """Water flow rate"""
         return self._state
 
     @property
     def icon(self):
-        """Icon for flow rate"""
         return 'mdi:water-pump'
+
+    @property
+    def device_state_attributes(self):
+        """Return the device state attributes."""
+        return self._attrs
 
     def update(self):
         """Update sensor state"""
         json = self._flo_service.get_waterflow_measurement(self._flo_icd_id)
+
+        # FIXME: add sanity checks on response
+
         self._state = json['average_flowrate']
         self._attrs.update({
             ATTR_PRESSURE    : json['average_pressure'],
