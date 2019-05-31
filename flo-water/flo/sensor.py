@@ -15,12 +15,9 @@ water status (on/off)
 import logging
 
 from homeassistant.components.sensor import DOMAIN
-
 from homeassistant.const import (
     CONF_USERNAME, CONF_PASSWORD, CONF_NAME, CONF_TIMEOUT
 )
-from homeassistant.helpers import aiohttp_client, config_validation as cv
-
 from homeassistant.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
@@ -39,7 +36,7 @@ def setup_platform(hass, config, add_entities_callback, discovery_info=None):
     sensors = FloService.hass_hass_sensors()
 
     # execute any callback after entities have been created
-    add_entities_callback(sensors)
+#FIXME    add_entities_callback(sensors)
 
     hass.data[FLO_HASS_SLUG] = {}
     hass.data[FLO_HASS_SLUG]['sensors'] = []
@@ -59,8 +56,7 @@ class FloService():
         self._initialize_sensors()
         
     def _get_authentication_token(self):
-        if not self._token:
-            
+        if not self._auth_token:
             # authenticate to the Flo API
             #   POST https://api.meetflo.com/api/v1/users/auth
             #   Payload: {username: "your@email.com", password: "1234"}
@@ -85,14 +81,14 @@ class FloService():
         return self._auth_token
 
     def trigger_update(self):
-        elapsed_time = datetime.datetime.now() - self._last_update_timestamp
+#        elapsed_time = datetime.datetime.now() - self._last_update_timestamp
 
         # only refresh data if the refresh interval has passed
-        return if elapsed_time.total_seconds() < self._refresh_interval
+#        if ( elapsed_time.total_seconds() >= self._refresh_interval )
         self._update_sensors()
 
-    def _flo_get_request(self, url)
-         headers = { 'authorization': auth_token }
+    def _flo_get_request(self, url):
+         headers = { 'authorization': self._auth_token }
          response = requests.Request('GET', url, headers=headers).prepare()
          _LOGGER.info("Flo GET %s : %s", url, response.content)
          return response
@@ -112,7 +108,7 @@ class FloService():
         self._hass_sensors[ flo_icd_id ] = FloSensor(flo_icd_id, json)
         self._update_sensors()
 
-    def _update_sensors(self, sensor)
+    def _update_sensors(self, sensor):
        # for each Flo device, request the latest data for the last 30 minutes
        self._last_update_timestamp = datetime.datetime.now()
        utc_timestamp = int(time.time()) - ( 60 * 30 )
