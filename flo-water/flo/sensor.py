@@ -36,7 +36,7 @@ def setup_platform(hass, config, add_entities_callback, discovery_info=None):
     sensors = FloService.hass_hass_sensors()
 
     # execute any callback after entities have been created
-#FIXME    add_entities_callback(sensors)
+    add_entities_callback(sensors)
 
     hass.data[FLO_HASS_SLUG] = {}
     hass.data[FLO_HASS_SLUG]['sensors'] = []
