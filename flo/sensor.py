@@ -24,6 +24,11 @@ _LOGGER = logging.getLogger(__name__)
 
 FLO_HASS_SLUG = 'flo'
 
+ATTR_FLOWRATE   = 'flowrate'
+ATTR_PRESSURE   = 'pressure'
+ATTR_TEMP       = 'temperature'
+ATTR_TOTAL_FLOW = 'total_flow'
+
 # pylint: disable=unused-argument
 def setup_platform(hass, config, add_entities_callback, discovery_info=None):
     """Setup the Flo Water Security System integration."""
@@ -183,6 +188,15 @@ class FloSensor(Entity):
         """State of the device"""
         return self._state
 
-    def update_state(self, state):
+    def update_state(self, json):
         """Update state"""
-        self._state = state
+        self._state = 'On' # FIXME
+        self._attrs.update({
+            ATTR_FLOWRATE   : json['average_flowrate'],
+            ATTR_PRESSURE   : json['average_pressure'],
+            ATTR_TEMP       : json['average_temperature'],
+            ATTR_TOTAL_FLOW : json['total_flow']
+        })
+
+    #async def async_update(self):
+    #"""Update the sensor"""
