@@ -34,7 +34,7 @@ def setup(hass, config):
 
     # FIXME: move the initial authentication to the server here
     # FIXME: we need to reauthenticate every N hours based on auth token details
-    
+
 #    for component in FLO_COMPONENTS:
 #        load_platform(hass, component, FLO_DOMAIN, {}, flo_service)
 
@@ -52,11 +52,14 @@ class FloService:
 
     def __init__(self, config):
         self._auth_token = None
+        self._auth_token_expiry = 0
+        
         self._username = config[CONF_USERNAME]
         self._password = config[CONF_PASSWORD]
 
     def _flo_authentication_token(self):
-        if not self._auth_token:
+        now = int(time.time())
+        if not self._auth_token or now > self._auth_token_expiry:
             # authenticate to the Flo API
             #   POST https://api.meetflo.com/api/v1/users/auth
             #   Payload: {username: "your@email.com", password: "1234"}
@@ -77,6 +80,7 @@ class FloService:
             #   "timeNow": 1559226161 }
 
             _LOGGER.debug("Flo authentication of %s received %s", self._username, response.json())
+            self._auth_token_expiry = now + ( int(response.json()['tokenExpiration']) / 2)
             self._auth_token = response.json()['token']
 
         return self._auth_token
