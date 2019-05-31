@@ -39,15 +39,14 @@ def setup_platform(hass, config, add_entities_callback, discovery_info=None):
     """Setup the Flo Water Security System integration."""
     if discovery_info is None:
         return
-
     name     = config.get(CONF_NAME, 'Flo Water Monitor')
     username = config[CONF_USERNAME]
     password = config[CONF_PASSWORD]
 
     flo_service = FloService(username, password)
-    sensors = flo_service.hass_sensors()
 
-    # execute any callback after entities have been created
+    # execute callback to add new entities
+    sensors = flo_service.hass_sensors()
     add_entities_callback(sensors)
 
 #    hass.data[FLO_HASS_SLUG] = {}
@@ -56,15 +55,14 @@ def setup_platform(hass, config, add_entities_callback, discovery_info=None):
 
 class FloService():
     def __init__(self, username, password):
-        
         self._auth_token = None
         self._username = username
         self._password = password
-                
-        self._hass_sensors = {}
+
+        self._hass_sensors = []
         self._initialize_sensors()
         
-    def _get_flo_authentication_token(self):
+    def _flo_authentication_token(self):
         if not self._auth_token:
             # authenticate to the Flo API
             #   POST https://api.meetflo.com/api/v1/users/auth
@@ -90,11 +88,11 @@ class FloService():
         return self._auth_token
 
     def _flo_get_request(self, url_path):
-         headers = { 'authorization': self._get_flo_authentication_token() }
-         url = 'https://api.meetflo.com/api/v1' + url_path
-         response = requests.Request('GET', url, headers=headers).prepare()
-         _LOGGER.info("Flo GET %s : %s", url, response.content)
-         return response
+        headers = { 'authorization': self._flo_authentication_token() }
+        url = 'https://api.meetflo.com/api/v1' + url_path
+        response = requests.Request('GET', url, headers=headers).prepare()
+        _LOGGER.info("Flo GET %s : %s", url, response.content)
+        return response
 
     def _initialize_sensors(self):
         response = self._flo_get_request('/icds/me')
@@ -106,7 +104,8 @@ class FloService():
  
         # FIXME: *actually* support multiple devices (and locations)
         flo_icd_id = json['id']
-        self._hass_sensors[ flo_icd_id ] = FloSensor(self, flo_icd_id, json)
+        sensor = FloSensor(self, flo_icd_id, json)
+        self._hass_sensors.append( sensor )
 
         self._update_all_sensors()
 
@@ -129,9 +128,9 @@ class FloService():
         sensor.update_state(json[0])
 
     def _update_all_sensors(self):
-       # for each Flo device, request the latest data for the last 30 minutes
-       for id, sensor in self._hass_sensors:
-           self._update_sensor(sensor)
+        # for each Flo device, request the latest data for the last 30 minutes
+        for sensor in self.hass_sensors():
+            self._update_sensor(sensor)
 
     def hass_sensors(self):
         return self._hass_sensors
