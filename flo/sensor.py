@@ -62,7 +62,6 @@ class FloRateSensor(FloEntity):
         self._flo_icd_id = flo_icd_id
         self._name = 'Flo Water Flow Rate'
         self._state = 0.0
-        self._attrs = {}
         super().__init__(flo_service)
 
     @property
@@ -78,11 +77,6 @@ class FloRateSensor(FloEntity):
     @property
     def icon(self):
         return 'mdi:water-pump'
-
-    @property
-    def device_state_attributes(self):
-        """Return the device state attributes."""
-        return self._attrs
 
     def update(self):
         """Update sensor state"""
@@ -128,6 +122,9 @@ class FloTempSensor(FloEntity):
 
         # FUTURE: round just to nearest degree?
         self._state = round(float(json_response['average_temperature']), 1)
+        self._attrs.update({
+            ATTR_TIME        : json_response['time']
+        })
         _LOGGER.info("Updated %s to %f %s : %s", self._name, self._state, self.unit_of_measurement, json_response)
 
 
@@ -162,6 +159,9 @@ class FloPressureSensor(FloEntity):
         # FIXME: add sanity checks on response
 
         self._state = round(float(json_response['average_pressure']), 1)
+        self._attrs.update({
+            ATTR_TIME        : json_response['time']
+        })
         _LOGGER.info("Updated %s to %f %s : %s", self._name, self._state, self.unit_of_measurement, json_response)
 
 class FloModeSensor(FloEntity):

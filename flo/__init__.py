@@ -74,7 +74,8 @@ class FloEntity(Entity):
     def __init__(self, flo_service):
         """Store service upon init."""
         self._flo_service = flo_service
-    
+        self._attrs = {}
+        
         if self._name is None:
             self._name = 'Flo Water' # default if unspecified
 
@@ -82,6 +83,11 @@ class FloEntity(Entity):
     def name(self):
         """Return the display name for this sensor"""
         return self._name
+
+    @property
+    def device_state_attributes(self):
+        """Return the device state attributes."""
+        return self._attrs
 
 class FloService:
     """Client interface to the Flo service API"""
