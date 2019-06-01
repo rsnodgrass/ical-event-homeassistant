@@ -17,6 +17,7 @@ import logging
 import json
 import requests
 import time
+from threading import Thread, Lock
 
 from homeassistant.helpers import discovery
 from homeassistant.helpers.entity import Entity
@@ -48,6 +49,8 @@ FLO_UNIT_SYSTEMS = {
         'pressure': 'kPa'
     }
 }
+
+mutex = Lock()
 
 #CONFIG_SCHEMA = vol.Schema({
 #    FLO_DOMAIN: vol.Schema({
@@ -144,8 +147,12 @@ class FloService:
 
         # to avoid DDoS Flo's servers, cache any results loaded in last 10 minutes
         now = int(time.time())
-        if self._last_waterflow_update > (now - (10 * 60)):
-            return self._last_waterflow_measurement
+        mutex.acquire()
+        try:
+            if self._last_waterflow_update > (now - (10 * 60)):
+                return self._last_waterflow_measurement
+        finally:
+            mutex.release()
 
         # request data for the last 30 minutes, plus Flo API takes ms since epoch
         timestamp = (now - ( 60 * 30 )) * 1000
@@ -173,8 +180,12 @@ class FloService:
             if measurement['time'] > latest_result['time']:
                 latest_measurement = measurement
 
-        self._last_waterflow_measurement = latest_measurement
-        self._last_waterflow_update = now
+        mutex.acquire()
+        try:
+            self._last_waterflow_measurement = latest_measurement
+            self._last_waterflow_update = now
+        finally:
+            mutex.release()
     
         return latest_measurement
 
