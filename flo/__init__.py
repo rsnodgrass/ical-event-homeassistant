@@ -27,8 +27,7 @@ _LOGGER = logging.getLogger(__name__)
 FLO_DOMAIN = 'flo'
 FLO_COMPONENTS = [ 'sensor', 'switch' ]
 
-FLO_SERVICE_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.51 Safari/537.36'
-#FLO_SERVICE_USER_AGENT = 'Home Assistant (Flo; https://github.com/rsnodgrass/hass-integrations/tree/master/flo)'
+FLO_SERVICE_USER_AGENT = 'Home Assistant (Flo; https://github.com/rsnodgrass/hass-integrations/tree/master/flo)'
 
 #PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 #    vol.Required(CONF_USERNAME): cv.string,
@@ -77,7 +76,6 @@ class FloService:
             # authenticate to the Flo API
             #   POST https://api.meetflo.com/api/v1/users/auth
             #   Payload: {username: "your@email.com", password: "1234"}
-            #   Content-Type: application/json;charset=UTF-8
 
             auth_url = 'https://api.meetflo.com/api/v1/users/auth'
             payload = json.dumps({
@@ -86,13 +84,10 @@ class FloService:
             })
             headers = { 
                 'User-Agent': FLO_SERVICE_USER_AGENT,
-                'Content-Type': 'application/json;charset=UTF-8',
-#                'Accept': 'application/json, text/plain, */*',
-#                'DNT': '1',
-                'Referer': 'https://user.meetflo.com/login',
+                'Content-Type': 'application/json;charset=UTF-8'
             }
 
-            _LOGGER.info("Authenticating Flo account %s via %s : %s", self._username, auth_url, payload)
+            _LOGGER.debug("Authenticating Flo account %s via %s", self._username, auth_url)
             response = requests.post(auth_url, data=payload, headers=headers)
             # Example response:
             # { "token": "caJhb.....",
@@ -103,7 +98,7 @@ class FloService:
 
             json_response = response.json()
 
-            _LOGGER.info("Flo user %s authentication results to %s : %s", self._username, auth_url, json_response)
+            _LOGGER.debug("Flo user %s authentication results %s : %s", self._username, auth_url, json_response)
             self._auth_token_expiry = now + int( int(json_response['tokenExpiration']) / 2)
             self._auth_token = json_response['token']
 
@@ -116,7 +111,7 @@ class FloService:
             'User-Agent': FLO_SERVICE_USER_AGENT
         }
         response = requests.get(url, headers=headers)
-        _LOGGER.info("Flo GET %s : %s", url, response.content)
+        _LOGGER.debug("Flo GET %s : %s", url, response.content)
         return response
 
     def get_waterflow_measurement(self, flo_icd_id):
