@@ -8,6 +8,9 @@ Support for [Flo Smart water monitoring and control device](https://amzn.to/2WBn
 - water pressure (psi)
 - water temperature (&deg;F)
 
+NOTE: Flo's webservice API only returns average sensor data for the previous 15 minute period.
+Real-time sensor state is not available from Flo at this time.
+
 ## Installation
 
 Visit the Home Assistant community if you need [help with installation and configuration of Flo](https://community.home-assistant.io/t/flo-water-sensor/10160/149).

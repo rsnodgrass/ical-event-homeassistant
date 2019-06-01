@@ -90,7 +90,10 @@ class FloService:
         self._username = config[CONF_USERNAME]
         self._password = config[CONF_PASSWORD]
 
-        self._units = FLO_UNIT_SYSTEMS[self._get_unit_system]
+        self._last_waterflow_measurement = None
+        self._last_waterflow_requested = 0
+
+#        self._units = FLO_UNIT_SYSTEMS[self._get_unit_system]
 
     def _flo_authentication_token(self):
         now = int(time.time())
@@ -139,10 +142,14 @@ class FloService:
     def get_waterflow_measurement(self, flo_icd_id):
         """Fetch latest state for a Flo inflow control device"""
 
-        # request data for the last 30 minutes
-        timestamp = (int(time.time()) - ( 60 * 30 )) * 1000
+        # to avoid DDoS Flo's servers, cache any results loaded in last 10 minutes
+        now = int(time.time())
+        if self._last_waterflow_update > (now - (10 * 60)):
+            return self._last_waterflow_measurement
 
-        # FIXME: does API require from=? perhaps default behavior is better
+        # request data for the last 30 minutes, plus Flo API takes ms since epoch
+        timestamp = (now - ( 60 * 30 )) * 1000
+
         waterflow_url = '/waterflow/measurement/icd/' + flo_icd_id + '/last_day?from=' + str(timestamp)
         response = self.get_request(waterflow_url)
         # Example response: [ {
@@ -158,15 +165,18 @@ class FloService:
         # Return the latest measurement data point. Strangely Flo's response list includes stubs
         # for timestamps in the future, so this searches for the last non-0.0 pressure entry
         # since the pressure always has a value even when the Flo valve is shut off.
-        latest_result = json_response[0]
+        latest_measurement = json_response[0]
         for measurement in json_response:
             if measurement['average_pressure'] <= 0.0:
                 continue
 
             if measurement['time'] > latest_result['time']:
-                latest_result = measurement
+                latest_measurement = measurement
 
-        return latest_result
+        self._last_waterflow_measurement = latest_measurement
+        self._last_waterflow_update = now
+    
+        return latest_measurement
 
     def _get_unit_system(self):
         """Return user configuration, such as units"""
