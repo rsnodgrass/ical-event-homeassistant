@@ -49,7 +49,7 @@ entities:
   - entity: sensor.flo_water_temperature
 ```
 
-More complex cards can be created, for example the following shows both the basic entities card as well as a card build with mini-graph-card:
+More complex cards can be created, for example the following shows both the basic entities card as well as a card built with mini-graph-card (see flo/lovelace/ folder for example cards):
 
 ![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/flo/lovelace/flo-lovelace-examples.png?raw=true)
 
