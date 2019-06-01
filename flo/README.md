@@ -12,7 +12,7 @@ Support for [Flo Smart water monitoring and control device](https://amzn.to/2WBn
 
 Visit the Home Assistant community if you need [help with installation and configuration of Flo](https://community.home-assistant.io/t/flo-water-sensor/10160/149).
 
-### Step 1: Install Custom Components
+### Step 1: Install Flo Custom Components
 
 Copy all the files in [flo/](https://github.com/rsnodgrass/hass-integrations/tree/master/flo) to /config/custom_components/flo on your Home Assistant installation.
 
