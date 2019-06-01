@@ -37,22 +37,13 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
     sensors.append(FloRateSensor(flo_service, flo_icd_id))
     sensors.append(FloTempSensor(flo_service, flo_icd_id))
     sensors.append(FloPressureSensor(flo_service, flo_icd_id))
+#    sensors.append(FloModeSensor(flo_service, flo_icd_id))
 
-#    sensor = FloModeSensor(flo_service, flo_icd_id)
-#    sensors.append( sensor )
-
-#    for sensor in sensors:
-#        sensor.update()
+    for sensor in sensors:
+        sensor.update()
 
     # execute callback to add new entities
     add_sensors_callback(sensors)
-        
-# FIXME:
-# implement a separate sensor for each value vs attributes?
-#  https://developers.home-assistant.io/docs/en/entity_sensor.html
-#   e.g..  
-#   device_class = temperature / unit_of_measurement = 'F'
-#   device_class = pressure /  unit_of_measurement = 'psi'
 
 # pylint: disable=too-many-instance-attributes
 class FloRateSensor(FloEntity):
