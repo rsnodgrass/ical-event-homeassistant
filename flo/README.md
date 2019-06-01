@@ -49,9 +49,11 @@ entities:
   - entity: sensor.flo_water_temperature
 ```
 
+![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/flo/lovelace/entities.png?raw=true)
+
 More complex cards can be created, for example the following shows both the basic entities card as well as a card built with mini-graph-card (see flo/lovelace/ folder for example cards):
 
-![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/flo/lovelace/flo-lovelace-examples.png?raw=true)
+![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/flo/lovelace/mini-graph.png?raw=true)
 
 ### Step 4: Configure Automatic Updates (optional)
 

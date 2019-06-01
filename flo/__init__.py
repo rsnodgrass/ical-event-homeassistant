@@ -75,7 +75,7 @@ class FloEntity(Entity):
         """Store service upon init."""
         self._flo_service = flo_service
         self._attrs = {}
-        
+
         if self._name is None:
             self._name = 'Flo Water' # default if unspecified
 
@@ -156,6 +156,7 @@ class FloService:
         mutex.acquire()
         try:
             if self._last_waterflow_update > (now - (10 * 60)):
+                _LOGGER.debug("Using cached waterflow measurements %s", self._last_waterflow_measurement)
                 return self._last_waterflow_measurement
         finally:
             mutex.release()
