@@ -131,7 +131,8 @@ class FloTempSensor(FloEntity):
 
         # FIXME: add sanity checks on response
 
-        self._state = float(json_response['average_temperature'])
+        # FUTURE: round just to nearest degree?
+        self._state = round(float(json_response['average_temperature']), 1)
         _LOGGER.info("Updated %s", self._name)
         #_LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
 
@@ -166,9 +167,8 @@ class FloPressureSensor(FloEntity):
 
         # FIXME: add sanity checks on response
 
-        self._state = float(json_response['average_pressure'])
-        _LOGGER.info("Updated %s", self._name)
-#        _LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
+        self._state = round(float(json_response['average_pressure']), 1)
+        _LOGGER.info("Updated %s to %f %s : %s", self._name, self._state, self.unit_of_measurement, json_response)
 
 class FloModeSensor(FloEntity):
     """Sensor returning current monitoring mode for the Flo device"""
