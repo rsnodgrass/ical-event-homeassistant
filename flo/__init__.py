@@ -14,6 +14,8 @@ FUTURE APIS:
 - https://api.meetflo.com/api/v1/userdetails/me
 """
 import logging
+import json
+import requests
 import time
 
 from homeassistant.helpers.entity import Entity

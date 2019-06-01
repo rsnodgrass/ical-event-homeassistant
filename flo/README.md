@@ -10,12 +10,16 @@ Support for [Flo Smart water monitoring and control device](https://amzn.to/2WBn
 
 ## Installation
 
+Visit the Home Assistant community if you need [help with installation and configuration of Flo](https://community.home-assistant.io/t/flo-water-sensor/10160/149).
+
 ### Step 1: Copy the scripts!
 
+Copy all the files in flo/ to /config/custom_components/flo on your Home Assistant installation.
+
 ```
-mkdir /config/custom_components/flo
 __init__.py 
 sensor.py
+switch.py
 manifest.json
 ```
 
@@ -30,9 +34,9 @@ sensor:
     password: your_flo_password
 ```
 
-### Step 3: Automatic Updates with Custom Updater (Optional)
+### Step 3: Automatic Updates (Optional)
 
-For easy updates whenever a new version is released, use the [Home Assistant custom_updater component](https://github.com/custom-components/custom_updater/wiki/Installation) and [Tracker card](https://github.com/custom-cards/tracker-card). Once those are setup, add the following custom_updater config:
+For easy updates whenever a new version is released, use the [Home Assistant custom_updater component](https://github.com/custom-components/custom_updater/wiki/Installation) and [Tracker card](https://github.com/custom-cards/tracker-card). Once those are setup, add the following custom_updater settings to your config:
 
 ```yaml
 custom_updater:
