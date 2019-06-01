@@ -12,9 +12,9 @@ Support for [Flo Smart water monitoring and control device](https://amzn.to/2WBn
 
 Visit the Home Assistant community if you need [help with installation and configuration of Flo](https://community.home-assistant.io/t/flo-water-sensor/10160/149).
 
-### Step 1: Copy the scripts!
+### Step 1: Install Custom Components
 
-Copy all the files in flo/ to /config/custom_components/flo on your Home Assistant installation.
+Copy all the files in [flo/](https://github.com/rsnodgrass/hass-integrations/tree/master/flo) to /config/custom_components/flo on your Home Assistant installation.
 
 ```
 __init__.py 
@@ -23,7 +23,7 @@ switch.py
 manifest.json
 ```
 
-### Step 2: Add sensors to Home Assistant's configuration
+### Step 2: Configure Sensors
 
 Example configuration:
 
@@ -34,7 +34,7 @@ sensor:
     password: your_flo_password
 ```
 
-### Step 3: Automatic Updates (Optional)
+### Step 3: Setup Automatic Updates (Optional)
 
 For easy updates whenever a new version is released, use the [Home Assistant custom_updater component](https://github.com/custom-components/custom_updater/wiki/Installation) and [Tracker card](https://github.com/custom-cards/tracker-card). Once those are setup, add the following custom_updater settings to your config:
 
@@ -50,8 +50,8 @@ custom_updater:
 ## See Also
 
 * https://community.home-assistant.io/t/flo-water-sensor/10160/149
-* [Check price of Flo water monitoring system on Amazon.com](https://amzn.to/2WBn8tW?tag=rynoshark-20)
 * [Flo by Moen](https://meetflo.com)
+* [Check price of Flo water monitoring device on Amazon.com](https://amzn.to/2WBn8tW?tag=rynoshark-20)
 
 ## Future Improvements
 
