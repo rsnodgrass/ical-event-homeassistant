@@ -65,7 +65,7 @@ custom_updater:
     - components
 
   component_urls:
-    - https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/custom_updater.json
+    - https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/flo/custom_updater.json
 ```
 
 ## See Also
