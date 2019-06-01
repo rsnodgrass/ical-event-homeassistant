@@ -6,7 +6,7 @@ Support for [Flo Smart water monitoring and control device](https://amzn.to/2WBn
 
 - water flow rate (gpm)
 - water pressure (psi)
-- water temperature (F)
+- water temperature (&deg;F)
 
 ## Installation
 
