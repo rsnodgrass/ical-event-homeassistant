@@ -75,6 +75,7 @@ Priority improvements:
 
 - support for switching water supply on/off
 - support for changing the automatic monitoring mode (home, away, sleep)
+- support imperial_us (gpm, F, psi) vs metric unit system (liter, C, kPa)
 
 Other ideas (no plans to add currently):
 

@@ -28,6 +28,27 @@ _LOGGER = logging.getLogger(__name__)
 FLO_DOMAIN = 'flo'
 FLO_USER_AGENT = 'Home Assistant (Flo; https://github.com/rsnodgrass/hass-integrations/tree/master/flo)'
 
+FLO_UNIT_SYSTEMS = {
+    'imperial_us': { 
+        'system':   'imperial_us',
+        'temp':     '°F',
+        'flow':     'gpm',
+        'pressure': 'psi',
+    },
+    'imperial_uk': { 
+        'system':   'imperial_uk',
+        'temp':     '°F',
+        'flow':     'gpm',
+        'pressure': 'psi',
+    },
+    'metric': { 
+        'system':   'metric',
+        'temp':     '°C',
+        'flow':     'lpm',
+        'pressure': 'kPa'
+    }
+}
+
 #CONFIG_SCHEMA = vol.Schema({
 #    FLO_DOMAIN: vol.Schema({
 #        vol.Required(CONF_USERNAME): cv.string,
@@ -68,6 +89,9 @@ class FloService:
         
         self._username = config[CONF_USERNAME]
         self._password = config[CONF_PASSWORD]
+
+        #self._unit_system = self._get_unit_system()
+        #self._units = FLO_UNIT_SYSTEMS[self._unit_system]
 
     def _flo_authentication_token(self):
         now = int(time.time())
@@ -144,3 +168,17 @@ class FloService:
                 latest_result = measurement
 
         return latest_result
+
+    def _get_unit_system(self):
+        """Return user configuration, such as units"""
+
+        response = self.get_request('/userdetails/me')
+        # Example response: {
+        #    "firstname": "Jenny",
+        #    "lastname": "Tutone",
+        #    "phone_mobile": "8008675309",
+        #    "user_id": "7cab21-d488-3213-af31-c1ca20177b5a",
+        #    "unit_system": "imperial_us"
+        #  }
+        json_response = response.json()
+        return json_response['unit_system']
