@@ -76,13 +76,13 @@ custom_updater:
 
 Priority improvements:
 
-- support for switching water supply on/off
-- support for changing the automatic monitoring mode (home, away, sleep)
-- support imperial_us (gpm, F, psi) vs metric unit system (liter, C, kPa)
+- support switching water supply on/off
+- support changing the automatic water leak monitoring mode (home, away, sleep)
+- support metric unit system (liter, C, kPa)
 
 Other ideas (no plans to add currently):
 
 - support Flo alerts (leaks detected)
 - support multiple Flo devices and locations within a single Home Assistant instance
 - support triggering the system test of a Flo device
-- support Flo's new fixtures beta features breaking down types of usage (e.g. toilets, appliances, faucet, irrigation, etc)
+- support Flo's fixtures beta feature breaking down usage by type (e.g. toilets, appliances, faucet, irrigation, etc)

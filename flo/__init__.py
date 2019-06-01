@@ -91,7 +91,7 @@ class FloService:
         self._password = config[CONF_PASSWORD]
 
         self._last_waterflow_measurement = None
-        self._last_waterflow_requested = 0
+        self._last_waterflow_update = 0
 
 #        self._units = FLO_UNIT_SYSTEMS[self._get_unit_system]
 
