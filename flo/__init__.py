@@ -29,6 +29,9 @@ _LOGGER = logging.getLogger(__name__)
 FLO_DOMAIN = 'flo'
 FLO_USER_AGENT = 'Home Assistant (Flo; https://github.com/rsnodgrass/hass-integrations/tree/master/flo)'
 
+# cache expiry in minutes; TODO: make this configurable (with a minimum to prevent DDoS)
+FLO_CACHE_EXPIRY=10
+
 FLO_UNIT_SYSTEMS = {
     'imperial_us': { 
         'system':   'imperial_us',
@@ -56,7 +59,7 @@ mutex = Lock()
 #    FLO_DOMAIN: vol.Schema({
 #        vol.Required(CONF_USERNAME): cv.string,
 #        vol.Required(CONF_PASSWORD): cv.string
-#        vol.Optional(CONF_SCAN_INTERVAL, default=300): cv.positive_int
+#        vol.Optional(CONF_SCAN_INTERVAL, default=600): cv.positive_int
 #    })
 #}, extra=vol.ALLOW_EXTRA)
 
@@ -155,8 +158,9 @@ class FloService:
         now = int(time.time())
         mutex.acquire()
         try:
-            if self._last_waterflow_update > (now - (10 * 60)):
-                _LOGGER.debug("Using cached waterflow measurements %s", self._last_waterflow_measurement)
+            if self._last_waterflow_update > (now - (FLO_CACHE_EXPIRY * 60)):
+                _LOGGER.debug("Using cached waterflow measurements (expiry %d min): %s",
+                              FLO_CACHE_EXPIRY, self._last_waterflow_measurement)
                 return self._last_waterflow_measurement
         finally:
             mutex.release()
