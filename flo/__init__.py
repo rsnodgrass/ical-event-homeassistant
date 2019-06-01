@@ -107,7 +107,7 @@ class FloService:
         url = 'https://api.meetflo.com/api/v1' + url_path
         headers = { 
             'authorization': self._flo_authentication_token(), 
-            'User-Agent': FLO_SERVICE_USER_AGENT
+            'User-Agent': FLO_USER_AGENT
         }
         response = requests.get(url, headers=headers)
         _LOGGER.info("Flo GET %s : %s", url, response.content)
