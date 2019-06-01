@@ -36,7 +36,7 @@ sensor:
 
 ### Step 3: Add Lovelace Card
 
-````yaml
+```yaml
 type: entities
 entities:
   - entity: sensor.flo_water_flow_rate
