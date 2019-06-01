@@ -1,5 +1,15 @@
 Remote control for windows
 
+## Configuration
+
+```yaml
+cover:
+  - platform: template
+    covers:
+      skylight:
+        name: 'Skylight'
+```
+
 ## Technical Details
 
 - FCC ID: Y6UWO011101001
