@@ -27,6 +27,9 @@ _LOGGER = logging.getLogger(__name__)
 FLO_DOMAIN = 'flo'
 FLO_COMPONENTS = [ 'sensor', 'switch' ]
 
+FLO_SERVICE_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.51 Safari/537.36'
+#FLO_SERVICE_USER_AGENT = 'Home Assistant (Flo; https://github.com/rsnodgrass/hass-integrations/tree/master/flo)'
+
 #PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 #    vol.Required(CONF_USERNAME): cv.string,
 #    vol.Required(CONF_PASSWORD): cv.string
@@ -74,15 +77,23 @@ class FloService:
             # authenticate to the Flo API
             #   POST https://api.meetflo.com/api/v1/users/auth
             #   Payload: {username: "your@email.com", password: "1234"}
+            #   Content-Type: application/json;charset=UTF-8
 
             auth_url = 'https://api.meetflo.com/api/v1/users/auth'
             payload = json.dumps({
                 'username': self._username,
                 'password': self._password
             })
+            headers = { 
+                'User-Agent': FLO_SERVICE_USER_AGENT,
+                'Content-Type': 'application/json;charset=UTF-8',
+#                'Accept': 'application/json, text/plain, */*',
+#                'DNT': '1',
+                'Referer': 'https://user.meetflo.com/login',
+            }
 
             _LOGGER.info("Authenticating Flo account %s via %s : %s", self._username, auth_url, payload)
-            response = requests.post(auth_url, data=payload)
+            response = requests.post(auth_url, data=payload, headers=headers)
             # Example response:
             # { "token": "caJhb.....",
             #   "tokenPayload": { "user": { "user_id": "9aab2ced-c495-4884-ac52-b63f3008b6c7", "email": "your@email.com"},
@@ -100,7 +111,11 @@ class FloService:
 
     def get_request(self, url_path):
         url = 'https://api.meetflo.com/api/v1' + url_path
-        response = requests.get(url, headers={ 'authorization': self._flo_authentication_token() })
+        headers = { 
+            'authorization': self._flo_authentication_token(), 
+            'User-Agent': FLO_SERVICE_USER_AGENT
+        }
+        response = requests.get(url, headers=headers)
         _LOGGER.info("Flo GET %s : %s", url, response.content)
         return response
 
@@ -111,7 +126,7 @@ class FloService:
         utc_timestamp = int(time.time()) - ( 60 * 30 )
 
         # FIXME: does API require from=? perhaps default behavior is better
-        waterflow_url = '/waterflow/measurement/icd/' + flo_icd_id + '/last_day?from=' + utc_timestamp
+        waterflow_url = '/waterflow/measurement/icd/' + flo_icd_id + '/last_day?from=' + str(utc_timestamp)
         response = self.get_request(waterflow_url)
         # Example response: [ {
         #    "average_flowrate": 0,
