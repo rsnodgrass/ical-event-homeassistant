@@ -81,7 +81,7 @@ class FloService:
                 'username': self._username,
                 'password': self._password
             }
-            response = requests.post(auth_url, data=json.dumps(payload)) #.prepare()
+            response = requests.post(auth_url, data=json.dumps(payload))
             # Example response:
             # { "token": "caJhb.....",
             #   "tokenPayload": { "user": { "user_id": "9aab2ced-c495-4884-ac52-b63f3008b6c7", "email": "your@email.com"},
@@ -89,10 +89,10 @@ class FloService:
             #   "tokenExpiration": 86400,
             #   "timeNow": 1559226161 }
 
-            json = response.json()
+            json_response = response.json()
             _LOGGER.debug("Flo user %s authenticated: %s", self._username, json)
-            self._auth_token_expiry = now + int( int(json['tokenExpiration']) / 2)
-            self._auth_token = json['token']
+            self._auth_token_expiry = now + int( int(json_response['tokenExpiration']) / 2)
+            self._auth_token = json_response['token']
 
         return self._auth_token
 
@@ -119,7 +119,7 @@ class FloService:
         #    "total_flow": 0,
         #    "time": "2019-05-30T07:00:00.000Z"
         #  }, {}, ... ]
-        json = response.json()
+        json_response = response.json()
 
         # FIXME: return only the latest data point
-        return json[0]
+        return json_response[0]

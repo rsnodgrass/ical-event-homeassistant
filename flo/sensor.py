@@ -30,12 +30,12 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
     #     "device_id": "a0b405bfe487",
     #     "id": "2faf8cd6-a8eb-4b63-bd1a-33298a26eca8",
     #     "location_id": "e7b2833a-f2cb-a4b1-ace2-36c21075d493" }
-    json = response.json()
+    json_response = response.json()
+    flo_icd_id = json_response['id']
 
     # FUTURE: support multiple devices (and locations)
     sensors = []
 
-    flo_icd_id = json['id']
     sensor = FloRateSensor(flo_service, flo_icd_id)
     sensor.update()  # FIXME: this may be unnecessary
     sensors.append( sensor )
@@ -94,13 +94,13 @@ class FloRateSensor(FloEntity):
 
     def update(self):
         """Update sensor state"""
-        json = self._flo_service.get_waterflow_measurement(self._flo_icd_id)
+        json_response = self._flo_service.get_waterflow_measurement(self._flo_icd_id)
 
         # FIXME: add sanity checks on response
 
-        self._state = float(json['average_flowrate'])
+        self._state = float(json_response['average_flowrate'])
         self._attrs.update({
-            ATTR_TOTAL_FLOW  : float(json['total_flow'])
+            ATTR_TOTAL_FLOW  : float(json_response['total_flow'])
         })
 
         _LOGGER.info("Updated Flo sensors! (4x https requests)")
@@ -130,11 +130,11 @@ class FloTempSensor(FloEntity):
     def update(self):
         """Update sensor state"""
         # FIXME: cache results so that for each sensor don't update multiple times
-        json = self._flo_service.get_waterflow_measurement(self._flo_icd_id)
+        json_response = self._flo_service.get_waterflow_measurement(self._flo_icd_id)
 
         # FIXME: add sanity checks on response
 
-        self._state = float(json['average_temperature'])
+        self._state = float(json_response['average_temperature'])
 
 
 class FloPressureSensor(FloEntity):
@@ -163,11 +163,11 @@ class FloPressureSensor(FloEntity):
     def update(self):
         """Update sensor state"""
         # FIXME: cache results so that for each sensor don't update multiple times
-        json = self._flo_service.get_waterflow_measurement(self._flo_icd_id)
+        json_response = self._flo_service.get_waterflow_measurement(self._flo_icd_id)
 
         # FIXME: add sanity checks on response
 
-        self._state = float(json['average_pressure'])
+        self._state = float(json_response['average_pressure'])
 
 
 class FloModeSensor(FloEntity):
@@ -197,5 +197,5 @@ class FloModeSensor(FloEntity):
         """Update sensor state"""
     
         # FIXME: cache results so that for each sensor don't update multiple times
-        json = self._flo_service.get_request('/icdalarmnotificationdeliveryrules/scan')
-        _LOGGER.info("Flo alarm notification: " + json)
+        json_response = self._flo_service.get_request('/icdalarmnotificationdeliveryrules/scan')
+        _LOGGER.info("Flo alarm notification: " + json_response)
