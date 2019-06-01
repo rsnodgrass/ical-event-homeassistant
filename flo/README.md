@@ -14,7 +14,7 @@ Visit the Home Assistant community if you need [help with installation and confi
 
 ### Step 1: Install Flo Custom Components
 
-Copy all the files in [flo/](https://github.com/rsnodgrass/hass-integrations/tree/master/flo) to /config/custom_components/flo on your Home Assistant installation.
+Copy all the files in `[flo/](https://github.com/rsnodgrass/hass-integrations/tree/master/flo)` to `/config/custom_components/flo` on your Home Assistant installation.
 
 ```
 __init__.py 
