@@ -2,10 +2,9 @@
 Support for Flo water inflow monitoring and control devices
 
 FUTURE:
-- last health test timestamp
-- add switchable mode (home/away/sleep)
 - convert to async
-- most recent alert
+- use track_point_in_utc_time() to trigger and update every 16 minutes
+     (one minute after Flo's every 15 minute average rollup)
 """
 import logging
 
@@ -16,6 +15,8 @@ _LOGGER = logging.getLogger(__name__)
 
 ATTR_TIME       = 'time'
 ATTR_TOTAL_FLOW = 'total_flow'
+
+#SCAN_INTERVAL = timedelta(seconds=0.1)
 
 # pylint: disable=unused-argument
 def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
