@@ -59,9 +59,9 @@ custom_updater:
 
 ## See Also
 
-* https://community.home-assistant.io/t/flo-water-sensor/10160/149
-* [Flo by Moen](https://meetflo.com)
+* [Community support for Home Assistant Flo sensor](https://community.home-assistant.io/t/flo-water-sensor/10160/149)
 * [Check price of Flo water monitoring device on Amazon.com](https://amzn.to/2WBn8tW?tag=rynoshark-20)
+* [Flo by Moen](https://meetflo.com) (official product page)
 
 ## Feature Requests
 
