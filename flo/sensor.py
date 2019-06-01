@@ -43,6 +43,7 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
 #    sensors.append( sensor )
 
     sensor = FloPressureSensor(flo_service, flo_icd_id)
+    sensor.update()  # FIXME: this may be unnecessary
     sensors.append( sensor )
 
 #    sensor = FloModeSensor(flo_service, flo_icd_id)
@@ -98,6 +99,7 @@ class FloRateSensor(FloEntity):
         self._attrs.update({
             ATTR_TOTAL_FLOW  : float(json_response['total_flow'])
         })
+        _LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
 
         _LOGGER.info("Updated Flo sensors! (4x https requests)")
 
@@ -131,6 +133,7 @@ class FloTempSensor(FloEntity):
         # FIXME: add sanity checks on response
 
         self._state = float(json_response['average_temperature'])
+        _LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
 
 
 class FloPressureSensor(FloEntity):
@@ -164,6 +167,8 @@ class FloPressureSensor(FloEntity):
         # FIXME: add sanity checks on response
 
         self._state = float(json_response['average_pressure'])
+        _LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
+
 
 
 class FloModeSensor(FloEntity):

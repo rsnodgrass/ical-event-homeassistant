@@ -18,31 +18,30 @@ import json
 import requests
 import time
 
+from homeassistant.helpers import discovery
 from homeassistant.helpers.entity import Entity
-from homeassistant.const import ( CONF_USERNAME, CONF_PASSWORD, CONF_NAME )
+from homeassistant.const import ( CONF_USERNAME, CONF_PASSWORD, CONF_NAME, CONF_SCAN_INTERVAL )
 #from homeassistant.components.sensor import ( PLATFORM_SCHEMA )
 
 _LOGGER = logging.getLogger(__name__)
 
 FLO_DOMAIN = 'flo'
-FLO_COMPONENTS = [ 'sensor', 'switch' ]
+FLO_USER_AGENT = 'Home Assistant (Flo; https://github.com/rsnodgrass/hass-integrations/tree/master/flo)'
 
-FLO_SERVICE_USER_AGENT = 'Home Assistant (Flo; https://github.com/rsnodgrass/hass-integrations/tree/master/flo)'
-
-#PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
-#    vol.Required(CONF_USERNAME): cv.string,
-#    vol.Required(CONF_PASSWORD): cv.string
-#})
+#CONFIG_SCHEMA = vol.Schema({
+#    FLO_DOMAIN: vol.Schema({
+#        vol.Required(CONF_USERNAME): cv.string,
+#        vol.Required(CONF_PASSWORD): cv.string
+#        vol.Optional(CONF_SCAN_INTERVAL, default=300): cv.positive_int
+#    })
+#}, extra=vol.ALLOW_EXTRA)
 
 def setup(hass, config):
     """Set up the Flo Water Security System"""
-
-    # FIXME: move the initial authentication to the server here
-    # FIXME: we need to reauthenticate every N hours based on auth token details
-
-#    for component in FLO_COMPONENTS:
-#        load_platform(hass, component, FLO_DOMAIN, {}, flo_service)
-
+#    conf = config[FLO_DOMAIN]
+#    conf = {}
+#    for component in ['sensor', 'switch']:
+#        discovery.load_platform(hass, component, FLO_DOMAIN, conf, config)
     return True
 
 class FloEntity(Entity):
@@ -83,7 +82,7 @@ class FloService:
                 'password': self._password
             })
             headers = { 
-                'User-Agent': FLO_SERVICE_USER_AGENT,
+                'User-Agent': FLO_USER_AGENT,
                 'Content-Type': 'application/json;charset=UTF-8'
             }
 
@@ -111,14 +110,14 @@ class FloService:
             'User-Agent': FLO_SERVICE_USER_AGENT
         }
         response = requests.get(url, headers=headers)
-        _LOGGER.debug("Flo GET %s : %s", url, response.content)
+        _LOGGER.info("Flo GET %s : %s", url, response.content)
         return response
 
     def get_waterflow_measurement(self, flo_icd_id):
         """Fetch latest state for a Flo inflow control device"""
 
         # request data for the last 30 minutes
-        utc_timestamp = int(time.time()) - ( 60 * 30 )
+        utc_timestamp = (int(time.time()) - ( 60 * 30 )) * 1000
 
         # FIXME: does API require from=? perhaps default behavior is better
         waterflow_url = '/waterflow/measurement/icd/' + flo_icd_id + '/last_day?from=' + str(utc_timestamp)
