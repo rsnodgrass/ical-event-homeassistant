@@ -1,3 +1,3 @@
-## 0.0.1 (2019-05-31)
+## 0.0.1 - BETA (2019-05-31)
 
-NOT YET RELEASED! Initial release of the Flo Water Security System sensor for Home Assistant
+Initial release of the Flo water monitoring sensor for Home Assistant
