@@ -47,7 +47,6 @@ custom_updater:
     - https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/custom_updater.json
 ```
 
-
 ## See Also
 
 * https://community.home-assistant.io/t/flo-water-sensor/10160/149
@@ -56,11 +55,14 @@ custom_updater:
 
 ## Future Improvements
 
-Ideas for future improvements:
+Priority improvements:
 
-- support on/off switch for main water supply
-- support for the automated monitoring mode (home, away, sleep)
-- support alerts like leaks detected
+- support for switching water supply on/off
+- support for changing the automatic monitoring mode (home, away, sleep)
+
+Ideas for future improvements (no plans to add currently):
+
+- support Flo alerts (leaks detected)
 - support multiple Flo devices and locations within a single Home Assistant instance
 - support triggering the system test of a Flo device
-- support Flo's new data on the types of usage (e.g. toilets, etc)
+- support Flo's new fixtures beta features breaking down types of usage (e.g. toilets, appliances, faucet, irrigation, etc)
