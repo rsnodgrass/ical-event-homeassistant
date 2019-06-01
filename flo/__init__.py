@@ -90,8 +90,7 @@ class FloService:
         self._username = config[CONF_USERNAME]
         self._password = config[CONF_PASSWORD]
 
-        #self._unit_system = self._get_unit_system()
-        #self._units = FLO_UNIT_SYSTEMS[self._unit_system]
+        self._units = FLO_UNIT_SYSTEMS[self._get_unit_system]
 
     def _flo_authentication_token(self):
         now = int(time.time())
