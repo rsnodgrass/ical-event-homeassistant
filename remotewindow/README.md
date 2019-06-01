@@ -1,5 +1,7 @@
 Remote control for windows
 
+NOTE: THIS DOES NOT WORK!  STUB ONLY
+
 ## Configuration
 
 ```yaml
