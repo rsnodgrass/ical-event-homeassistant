@@ -14,6 +14,7 @@ from . import FloService, FloEntity
 
 _LOGGER = logging.getLogger(__name__)
 
+ATTR_TIME       = 'time'
 ATTR_TOTAL_FLOW = 'total_flow'
 
 # pylint: disable=unused-argument
@@ -33,21 +34,15 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
 
     # FUTURE: support multiple devices (and locations)
     sensors = []
-
-#    sensor = FloRateSensor(flo_service, flo_icd_id)
-#    sensor.update()  # FIXME: this may be unnecessary
-#    sensors.append( sensor )
-
-#    sensor = FloTempSensor(flo_service, flo_icd_id)
-#    sensor.update()  # FIXME: this may be unnecessary
-#    sensors.append( sensor )
-
-    sensor = FloPressureSensor(flo_service, flo_icd_id)
-    sensor.update()  # FIXME: this may be unnecessary
-    sensors.append( sensor )
+    sensors.append(FloRateSensor(flo_service, flo_icd_id))
+    sensors.append(FloTempSensor(flo_service, flo_icd_id))
+    sensors.append(FloPressureSensor(flo_service, flo_icd_id))
 
 #    sensor = FloModeSensor(flo_service, flo_icd_id)
 #    sensors.append( sensor )
+
+#    for sensor in sensors:
+#        sensor.update()
 
     # execute callback to add new entities
     add_sensors_callback(sensors)
@@ -97,10 +92,10 @@ class FloRateSensor(FloEntity):
 
         self._state = float(json_response['average_flowrate'])
         self._attrs.update({
-            ATTR_TOTAL_FLOW  : float(json_response['total_flow'])
+            ATTR_TOTAL_FLOW  : round(float(json_response['total_flow']),1),
+            ATTR_TIME        : json_response['time']
         })
-        _LOGGER.info("Updated %s", self._name)
-        #_LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
+        _LOGGER.info("Updated %s to %f %s : %s", self._name, self._state, self.unit_of_measurement, json_response)
 
 class FloTempSensor(FloEntity):
     """Water temp sensor for a Flo device"""
@@ -133,8 +128,7 @@ class FloTempSensor(FloEntity):
 
         # FUTURE: round just to nearest degree?
         self._state = round(float(json_response['average_temperature']), 1)
-        _LOGGER.info("Updated %s", self._name)
-        #_LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
+        _LOGGER.info("Updated %s to %f %s : %s", self._name, self._state, self.unit_of_measurement, json_response)
 
 
 class FloPressureSensor(FloEntity):

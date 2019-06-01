@@ -110,7 +110,7 @@ class FloService:
             'User-Agent': FLO_USER_AGENT
         }
         response = requests.get(url, headers=headers)
-        _LOGGER.info("Flo GET %s : %s", url, response.content)
+        _LOGGER.debug("Flo GET %s : %s", url, response.content)
         return response
 
     def get_waterflow_measurement(self, flo_icd_id):
@@ -132,10 +132,15 @@ class FloService:
         #  }, {}, ... ]
         json_response = response.json()
 
-        # Return only the latest data point. Strangely Flo's response list includes stubs
+        # Return the latest measurement data point. Strangely Flo's response list includes stubs
         # for timestamps in the future, so this searches for the last non-0.0 pressure entry
         # since the pressure always has a value even when the Flo valve is shut off.
-        for result in reversed(list(enumerate(json_response))):
-            if result['average_pressure'] is not 0.0:
-                return result
-        return json_response[0]
+        latest_result = json_response[0]
+        for measurement in json_response:
+            if measurement['average_pressure'] <= 0.0:
+                continue
+
+            if measurement['time'] > latest_result['time']:
+                latest_result = measurement
+
+        return latest_result
