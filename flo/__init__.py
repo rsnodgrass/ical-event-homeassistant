@@ -117,10 +117,10 @@ class FloService:
         """Fetch latest state for a Flo inflow control device"""
 
         # request data for the last 30 minutes
-        utc_timestamp = (int(time.time()) - ( 60 * 30 )) * 1000
+        timestamp = (int(time.time()) - ( 60 * 30 )) * 1000
 
         # FIXME: does API require from=? perhaps default behavior is better
-        waterflow_url = '/waterflow/measurement/icd/' + flo_icd_id + '/last_day?from=' + str(utc_timestamp)
+        waterflow_url = '/waterflow/measurement/icd/' + flo_icd_id + '/last_day?from=' + str(timestamp)
         response = self.get_request(waterflow_url)
         # Example response: [ {
         #    "average_flowrate": 0,
@@ -132,5 +132,5 @@ class FloService:
         #  }, {}, ... ]
         json_response = response.json()
 
-        # FIXME: return only the latest data point
-        return json_response[0]
+        # return only the latest data point (last in the list)
+        return json_response[-1]

@@ -99,9 +99,8 @@ class FloRateSensor(FloEntity):
         self._attrs.update({
             ATTR_TOTAL_FLOW  : float(json_response['total_flow'])
         })
-        _LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
-
-        _LOGGER.info("Updated Flo sensors! (4x https requests)")
+        _LOGGER.info("Updated %s", self._name)
+        #_LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
 
 class FloTempSensor(FloEntity):
     """Water temp sensor for a Flo device"""
@@ -133,7 +132,8 @@ class FloTempSensor(FloEntity):
         # FIXME: add sanity checks on response
 
         self._state = float(json_response['average_temperature'])
-        _LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
+        _LOGGER.info("Updated %s", self._name)
+        #_LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
 
 
 class FloPressureSensor(FloEntity):
@@ -167,9 +167,8 @@ class FloPressureSensor(FloEntity):
         # FIXME: add sanity checks on response
 
         self._state = float(json_response['average_pressure'])
-        _LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
-
-
+        _LOGGER.info("Updated %s", self._name)
+#        _LOGGER.info("Updated %s to %s %s", self._name, str(self._state), self.unit_of_measurement())
 
 class FloModeSensor(FloEntity):
     """Sensor returning current monitoring mode for the Flo device"""
