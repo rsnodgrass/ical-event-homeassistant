@@ -76,6 +76,7 @@ custom_updater:
 
 Priority improvements:
 
+- change to flo: domain configuration vs individual sensor (will be breaking change)
 - support switching water supply on/off
 - support changing the automatic water leak monitoring mode (home, away, sleep)
 - support metric unit system (liter, C, kPa)
