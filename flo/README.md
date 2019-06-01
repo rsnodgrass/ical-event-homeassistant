@@ -13,7 +13,7 @@ Real-time sensor state is not available from Flo at this time.
 
 ## Installation
 
-Visit the Home Assistant community if you need [help with installation and configuration of Flo](https://community.home-assistant.io/t/flo-water-sensor/10160/149).
+Visit the Home Assistant community if you need [help with installation and configuration of Flo](https://community.home-assistant.io/t/flo-smart-water-leak-detector/119532).
 
 ### Step 1: Install Flo Custom Components
 
@@ -68,7 +68,7 @@ custom_updater:
 
 ## See Also
 
-* [Community support for Home Assistant Flo sensor](https://community.home-assistant.io/t/flo-water-sensor/10160/149)
+* [Community support for Home Assistant Flo sensor](https://community.home-assistant.io/t/flo-smart-water-leak-detector/119532)
 * [Check price of Flo water monitoring device on Amazon.com](https://amzn.to/2WBn8tW?tag=rynoshark-20)
 * [Flo by Moen](https://meetflo.com) (official product page)
 
