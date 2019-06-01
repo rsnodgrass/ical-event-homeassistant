@@ -177,7 +177,7 @@ class FloService:
             if measurement['average_pressure'] <= 0.0:
                 continue
 
-            if measurement['time'] > latest_result['time']:
+            if measurement['time'] > latest_measurement['time']:
                 latest_measurement = measurement
 
         mutex.acquire()
