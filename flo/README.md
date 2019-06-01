@@ -36,6 +36,8 @@ sensor:
 
 ### Step 3: Add Lovelace Card
 
+The following is a simplest Lovelace card which shows data from the Flo sensors:
+
 ```yaml
 type: entities
 entities:
@@ -43,6 +45,10 @@ entities:
   - entity: sensor.flo_water_pressure
   - entity: sensor.flo_water_temperature
 ```
+
+More complex cards can be created, for example the following shows both the basic entities card as well as a card build with mini-graph-card:
+
+![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/flo/lovelace/flo-lovelace-examples.png?raw=true)
 
 ### Step 4: Configure Automatic Updates (optional)
 
