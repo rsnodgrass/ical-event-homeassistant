@@ -44,7 +44,7 @@ entities:
   - entity: sensor.flo_water_temperature
 ```
 
-### Step 4: Setup Automatic Updates (Optional)
+### Step 4: Configure Automatic Updates (optional)
 
 For easy updates whenever a new version is released, use the [Home Assistant custom_updater component](https://github.com/custom-components/custom_updater/wiki/Installation) and [Tracker card](https://github.com/custom-cards/tracker-card). Once those are setup, add the following custom_updater settings to your config:
 
@@ -63,14 +63,14 @@ custom_updater:
 * [Flo by Moen](https://meetflo.com)
 * [Check price of Flo water monitoring device on Amazon.com](https://amzn.to/2WBn8tW?tag=rynoshark-20)
 
-## Future Improvements
+## Feature Requests
 
 Priority improvements:
 
 - support for switching water supply on/off
 - support for changing the automatic monitoring mode (home, away, sleep)
 
-Ideas for future improvements (no plans to add currently):
+Other ideas (no plans to add currently):
 
 - support Flo alerts (leaks detected)
 - support multiple Flo devices and locations within a single Home Assistant instance
