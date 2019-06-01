@@ -19,8 +19,6 @@ ATTR_TOTAL_FLOW = 'total_flow'
 # pylint: disable=unused-argument
 def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
     """Setup the Flo water inflow control sensor"""
-    _LOGGER.debug("Initializing the Flo sensors")
-
     flo_service = FloService(config)
 
     # get a list of all Flo inflow control devices
@@ -36,21 +34,19 @@ def setup_platform(hass, config, add_sensors_callback, discovery_info=None):
     # FUTURE: support multiple devices (and locations)
     sensors = []
 
-    sensor = FloRateSensor(flo_service, flo_icd_id)
-    sensor.update()  # FIXME: this may be unnecessary
-    sensors.append( sensor )
+#    sensor = FloRateSensor(flo_service, flo_icd_id)
+#    sensor.update()  # FIXME: this may be unnecessary
+#    sensors.append( sensor )
 
-    sensor = FloTempSensor(flo_service, flo_icd_id)
-    sensor.update()  # FIXME: this may be unnecessary
-    sensors.append( sensor )
+#    sensor = FloTempSensor(flo_service, flo_icd_id)
+#    sensor.update()  # FIXME: this may be unnecessary
+#    sensors.append( sensor )
 
     sensor = FloPressureSensor(flo_service, flo_icd_id)
     sensors.append( sensor )
 
-    sensor = FloModeSensor(flo_service, flo_icd_id)
-    sensors.append( sensor )
-
-    _LOGGER.info("Initialized the Flo sensors")
+#    sensor = FloModeSensor(flo_service, flo_icd_id)
+#    sensors.append( sensor )
 
     # execute callback to add new entities
     add_sensors_callback(sensors)
@@ -191,7 +187,7 @@ class FloModeSensor(FloEntity):
 
     @property
     def icon(self):
-        return 'mdi:gauge'
+        return 'mdi:shield-search'
 
     def update(self):
         """Update sensor state"""
