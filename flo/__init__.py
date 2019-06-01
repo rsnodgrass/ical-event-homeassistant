@@ -118,7 +118,7 @@ class FloService:
 
         # request data for the last 30 minutes
         timestamp = (int(time.time()) - ( 60 * 30 )) * 1000
-        
+
         # FIXME: does API require from=? perhaps default behavior is better
         waterflow_url = '/waterflow/measurement/icd/' + flo_icd_id + '/last_day?from=' + str(timestamp)
         response = self.get_request(waterflow_url)
@@ -136,6 +136,6 @@ class FloService:
         # for timestamps in the future, so this searches for the last non-0.0 pressure entry
         # since the pressure always has a value even when the Flo valve is shut off.
         for result in reversed(list(enumerate(json_response))):
-            if result['average_pressure'] is not '0.0':
+            if result['average_pressure'] is not 0.0:
                 return result
         return json_response[0]
