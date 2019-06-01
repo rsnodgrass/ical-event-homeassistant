@@ -74,7 +74,7 @@ class FloService:
             # authenticate to the Flo API
             #   POST https://api.meetflo.com/api/v1/users/auth
             #   Payload: {username: "your@email.com", password: "1234"}
-            _LOGGER.debug("Authenticating to Flo account %s", self._username)
+            _LOGGER.info("Authenticating Flo account %s", self._username)
 
             auth_url = 'https://api.meetflo.com/api/v1/users/auth'
             payload = {
@@ -90,7 +90,7 @@ class FloService:
             #   "timeNow": 1559226161 }
 
             json_response = response.json()
-            _LOGGER.debug("Flo user %s authenticated: %s", self._username, json)
+            _LOGGER.info("Flo user %s authenticated to %s : %s", self._username, auth_url, json_response)
             self._auth_token_expiry = now + int( int(json_response['tokenExpiration']) / 2)
             self._auth_token = json_response['token']
 
