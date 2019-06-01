@@ -81,7 +81,7 @@ class FloService:
                 'username': self._username,
                 'password': self._password
             }
-            response = requests.Request('POST', auth_url, data=json.dumps(payload)).prepare()
+            response = requests.post(auth_url, data=json.dumps(payload)) #.prepare()
             # Example response:
             # { "token": "caJhb.....",
             #   "tokenPayload": { "user": { "user_id": "9aab2ced-c495-4884-ac52-b63f3008b6c7", "email": "your@email.com"},
@@ -89,16 +89,16 @@ class FloService:
             #   "tokenExpiration": 86400,
             #   "timeNow": 1559226161 }
 
-            _LOGGER.debug("Flo user %s authenticated: %s", self._username, response.json())
-            self._auth_token_expiry = now + ( int(response.json()['tokenExpiration']) / 2)
-            self._auth_token = response.json()['token']
+            json = response.json()
+            _LOGGER.debug("Flo user %s authenticated: %s", self._username, json)
+            self._auth_token_expiry = now + int( int(json['tokenExpiration']) / 2)
+            self._auth_token = json['token']
 
         return self._auth_token
 
     def get_request(self, url_path):
-        headers = { 'authorization': self._flo_authentication_token() }
         url = 'https://api.meetflo.com/api/v1' + url_path
-        response = requests.Request('GET', url, headers=headers).prepare()
+        response = requests.get(url, headers={ 'authorization': self._flo_authentication_token() })
         _LOGGER.info("Flo GET %s : %s", url, response.content)
         return response
 
