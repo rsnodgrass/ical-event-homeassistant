@@ -51,6 +51,33 @@ entities:
 
 ![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/flo/lovelace/entities.png?raw=true)
 
+Alternatively, Lovelace example with gauges that turn colors when pressure or flow rate is high:
+
+```yaml
+cards:
+  - type: gauge
+    name: Water Pressure
+    entity: sensor.flo_water_pressure
+    max: 100
+    severity:
+      green: 0
+      yellow: 70
+      red: 80
+  - type: gauge
+    name: Flow Rate
+    entity: sensor.flo_water_flow_rate
+    max: 15
+    severity:
+      green: 0
+      yellow: 10
+      red: 12
+  - type: gauge
+    name: Temp
+    entity: sensor.flo_water_temperature
+    max: 75
+type: horizontal-stack
+```
+
 More complex cards can be created, for example the following shows both the basic entities card as well as a card built with mini-graph-card (see flo/lovelace/ folder for example cards):
 
 ![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/flo/lovelace/mini-graph.png?raw=true)
