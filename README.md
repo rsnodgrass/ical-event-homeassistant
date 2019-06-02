@@ -1,6 +1,6 @@
 # Home Assistant Integrations
 
-* [flo-water](flo-water): support for the Flo Water Security System
+* [flo](flo): support for the Flo water monitoring and control system
 
 * [Hass.io Add-Ons](https://github.com/rsnodgrass/hassio-addons)
 
