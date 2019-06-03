@@ -65,6 +65,7 @@ custom_updater:
 * sensor managed by your own Google calendar iCal feed
 * sensor schedule based on AirBNB or rental occupancy calendar
 * sensor schedule based on local community events
+* sensor schedule based on reoccuring times (every 3rd Saturday at 8am)
 
 # See Also
 
