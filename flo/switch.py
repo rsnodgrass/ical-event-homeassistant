@@ -1,5 +1,5 @@
 """
-Support for Flo Water Security System inflow control device valve on/off switches
+Support for Flo Water Control System inflow control device valve on/off switches
 
 SWITCHES:
 mode (home/away/sleep) ... not a switch
@@ -12,7 +12,7 @@ _LOGGER = logging.getLogger(__name__)
 
 # pylint: disable=unused-argument
 def setup_platform(hass, config, add_switches_callback, discovery_info=None):
-    """Setup the Flo Water Security System integration."""
+    """Setup the Flo Water Control System integration."""
 
     switches = []
     switches.append( FloControlSwitch(None) ) # FIXME

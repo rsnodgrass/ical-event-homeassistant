@@ -1,5 +1,5 @@
 """
-Flo Smart Home Water Security System for Home Assistant
+Flo Smart Home Water Control System for Home Assistant
 See https://github.com/rsnodgrass/hass-integrations/flo
 
 For good example of update, see Leaf sensor/switch:
@@ -64,7 +64,7 @@ mutex = Lock()
 #}, extra=vol.ALLOW_EXTRA)
 
 def setup(hass, config):
-    """Set up the Flo Water Security System"""
+    """Set up the Flo Water Control System"""
 #    conf = config[FLO_DOMAIN]
 #    conf = {}
 #    for component in ['sensor', 'switch']:
