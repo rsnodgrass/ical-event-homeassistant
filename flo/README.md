@@ -119,3 +119,10 @@ Other ideas (no plans to add currently):
 - support triggering the system test of a Flo device
 - support Flo's fixtures beta feature breaking down usage by type (e.g. toilets, appliances, faucet, irrigation, etc)
 - support leak detection sensitivity settings (all, small, bigger, biggest)
+
+## Automation Ideas
+
+- automatically turn on Away mode for water control system when house goes into Away mode (and vice-a-versa)
+- pre-warm heated towel rack when shower flow rate is detected
+- toilet flush detection as an occupancy sensor (e.g. disable Away modes)
+
