@@ -51,7 +51,7 @@ entities:
   - entity: sensor.flo_water_temperature
 ```
 
-![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/flo/lovelace/entities.png?raw=true)
+![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/custom_components/flo/lovelace/entities.png?raw=true)
 
 Alternatively, Lovelace example with gauges that turn colors when pressure or flow rate is high:
 
@@ -82,9 +82,11 @@ type: horizontal-stack
 
 More complex cards can be created, for example the following shows both the basic entities card as well as a card built with mini-graph-card (see flo/lovelace/ folder for example cards):
 
-![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/flo/lovelace/mini-graph.png?raw=true)
+![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/custom_components/flo/lovelace/mini-graph.png?raw=true)
 
 ### Step 4: Configure Automatic Updates (optional)
+
+NOTE: This has been upgraded to support HACS as well using the repository: rsnodgrass/hass-integrations
 
 For easy updates whenever a new version is released, use the [Home Assistant custom_updater component](https://github.com/custom-components/custom_updater/wiki/Installation) and [Tracker card](https://github.com/custom-cards/tracker-card). Once those are setup, add the following custom_updater settings to your config:
 
