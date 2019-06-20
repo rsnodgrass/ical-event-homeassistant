@@ -3,9 +3,9 @@
       "updated_at": "2019-05-31",
       "version": "0.0.1",
       "local_location": "/custom_components/foo/__init__.py",
-      "remote_location": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/flo-water/flo/__init__.py",
+      "remote_location": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/custom_components/flo/__init__.py",
       "visit_repo": "https://github.com/rsnodgrass/hass-integrations/tree/master/flo",
-      "changelog": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/flo-water/changelog.md",
+      "changelog": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/custom_components/flo/CHANGELOG.md",
       "resources": [
         "/custom_components/flo/sensor.py",
         "/custom_components/flo/switch.py"
