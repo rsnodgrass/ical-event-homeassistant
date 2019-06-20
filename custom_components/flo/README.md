@@ -86,7 +86,7 @@ More complex cards can be created, for example the following shows both the basi
 
 ### Step 4: Configure Automatic Updates (optional)
 
-NOTE: This has been upgraded to support HACS as well using the repository: rsnodgrass/hass-integrations
+NOTE: This has been upgraded to support [HACS](https://github.com/custom-components/hacs) as well using the repository: rsnodgrass/hass-integrations
 
 For easy updates whenever a new version is released, use the [Home Assistant custom_updater component](https://github.com/custom-components/custom_updater/wiki/Installation) and [Tracker card](https://github.com/custom-cards/tracker-card). Once those are setup, add the following custom_updater settings to your config:
 
