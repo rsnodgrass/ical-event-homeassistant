@@ -113,6 +113,7 @@ Priority improvements:
 - support switching water supply on/off
 - support changing the automatic water leak monitoring mode (home, away, sleep)
 - support metric unit system (liter, C, kPa)
+- auto-create a pressure sensor for status of water flow (Ok, Warning, Critical)
 
 Other ideas (no plans to add currently):
 
@@ -121,6 +122,7 @@ Other ideas (no plans to add currently):
 - support triggering the system test of a Flo device
 - support Flo's fixtures beta feature breaking down usage by type (e.g. toilets, appliances, faucet, irrigation, etc)
 - support leak detection sensitivity settings (all, small, bigger, biggest)
+- create water sensor base class in Home Assistant (applies to other water sensing/shutoff valves)
 
 ## Automation Ideas
 

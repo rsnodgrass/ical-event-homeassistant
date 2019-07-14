@@ -1,0 +1,8 @@
+{
+  "domain": "xantech",
+  "name": "Xantech Multi-Zone Amplifier Controller",
+  "documentation": "https://github.com/rsnodgrass/hass-integrations/custom_components/xantech/",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@rsnodgrass"]
+}
