@@ -91,3 +91,20 @@ Zone Periodic Auto Update
 Zone Data
 ?(z#}ZD+ 
 Returns the status of the zone, minus the Metadata. 
+
+## Hardware Interface Notes
+
+The RS232 connector on the rear of the Xantech MRC88 and related controllers are wired such
+that the Transmit and Receive lines already interchanged for direct communication with
+a PC/RPi/etc using a standard RS232 serial cable (no Null Modem cable required).
+
+The Xantech RS232 connector pin out is:
+
+PIN # FUNCTION
+1, 8, & 9 NC
+2 Tx
+3 Rx
+4 DTR
+5 GND
+6 DSR
+7 RTS
