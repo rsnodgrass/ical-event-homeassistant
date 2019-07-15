@@ -1,6 +1,8 @@
 # Xantech Control for Home Assistant
 
-Support for Xantech multi-zone amplifiers for Home Assistant using the Xantech RS232 interface. This is compatible with the MRC88 and other Xantech amplifiers. Multiple Xantech amplifiers may be used.
+Support for Xantech multi-zone amplifiers for Home Assistant using the Xantech RS232 interface. This is compatible with the MRC88, MRAUDIO8X8 and possibly other Xantech amplifiers. Multiple Xantech amplifiers may be used and controlled simultaneously via a single Home Assistant interface.
+
+Note that no plans exist to integrate or support Xantech mutli-zone room control pads. This is purely for allowing HA control of a Xantech multi-zone audio system.
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](YOUR_EMAIL_CODE)
 
@@ -46,3 +48,46 @@ This component support [HACS](https://github.com/custom-components/hacs) using t
 * Xantech MRC88 RS332 Digital Interface manual
 
 ## Feature Requests
+
+* subscribe to periodic and "zone change" status updates
+* support basic audio settings per-zone
+  - power on/off
+  - volume + mute
+  - source selection
+
+No plans to implement:
+
+* per-zone control of bass/treble/balance/etc
+
+## Supported RS232
+
+Zone Power On/Off
+!{z#}PR{0/1}+ 
+
+Input (Source) Select
+!{z#}SS{s#}+ 
+E.g. To set Zone 1 to Source Input 5: !1SS5+
+
+Volume
+!{z#}VO{v#}+ 
+
+Volume Increment
+!{z#}VI+ 
+
+Volume Decrement
+!{z#}VD+ 
+
+Mute
+!{z#}MU{0/1}+ 
+
+Getting state:
+
+Zone Activity Auto Update
+!ZA{0/1}+ 
+
+Zone Periodic Auto Update
+!ZP{X seconds}+ 
+
+Zone Data
+?(z#}ZD+ 
+Returns the status of the zone, minus the Metadata. 
