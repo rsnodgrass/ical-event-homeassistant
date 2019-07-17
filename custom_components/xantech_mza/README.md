@@ -55,32 +55,32 @@ xantech_mza:
 
 ### Step 3: Add Lovelace Card
 
-The following is a simplest Lovelace card which shows current state of a Xantech zone:
+The following is a simplest Lovelace card for showing a media player
 
 ```yaml
+type: media-control
+entity: media_player.xantech_mza_1
 ```
-
-![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/custom_components/flo/lovelace/entities.png?raw=true)
 
 Or with [mini-media-player](https://github.com/kalkih/mini-media-player):
 
 ```yaml
-- type: custom:mini-media-player
-  entity: media_player.xantech_mza_1
-  icon: mdi:spotify
-  artwork: cover
-  hide:
-    volume: true
-    source: true
-    power_state: false
+type: custom:mini-media-player
+entity: media_player.xantech_mza_1
+icon: mdi:spotify
+artwork: cover
+hide:
+  volume: true
+  source: true
+  power_state: false
 ```
 
-Or with multiple zones grouped together (this example has a single Sonos Connect feeding in):
+Or a more complicated example with multiple zones grouped together. This example has a single Sonos Connect feeding in which controls the source playback at the top of the card.
 
 ![Lovelace Examples](https://user-images.githubusercontent.com/457678/52081831-800cec80-259b-11e9-9b35-63b23805c879.png)
 
 ```yaml
-- type: entities
+  type: entities
   entities:
     - type: custom:mini-media-player
       entity: media_player.sonos_connect
