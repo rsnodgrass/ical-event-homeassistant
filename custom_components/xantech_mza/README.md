@@ -113,4 +113,4 @@ xantech_mza:
 
 ## Unsupported
 
-* No plans exist to integrate or support Xantech multi-zone room control pads (feel free to contribute).
+* No plans exist to integrate or support Xantech or Monoprice multi-zone room control pads (feel free to contribute).
