@@ -27,7 +27,7 @@ from homeassistant.const import ( CONF_USERNAME, CONF_PASSWORD, CONF_NAME, CONF_
 _LOGGER = logging.getLogger(__name__)
 
 FLO_DOMAIN = 'flo'
-FLO_USER_AGENT = 'Home Assistant (Flo; https://github.com/rsnodgrass/hass-integrations/tree/master/flo)'
+FLO_USER_AGENT = 'Home Assistant (Flo; https://github.com/rsnodgrass/hass-integrations/)'
 
 # cache expiry in minutes; TODO: make this configurable (with a minimum to prevent DDoS)
 FLO_CACHE_EXPIRY=10

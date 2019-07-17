@@ -1,7 +1,11 @@
 """
 Exposes each zone of a Xantech multi-zone audio controllers/amplifiers as a Home Assistant media player entity.
 
-Based on Jesse Newland's mpr-6hmaut API
+FUTURE:
+- auto-name zones based on dynamic results from microservice
+- automatically create media player instances based on the configured zones on remote side (no need to configure each zone in YAML)
+
+Inspired by Jesse Newland's mpr-6hmaut API
 https://github.com/jnewland/ha-config/blob/master/custom_components/mpr_6zhmaut/media_player.py
 """
 import logging
@@ -34,6 +38,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_NAME): cv.string,
     vol.Required(CONF_HOST): cv.string,
     vol.Required(CONF_PORT): cv.port,
+    vol.optional(CONF_MODULE, default='xantech_mza'): cv.string,
     vol.Required(CONF_ZONE): cv.string,
     vol.Optional(CONF_PROTO, default=DEFAULT_PROTO): cv.string,
 })
@@ -46,6 +51,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
         config.get(CONF_NAME),
         config.get(CONF_HOST),
         config.get(CONF_PORT),
+        config.get(CONF_MODULE),
         config.get(CONF_ZONE),
         config.get(CONF_PROTO),
     )
@@ -59,19 +65,22 @@ class AmplifierZone(MediaPlayerDevice):
     """Represents a single audio zone of the multi-zone amplifier"""
 
     # pylint: disable=too-many-public-methods
-    def __init__(self, name, host, port, zone, proto):
+    def __init__(self, name, proto, host, port, module, zone):
         self._name = name
+
+        self._proto = proto
         self._host = host
         self._port = port
+        self._module = module
+
         self._zone = zone
-        self._proto = proto
         self._state_hash = {}
 
     @property
     def _base_url(self):
         """Returns the base URL for microservice endpoint"""
         # FIXME: modify the URL
-        return self._proto + "://" + self._host + ":" + str(self._port) + "/zones/" + str(self._zone)
+        return self._proto + "://" + self._host + ":" + str(self._port) + "/api/xantech/zones/" + str(self._zone)
 
     def _request(self, method, path="", d=""):
         """Makes the actual request and returns the parsed response"""
