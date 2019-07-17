@@ -1,6 +1,6 @@
 # Home Assistant Integrations
 
-* [flo](custom_components/flo): support for the Flo water monitoring and control system
+* [Flo Water Sensor](custom_components/flo): support for the Flo water monitoring and control system
 
 * [Hass.io Add-Ons](https://github.com/rsnodgrass/hassio-addons)
 
