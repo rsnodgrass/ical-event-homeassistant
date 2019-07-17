@@ -1,9 +1,11 @@
 # Xantech Multi-Zone Audio Control for Home Assistant
 
-[Home Assistant](https://www.home-assistant.io/) support for Xantech multi-zone controllers and amplifiers that can be controlled via the Xantech's RS232 protocol using the [Xantech Multi-Zone Audio Serial Bridge](). This is compatible with the MRC88, [MRAUDIO8X8](https://corebrands-resources.s3.amazonaws.com/products/Xantech-Discontinued-Manuals/9_MRC88m.pdf), MX88 models, and possibly other multi-one Xantech amplifiers (though the MRAUDIO4X4 reportedly does not support RS232 control). Additionally, the [Monoprice](https://www.monoprice.com/product?p_id=10761) implements a version of the Xantech RS232 multi-zone protocol. An unlimited number of remotely controlled Xantech amplifiers may be integrated and controlled simultaneously from a single Home Assistant instance.
+[Home Assistant](https://www.home-assistant.io/) support for Xantech multi-zone controllers and amplifiers that can be controlled via the Xantech's RS232 protocol using the [Xantech Multi-Zone Audio Serial Bridge](https://github.com/rsnodgrass/hassio-addons/tree/master/RESTful-serial-bridge).
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WREP29UDAMB6G)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+This is compatible with the MRC88, [MRAUDIO8X8](https://corebrands-resources.s3.amazonaws.com/products/Xantech-Discontinued-Manuals/9_MRC88m.pdf), MX88 models, and possibly other multi-one Xantech amplifiers (though the MRAUDIO4X4 reportedly does not support RS232 control). Additionally, the [Monoprice 6-Zone Controller/Amplifier](https://www.monoprice.com/product?p_id=10761) implements a version of the Xantech RS232 multi-zone protocol. An unlimited number of remotely controlled Xantech amplifiers may be integrated and controlled simultaneously from a single Home Assistant instance.
 
 ## Installation
 
