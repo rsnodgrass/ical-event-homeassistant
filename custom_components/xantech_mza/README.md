@@ -43,6 +43,16 @@ media_player:
 Note that multiple Xantech audio controllers and zones can be simultaneously integrated by having
 different instances of the remote microservice running.
 
+Future configuration:
+
+```yaml
+xantech_mza:
+  bridges:
+    - name: 'Xantech'
+      host: !secret xantech_bridge_ip
+      port: !secret xantech_bridge_port
+```
+
 ### Step 3: Add Lovelace Card
 
 The following is a simplest Lovelace card which shows current state of a Xantech zone:
@@ -51,6 +61,56 @@ The following is a simplest Lovelace card which shows current state of a Xantech
 ```
 
 ![Flo Lovelace Examples](https://github.com/rsnodgrass/hass-integrations/blob/master/custom_components/flo/lovelace/entities.png?raw=true)
+
+Or with [mini-media-player](https://github.com/kalkih/mini-media-player):
+
+```yaml
+- type: custom:mini-media-player
+  entity: media_player.xantech_mza_1
+  icon: mdi:spotify
+  artwork: cover
+  hide:
+    volume: true
+    source: true
+    power_state: false
+```
+
+Or with multiple zones grouped together (this example has a single Sonos Connect feeding in):
+
+![Lovelace Examples](https://user-images.githubusercontent.com/457678/52081831-800cec80-259b-11e9-9b35-63b23805c879.png)
+
+```yaml
+- type: entities
+  entities:
+    - type: custom:mini-media-player
+      entity: media_player.sonos_connect
+      group: true
+      source: icon
+      info: short
+      hide:
+        volume: true
+        power: true
+    - type: custom:mini-media-player
+      entity: media_player.xantech_mza_1
+      group: true
+      hide:
+        controls: true
+    - type: custom:mini-media-player
+      entity: media_player.xantech_mza_2
+      group: true
+      hide:
+        controls: true
+    - type: custom:mini-media-player
+      entity: media_player.xantech_mza_3
+      group: true
+      hide:
+        controls: true
+    - type: custom:mini-media-player
+      entity: media_player.xantech_mza_4
+      group: true
+      hide:
+        controls: true
+```
 
 ### Step 4: Configure Automatic Updates (optional)
 

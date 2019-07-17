@@ -1,5 +1,5 @@
 """
-Xantech Multi-Zone Amplifier Serial Controller
+Xantech Multi-Zone Audio Serial Control
 """
 import logging
 import json
@@ -29,7 +29,7 @@ def setup(hass, config):
     # dynamically create all the media players based on results 
     zone_details = service._get_request('/zones')
     for zone in zone_details['zones']:
-        name = service.name() + " Zone " + zone        
+        name = service.name() + " Zone " + zone         
 #        discovery.load_platform(hass, 'media_player', FLO_DOMAIN, conf, config)
 #        FIXME: inject name and service into each media player entity
 
