@@ -43,16 +43,6 @@ media_player:
 Note that multiple Xantech audio controllers and zones can be simultaneously integrated by having
 different instances of the remote microservice running.
 
-Future configuration:
-
-```yaml
-xantech_mza:
-  bridges:
-    - name: 'Xantech'
-      host: !secret xantech_bridge_ip
-      port: !secret xantech_bridge_port
-```
-
 ### Step 3: Add Lovelace Card
 
 The following is a simplest Lovelace card for showing a media player
@@ -120,6 +110,16 @@ This component support [HACS](https://github.com/custom-components/hacs) using t
 
 * automatically configure all the media players for all zones based on dynamic configuration from microservice /api/xantech_mza/zones and /api/xantech_mza/sources.
 * add support for named sources from microservice
+
+Future configuration:
+
+```yaml
+xantech_mza:
+  bridges:
+    - name: 'Xantech'
+      host: !secret xantech_bridge_ip
+      port: !secret xantech_bridge_port
+```
 
 ## Unsupported
 
