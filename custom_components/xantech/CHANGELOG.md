@@ -1,3 +1,4 @@
-## NOT YET RELEASED
+## 0.1.0 (2019-07-16)
 
-The Xantech Multi-Zone controller is not yet implemented.
+Initial implementation of the Xantech Multi-Zone audio controller integration.
+
