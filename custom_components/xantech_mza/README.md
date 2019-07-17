@@ -45,24 +45,18 @@ different instances of the remote microservice running.
 
 ### Step 3: Add Lovelace Card
 
-The following is a simplest Lovelace card for showing a media player
+The following is a simplest Lovelace card for showing a media player for Zone 1 of the Xantech amplifier:
 
 ```yaml
 type: media-control
 entity: media_player.xantech_mza_1
 ```
 
-Or with [mini-media-player](https://github.com/kalkih/mini-media-player):
+Or with the [mini-media-player Lovelace card](https://github.com/kalkih/mini-media-player):
 
 ```yaml
 type: custom:mini-media-player
 entity: media_player.xantech_mza_1
-icon: mdi:spotify
-artwork: cover
-hide:
-  volume: true
-  source: true
-  power_state: false
 ```
 
 Or a more complicated example with multiple zones grouped together. This example has a single Sonos Connect feeding in which controls the source playback at the top of the card.
