@@ -8,6 +8,8 @@
 
 ### Automatic Updates with Custom Updater (Optional)
 
+NOTE: This is deprecated in favor of [HACS](https://github.com/custom-components/hacs)
+
 For easy updates whenever new versions are released, use the [Home Assistant custom_updater component](https://github.com/custom-components/custom_updater/wiki/Installation) and [Tracker card](https://github.com/custom-cards/tracker-card). Once those are setup, add the following custom_updater config:
 
 ``` 
