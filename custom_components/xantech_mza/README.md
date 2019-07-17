@@ -2,7 +2,7 @@
 
 Home Assistant support for Xantech multi-zone controllers and amplifiers that can be controlled via the Xantech's RS232 protocol using the [Xantech Multi-Zone Audio Serial Bridge](). This is compatible with the MRC88, MRAUDIO8X8 and possibly other Xantech amplifiers. Multiple Xantech amplifiers may be used and controlled simultaneously via a single Home Assistant interface.
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](WREP29UDAMB6G)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WREP29UDAMB6G)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Installation
