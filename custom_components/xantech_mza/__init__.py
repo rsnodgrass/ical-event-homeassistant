@@ -28,10 +28,15 @@ def setup(hass, config):
 
     # dynamically create all the media players based on results 
     zone_details = service._get_request('/zones')
+    
+    # FIXME: handle errors and emit log ERRORS
+    #_LOGGER.error("Failed connecting to %s!", service.base_url())
+
     for zone in zone_details['zones']:
         name = service.name() + " Zone " + zone         
 #        discovery.load_platform(hass, 'media_player', FLO_DOMAIN, conf, config)
 #        FIXME: inject name and service into each media player entity
+        _LOGGER.error("Failed creating media_player %s!", name)
 
     return True
 
@@ -53,13 +58,13 @@ class XantechService():
         return self._name
 
     @property
-    def _base_url(self):
+    def base_url(self):
         """Returns the base URL for microservice endpoint"""
         return "http://" + self._host + ":" + str(self._port) + "/api/" + self._module)
 
     def _get_request(self, path=""):
         """Makes microservice GET request"""
-        url = self._base_url + path
+        url = self.base_url + path
         headers = { 
             'User-Agent': self._user_agent
         }
@@ -71,7 +76,7 @@ class XantechService():
 
     def _post_request(self, path="", d=""):
         """Makes microservice POST request and returns JSON parsed response"""
-        url = self._base_url + path
+        url = self.base_url + path
 
         headers = { 
             'User-Agent': self._user_agent,

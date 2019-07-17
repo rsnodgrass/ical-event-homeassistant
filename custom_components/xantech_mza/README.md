@@ -9,13 +9,7 @@
 
 ### Step 1: Install Custom Components
 
-Copy all the files in [xantech_mza/](https://github.com/rsnodgrass/hass-integrations/tree/master/custom_components/xantech_mza) GitHub directory to `/config/custom_components/xantech_mza` on your Home Assistant installation.
-
-```
-__init__.py 
-media_player.py
-manifest.json
-```
+Copy all the files in [xantech_mza/](https://github.com/rsnodgrass/hass-integrations/tree/master/custom_components/xantech_mza) to `/config/custom_components/xantech_mza` on your Home Assistant installation.
 
 ### Step 2: Configure Sensors
 
