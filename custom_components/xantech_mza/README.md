@@ -8,10 +8,11 @@ Home Assistant support for Xantech multi-zone controllers and amplifiers that ca
 
 ### Step 1: Install Custom Components
 
-Copy all the files in [xantech_mza/](https://github.com/rsnodgrass/hass-integrations/tree/master/custom_components/xantech_mza) GitHub directory to `/config/custom_components/xantech` on your Home Assistant installation.
+Copy all the files in [xantech_mza/](https://github.com/rsnodgrass/hass-integrations/tree/master/custom_components/xantech_mza) GitHub directory to `/config/custom_components/xantech_mza` on your Home Assistant installation.
 
 ```
 __init__.py 
+media_player.py
 manifest.json
 ```
 
@@ -54,6 +55,6 @@ The following is a simplest Lovelace card which shows current state of a Xantech
 
 This component support [HACS](https://github.com/custom-components/hacs) using the repository: rsnodgrass/hass-integrations
 
-# Unsupported
+## Unsupported
 
-* Note that no plans exist to integrate or support Xantech mutli-zone room control pads. This is purely for allowing HA control of a Xantech multi-zone audio system.
+* No plans exist to integrate or support Xantech multi-zone room control pads (feel free to contribute).
