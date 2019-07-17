@@ -2,6 +2,8 @@
 
 * [Flo Water Sensor](custom_components/flo): support for the Flo water monitoring and control system
 
+* [Xantech Multi-Zone Audio Control](custom_components/xantech_mza): support for Xantech multi-zone audio controllers and amplifiers with RS232 interfaces
+
 * [Hass.io Add-Ons](https://github.com/rsnodgrass/hassio-addons)
 
 ### Automatic Updates with Custom Updater (Optional)

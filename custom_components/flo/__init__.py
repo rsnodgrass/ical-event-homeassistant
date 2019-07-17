@@ -1,6 +1,6 @@
 """
 Flo Smart Home Water Control System for Home Assistant
-See https://github.com/rsnodgrass/hass-integrations/custom_components/flo
+See https://github.com/rsnodgrass/hass-integrations/flo
 
 For good example of update, see Leaf sensor/switch:
 https://github.com/home-assistant/home-assistant/blob/dev/homeassistant/components/nissan_leaf/__init__.py
