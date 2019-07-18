@@ -5,7 +5,14 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WREP29UDAMB6G)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-This is compatible with the MRC88, [MRAUDIO8X8](https://corebrands-resources.s3.amazonaws.com/products/Xantech-Discontinued-Manuals/9_MRC88m.pdf), MX88 models, and possibly other multi-one Xantech amplifiers (though the MRAUDIO4X4 reportedly does not support RS232 control). Additionally, the [Monoprice MPR-SG6Z 6-Zone Controller/Amplifier](https://www.monoprice.com/product?p_id=10761) implements a version of the Xantech RS232 multi-zone protocol. An unlimited number of remotely controlled Xantech amplifiers may be integrated and controlled simultaneously from a single Home Assistant instance.
+This is compatible with the MRC88, [MRAUDIO8X8](https://corebrands-resources.s3.amazonaws.com/products/Xantech-Discontinued-Manuals/9_MRC88m.pdf), MX88 models, and possibly other multi-one Xantech amplifiers (though the MRAUDIO4X4 reportedly does not support RS232 control). Additionally, the [Monoprice MPR-SG6Z 6-Zone Controller/Amplifier](https://www.monoprice.com/product?p_id=10761) and [Dayton Audio DAX66](https://www.parts-express.com/dayton-audio-dax66-6-source-6-room-distributed-whole-house-audio-system-with-keypads-25-wpc--300-585)
+
+both implement a version of the Xantech RS232 multi-zone protocol. This means an "unlimited" number
+of multiple brands and models of matrix audio amplifiers can be controlled in a similar fashion from a
+single Home Assistant dashboard.
+
+For the full list of supported multi-zone amplifier controllers see the Supported Amplifiers/Controllers
+list on the Xantech Serial Bridge.
 
 ## Installation
 
@@ -111,6 +118,3 @@ xantech_mza:
       port: !secret xantech_bridge_port
 ```
 
-## Unsupported
-
-* No plans exist to integrate or support Xantech multi-zone room control pads (feel free to contribute).
