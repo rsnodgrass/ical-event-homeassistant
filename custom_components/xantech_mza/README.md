@@ -117,4 +117,3 @@ xantech_mza:
       host: !secret xantech_bridge_ip
       port: !secret xantech_bridge_port
 ```
-
