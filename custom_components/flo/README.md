@@ -120,6 +120,7 @@ Priority improvements:
 Other ideas (no plans to add currently):
 
 - support Flo alerts (leaks detected)
+- total water usage for the day/week
 - support multiple Flo devices and locations within a single Home Assistant instance
 - support triggering the system test of a Flo device
 - support Flo's fixtures beta feature breaking down usage by type (e.g. toilets, appliances, faucet, irrigation, etc)
