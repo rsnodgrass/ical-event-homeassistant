@@ -11,5 +11,6 @@ All of these components use [Home Assistant Community Store (HACS)](https://gith
 
 ### See Also
 
-* [Hass.io Add-Ons](https://github.com/rsnodgrass/hassio-addons)
+* [Hass.io Add-ons](https://github.com/rsnodgrass/hassio-addons) for additional Home Assistant integrations
+
 
