@@ -105,6 +105,7 @@ custom_updater:
 * [Community support for Home Assistant Flo sensor](https://community.home-assistant.io/t/flo-smart-water-leak-detector/119532)
 * [Check price of Flo water monitoring device on Amazon.com](https://amzn.to/2WBn8tW?tag=rynoshark-20)
 * [Flo by Moen](https://meetflo.com) (official product page)
+* [15% OFF purchases of Flo](https://meetflo.referralrock.com/l/818758/)
 
 ## Feature Requests
 
