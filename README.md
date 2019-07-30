@@ -1,7 +1,9 @@
 # Home Assistant Integrations
 
-| Home Assistant Custom Components | Description |
-| -------------------------- | ----------- |
+Various custom components for the [Home Assistant](https://home-assistant.io) home automation platform.
+
+| Component                        | Description |
+| -------------------------------- | ----------- |
 | [Flo Water Sensor](custom_components/flo) | support for the Flo water monitoring and control system |
 | [Xantech Multi-Zone Audio Control](custom_components/xantech_mza) | support for Xantech multi-zone audio controllers/amplifiers with RS232 interfaces |
 
