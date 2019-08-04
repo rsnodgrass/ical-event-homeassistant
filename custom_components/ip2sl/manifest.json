@@ -1,0 +1,8 @@
+{
+  "domain": "ip2sl",
+  "name": "IP-to Serial Remote (IP2SL)",
+  "documentation": "https://github.com/rsnodgrass/hass-integrations/custom_components/ip2sl/",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@rsnodgrass"]
+}
