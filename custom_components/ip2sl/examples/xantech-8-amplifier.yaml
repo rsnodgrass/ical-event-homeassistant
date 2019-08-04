@@ -3,7 +3,7 @@
   port: 4999 # which serial port to connect to (4999 = serial port 1)
   name: "Xantech Amplifier"
   commands:
-    - name: "All Off"
+    - name: "Power Off"
       data: "!AO+"
 
 - platform: ip2sl
@@ -11,9 +11,9 @@
   port: 4999 # which serial port to connect to (4999 = serial port 1)
   name: "Xantech Zone 1"
   commands:
-    - name: "On"
+    - name: "Power On"
       data: "!1PR1+"
-    - name: "Off"
+    - name: "Power Off"
       data: "!1PR0+"
     - name: "Power Toggle"
       data: "!1PT+"
@@ -21,7 +21,7 @@
       data: "!1VI+"
     - name: "Volume Down"
       data: "!1VD+"
-    - name: "Mute On"
+    - name: "Mute"
       data: "!1MU1+"
     - name: "Mute Off"
       data: "!1MU0+"
