@@ -17,20 +17,21 @@ like media_player.
 
 This is based on ideas from the [Home Assistant IP2SL notify implementation by tinglis1](https://github.com/tinglis1/home-assistant-custom/tree/master/custom_components/notify) and [iTach IR Remote](https://www.home-assistant.io/components/itach/).
 
-### Step 4: Configure Automatic Updates (optional)
+#### Example
 
-This supports [HACS](https://github.com/custom-components/hacs) with the repository: rsnodgrass/hass-integrations
-
-
-## Example
-
-Examples calling the integration from developer tools:
+Examples calling the remote commands via HA service calls:
 
 ```
 remote.send_command service: { "entity_id":"remote.amplifier", "command":"mute" }
+```
 
+```
 remote.send_command service: { "entity_id":"remote.radiora", "command":"kitchen_light_on" }
 ```
+
+## Configuring Automatic Updates (optional)
+
+This supports [HACS](https://github.com/custom-components/hacs) with the repository: rsnodgrass/hass-integrations
 
 ## See Also
 
