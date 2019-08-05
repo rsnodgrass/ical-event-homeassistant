@@ -1,26 +1,27 @@
 # See https://community.home-assistant.io/t/rs232-control-via-itach-ip2sl-tweak-of-itach-remote-component/117912
 
 - platform: ip2sl
+  entity: radiora
   host: <itach_ip_address>  # ideally could alternative specify either host or /dev/tty
   port: 5000 # which serial port to connect to (5000 = serial port 2)
   name: "Lutron RadioRA Lighting"
 
-  required:
-    power_on:
-	data: "BP,16,ON"
-    power_off:
-	data: "BP,17,ON"
-
   commands:
-    - name: "All On"
+    power_on: # required
+      name: "All Lights On"
       data: "BP,16,ON"
-    - name: "All Off"
+    power_off: # required
+      name: "All Lights Off"
       data: "BP,17,ON"
-    - name: "Security Flash On"
+    security_flash_on:
+      name: "Security Flash On"
       data: "SFM,16,ON"
-    - name: "Security Flash Off"
+    security_flash_off:
+      name: "Security Flash Off"
       data: "SFM,17,ON"
-    - name: "Kitchen Light On"
+    kitchen_light_on:
+      name: "Kitchen Light On"
       data: "SDL,5,100" # NOTE: no way to finely control a dimmer via a simple remote interface, so 100%!
-    - name: "Kitchen Light Off"
+    kitchen_light_off:
+      name: "Kitchen Light Off"
       data: "SDL,5,0"

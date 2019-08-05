@@ -17,12 +17,16 @@ This is based on ideas from the [Home Assistant IP2SL notify implementation by t
 
 This supports [HACS](https://github.com/custom-components/hacs) with the repository: rsnodgrass/hass-integrations
 
-## TODO
 
-* implement a more complex request/reply interaction model for complex interactions
-* implement a serial sensor for IP2SL (see https://www.home-assistant.io/components/serial)
-* implement support for local /dev/tty serial interfaces?
-* implement sensors and binary sensor mappings as well (very complicated)
+## Example
+
+Examples calling the integration from developer tools:
+
+```
+remote.send_command service: { "entity_id":"remote.amplifier", "command":"mute" }
+
+remote.send_command service: { "entity_id":"remote.radiora", "command":"kitchen_light_on" }
+```
 
 ## See Also
 
