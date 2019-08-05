@@ -17,7 +17,9 @@ like media_player.
 
 This is based on concepts from the [Home Assistant IP2SL notify implementation by tinglis1](https://github.com/tinglis1/home-assistant-custom/tree/master/custom_components/notify) and [iTach IR Remote](https://www.home-assistant.io/components/itach/).
 
-### Example Service Calls
+### Examples
+
+See [examples/](examples/) for examples of configuring Home Assistant platform remotes to control remote serial devices.
 
 Examples calling the remote commands via HA service calls:
 
