@@ -29,6 +29,11 @@ remote.send_command service: { "entity_id":"remote.amplifier", "command":"mute" 
 remote.send_command service: { "entity_id":"remote.radiora", "command":"kitchen_light_on" }
 ```
 
+#### Supported Devices
+
+* Global Caché iTach Flex, IP2SL, W2SL
+* [Virtual IP2SL](https://github.com/rsnodgrass/hassio-addons/tree/master/virtual-ip2sl) - supports wide variety of USB and other serial interfaces
+
 ## Configuring Automatic Updates (optional)
 
 This supports [HACS](https://github.com/custom-components/hacs) with the repository: rsnodgrass/hass-integrations
