@@ -8,6 +8,8 @@ communication or response from remote commands is supported.
 
 I’m not really convinced that a completely generic IP2SL interface from Home Assistant is useful except for initial experimentation. Amost every case I get into, I want more discrete control over details (exact volume level, dimmer level setting, passing source ids, etc)…or want the data/commands exposed in more complex interfaces like media_player.
 
+This is based on ideas from the [Home Assistant IP2SL notify implementation by tinglis1](https://github.com/tinglis1/home-assistant-custom/tree/master/custom_components/notify) and [iTach IR Remote](https://www.home-assistant.io/components/itach/).
+
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WREP29UDAMB6G)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
