@@ -12,13 +12,13 @@
   port: 4999 # which serial port to connect to (4999 = serial port 1)
   name: "Xantech Zone 1"
   commands:
-    power_on
+    power_on:
       name: "Power On"
       data: "!1PR1+"
     power_off:
       name: "Power Off"
       data: "!1PR0+"
-    power_toggle
+    power_toggle:
       name: "Power Toggle"
       data: "!1PT+"
     volume_up:
@@ -64,13 +64,13 @@
   port: 4999 # which serial port to connect to (4999 = serial port 1)
   name: "Xantech Zone 2"
   commands:
-    power_on
+    power_on:
       name: "Power On"
       data: "!2PR1+"
     power_off:
       name: "Power Off"
       data: "!2PR0+"
-    power_toggle
+    power_toggle:
       name: "Power Toggle"
       data: "!2PT+"
     volume_up:
