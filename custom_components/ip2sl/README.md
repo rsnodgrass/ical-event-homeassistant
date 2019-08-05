@@ -17,7 +17,7 @@ like media_player.
 
 This is based on ideas from the [Home Assistant IP2SL notify implementation by tinglis1](https://github.com/tinglis1/home-assistant-custom/tree/master/custom_components/notify) and [iTach IR Remote](https://www.home-assistant.io/components/itach/).
 
-#### Example
+### Example Service Calls
 
 Examples calling the remote commands via HA service calls:
 
@@ -29,7 +29,7 @@ remote.send_command service: { "entity_id":"remote.amplifier", "command":"mute" 
 remote.send_command service: { "entity_id":"remote.radiora", "command":"kitchen_light_on" }
 ```
 
-#### Supported Devices
+### Supported Devices
 
 * Global Caché [iTach Flex](https://www.amazon.com/Global-Cache-iTach-Flex-IP/dp/B00C6FRPIC/), [iTach IP2SL](https://www.amazon.com/Global-Cache-iTach-Serial-IP2SL/dp/B0051BU1X4/), [iTach WF2SL](https://www.amazon.com/Global-Cache-iTach-Wi-Fi-Serial/dp/B0051BU42W/)
 * [Virtual IP2SL](https://github.com/rsnodgrass/hassio-addons/tree/master/virtual-ip2sl) - supports wide variety of USB and other serial interfaces
