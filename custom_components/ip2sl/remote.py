@@ -70,22 +70,23 @@ class IP2SLRemote(remote.RemoteDevice):
     @property
     def is_on(self):
         """Return true if device is on."""
+        # FIXME: this will never really work...without some serial command/reply to inquire if the device is on
         return self._power
 
     def turn_on(self, **kwargs):
         """Turn the device on."""
-        # FIXME: need to identify which is power on and power off from the command list!
+        self.send_command('power_on')
         self._power = True
         self.schedule_update_ha_state()
 
     def turn_off(self, **kwargs):
         """Turn the device off."""
+        self.send_command('power_off')
         self._power = False
         self.schedule_update_ha_state()
 
     def update(self):
         """Update the device."""
-        self.itachip2ir.update()
 
     def send_command(self, command, **kwargs):
         """Send multiple commands to an IP2SL compatible device."""
@@ -94,6 +95,8 @@ class IP2SLRemote(remote.RemoteDevice):
 
     def send_command(self, command):
         """Send a command to an IP2SL compatible device"""
+
+        # FIXME: may need special handling for power_on/power_off command
 
         # lookup the payload in the config
         payload = self._commands(command)
