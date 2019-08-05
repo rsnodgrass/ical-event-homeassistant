@@ -15,7 +15,7 @@ spending time on, I want more discrete control over details (exact volume level,
 setting, passing source ids, etc)…or want the data/commands exposed in more complex interfaces
 like media_player.
 
-This is based on ideas from the [Home Assistant IP2SL notify implementation by tinglis1](https://github.com/tinglis1/home-assistant-custom/tree/master/custom_components/notify) and [iTach IR Remote](https://www.home-assistant.io/components/itach/).
+This is based on concepts from the [Home Assistant IP2SL notify implementation by tinglis1](https://github.com/tinglis1/home-assistant-custom/tree/master/custom_components/notify) and [iTach IR Remote](https://www.home-assistant.io/components/itach/).
 
 ### Example Service Calls
 
