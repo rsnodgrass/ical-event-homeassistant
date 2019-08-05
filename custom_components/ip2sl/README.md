@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Exposes a very basic [Remote](https://www.home-assistant.io/components/#remote) interface in Home Assistant
+Exposes a basic [Remote](https://www.home-assistant.io/components/#remote) interface in Home Assistant
 for one-way sending of commands to serial devices connected via the IP-to-Serial (IP2SL) protocol.
 No bi-directional communication or response from remote commands is supported.
 
