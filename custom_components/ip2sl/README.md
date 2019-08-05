@@ -31,7 +31,7 @@ remote.send_command service: { "entity_id":"remote.radiora", "command":"kitchen_
 
 #### Supported Devices
 
-* Global Caché iTach Flex, IP2SL, W2SL
+* Global Caché [iTach Flex](https://www.amazon.com/Global-Cache-iTach-Flex-IP/dp/B00C6FRPIC/), [iTach IP2SL](https://www.amazon.com/Global-Cache-iTach-Serial-IP2SL/dp/B0051BU1X4/), [iTach WF2SL](https://www.amazon.com/Global-Cache-iTach-Wi-Fi-Serial/dp/B0051BU42W/)
 * [Virtual IP2SL](https://github.com/rsnodgrass/hassio-addons/tree/master/virtual-ip2sl) - supports wide variety of USB and other serial interfaces
 
 ## Configuring Automatic Updates (optional)
