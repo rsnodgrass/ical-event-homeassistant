@@ -21,7 +21,7 @@ cover:
 - Alternative Model Ids: WO01
 
 Connects to window operator using ISM 915Mhz RF technology, sending open and close command
-to control window.
+to control window. Examples are CrystaLite skylights.
 
 ## See Also
 
