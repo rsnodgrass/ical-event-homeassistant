@@ -118,18 +118,19 @@ class PoolMathClient():
         self._timestamp = most_recent_test_log.find('time', class_='timestamp timereal')
         log.info(f"Timestamp for most recent test log: {self._timestamp}")
 
-        # iterate through all the data chiclets and dynamically create sensors
+        # iterate through all the data chiclets and dynamically create/update sensors
         data_entries = most_recent_test_log.find(class_='chiclet')
         for entry in data_entries:
             sensor_type = 'unknown'
             state = 'unknown'
+
             for div in entry.find_all('div'):
                 if div['class'] == 'bold':
                     state = div.string
                 else:
                     sensor_type = div['class']
             
-            log.warn(f"Found sensor type {sensor_type} = {state}")
+            log.warn(f"Found sensor type '{sensor_type}' = {state}")
             sensor = get_sensor(sensor_type)
             if sensor:
                 sensor.inject_state(state)
@@ -163,7 +164,7 @@ class UpdatableSensor(Entity):
         """Return the state of the device."""
         return self._state
 
-    def inject_state(self, state)
+    def inject_state(self, state):
         self._state = state
 
     def update(self):
