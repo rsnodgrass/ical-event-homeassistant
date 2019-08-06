@@ -102,6 +102,7 @@ class PoolMathClient():
         self._sensors[sensor_type] = sensor
 
         # register sensor with Home Assistant
+        # FIXME: is there a way to specify the update interval (or disable it!?)
         add_entities([sensor], True)
         return sensor
 
@@ -120,10 +121,15 @@ class PoolMathClient():
         # iterate through all the data chiclets and dynamically create sensors
         data_entries = most_recent_test_log.find(class_='chiclet')
         for entry in data_entries:
-            # FIXME: bold is data... other is which sensor result
-            sensor_type = 'pH'
-            state = 7.7
-
+            sensor_type = 'unknown'
+            state = 'unknown'
+            for div in entry.find_all('div'):
+                if div['class'] == 'bold':
+                    state = div.string
+                else:
+                    sensor_type = div['class']
+            
+            log.warn(f"Found sensor type {sensor_type} = {state}")
             sensor = get_sensor(sensor_type)
             if sensor:
                 sensor.inject_state(state)
