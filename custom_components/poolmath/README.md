@@ -8,9 +8,8 @@ Creates sensors exposing the most recent test results for pools being tracked wi
 
 From the [Trouble Free Pool](https://troublefreepool.com/) website:
 
-* PoolMath makes swimming pool care, maintenance and management easy by tracking chlorine, pH, alkalinity and other  levels to help calculate how much salt, bleach and other chemicals to add.
+* Pool Math makes swimming pool care, maintenance and management easy by tracking chlorine, pH, alkalinity and other  levels to help calculate how much salt, bleach and other chemicals to add.
 * Pool Math performs all the calculations you need to keep your chlorine, pH, calcium, alkalinity, and stabilizer levels balanced.
-* By following the TroubleFreePool method of caring for your pool, you will spend less time and money chasing crystal clear, algae free water, and more time lounging in the sun.
 * Trouble Free Pool is a registered 501(c)3 non-profit who displays NO advertising on our site nor is our advice compromised by financial incentives.
 
 #### Supported Pool Math Data
@@ -34,6 +33,8 @@ sensor:
   - type: poolmath
     url: https://troublefreepool.com/mypool/6WPG8yL
 ```
+
+### Example Lovelace UI
 
 ## Automatic Updates (optional)
 
