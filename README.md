@@ -5,8 +5,8 @@ Various custom components for the [Home Assistant](https://home-assistant.io) ho
 | Component                        | Description |
 | -------------------------------- | ----------- |
 | [Flo Water Sensor](custom_components/flo) | support for the Flo water monitoring and control system |
-| [Pool Math](custom_components/poolmath) | support for data collected in Pool Math by Trouble Free Pool |
-| [Xantech Multi-Zone Audio Control](custom_components/xantech_mza) | support for Xantech multi-zone audio controllers/amplifiers with RS232 interfaces |
+| [Pool Math](https://github.com/rsnodgrass/hass-poolmath/) | support for data collected in Pool Math by Trouble Free Pool |
+| [Xantech Matrix Audio Control](https://github.com/rsnodgrass/hass-matrix-audio/) | support for Xantech multi-zone audio controllers/amplifiers with RS232 interfaces |
 
 ### Automatic Updates (Optional)
 
