@@ -49,3 +49,4 @@ This supports [HACS](https://github.com/custom-components/hacs) with the reposit
 ## Community Support
 
 * [How to use the Pool Math app?](https://www.troublefreepool.com/threads/how-to-use-the-pool-math-app.179282/)
+* For issues with the Pool Math apps, see forums or contact [poolmath@troublefreepool.com](mailto:poolmath@troublefreepool.com)
