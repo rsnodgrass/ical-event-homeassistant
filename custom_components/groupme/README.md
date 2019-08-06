@@ -1,5 +1,7 @@
 # GroupMe Message Sensor for Home Assistant
 
+***IMPLEMENTATION NOT WORKING YET***
+
 Sensor for Home Assistant that returns true if any 'recent' messages
 match a set of provided patterns. This uses the
 [GroupMe API](https://dev.groupme.com).
