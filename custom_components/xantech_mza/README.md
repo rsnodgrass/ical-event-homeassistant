@@ -2,8 +2,8 @@
 
 [Home Assistant](https://www.home-assistant.io/) support for Xantech, Monoprice, and Dayton Audio multi-zone controllers and amplifiers that can be controlled using the [Matrix Audio Bridge](https://github.com/rsnodgrass/hassio-addons/tree/master/matrix-audio-bridge).
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WREP29UDAMB6G)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WREP29UDAMB6G)
 
 This is compatible with the MRC88, [MRAUDIO8X8](https://corebrands-resources.s3.amazonaws.com/products/Xantech-Discontinued-Manuals/9_MRC88m.pdf), MX88 models, and possibly other multi-one Xantech amplifiers (though the MRAUDIO4X4 reportedly does not support RS232 control). Additionally, the [Monoprice MPR-SG6Z 6-Zone Controller/Amplifier](https://www.monoprice.com/product?p_id=10761) and [Dayton Audio DAX66](https://www.parts-express.com/dayton-audio-dax66-6-source-6-room-distributed-whole-house-audio-system-with-keypads-25-wpc--300-585)
 

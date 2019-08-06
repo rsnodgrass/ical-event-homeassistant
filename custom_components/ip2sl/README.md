@@ -1,8 +1,9 @@
 # IP-to-Serial (IP2SL) Remote for Home Assistant
 
-***NOT IMPLEMENTED; THIS IS JUST A THOUGHT EXPERIMENT AT THIS POINT***
+***PRE-BETA - BASIC IMPLEMENTATION NOT GUARANTEED TO WORK YET***
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WREP29UDAMB6G)
 
 Exposes a basic [Remote](https://www.home-assistant.io/components/#remote) interface in Home Assistant
 for one-way sending of commands to serial devices connected via the IP-to-Serial (IP2SL) protocol.
