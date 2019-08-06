@@ -25,30 +25,34 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     }
 )
 
-# for each type of data log returned, create a sensor and add it
-SENSOR_UNITS = {  # units or names?
-    'fc': 'FC',
-    'ph': 'pH',
-    'ta': 'TA',
-    'ch': 'CH',
-    'cya': 'CYA',
-    'salt': 'Salt'
+# see https://www.troublefreepool.com/blog/2018/12/12/abcs-of-pool-water-chemistry/
+POOL_MATH_SENSOR_SETTINGS = {
+    'fc':     { 'name': 'FC',     'units': 'mg/L', 'description': 'Free Chlorine'    },
+    'ph':     { 'name': 'pH',     'units': 'pH',   'description': 'Acidity/Basicity' },
+    'ta':     { 'name': 'TA',     'units': 'ppm',  'description': 'Total Alkalinity' },
+    'ch':     { 'name': 'CH',     'units': 'ppm',  'description': 'Calcium Hardness' },
+    'cya':    { 'name': 'CYA',    'units': 'ppm',  'description': 'Cyanuric Acid'    },
+    'salt':   { 'name': 'Salt',   'units': 'ppm',  'description': 'Salt'             },
+    'borate': { 'name': 'Borate', 'units': 'ppm',  'description': 'Borate'           }
+}
+
+TARGET_LEVELS = {
+    'fc':     { 'min': 0,    'max': 0    }, # depends on CYA
+    'ph':     { 'min': 7.2,  'max': 7.8, 'target': 7.7 },
+    'ta':     { 'min': 0,    'max': 0    },
+    'ch':     { 'min': 250,  'max': 350  }, # with salt: 350-450 ppm
+    'cya':    { 'min': 30,   'max': 50   }, # with salt: 70-80 ppm
+    'salt':   { 'min': 2000, 'max': 3000 },
+    'borate': { 'min': 30,   'max': 50   },
 }
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the Web scrape sensor."""
-    url = config.get(CONF_RESOURCE)
-
     client = PoolMathClient(config)
-
-    # FIXME: create a sensor for each value?
-#    add_entities(
-#        [PoolMathSensor(rest, name, select, attr, index, value_template, unit)], True
-#    )
 
 class PoolMathClient():
     def __init__(self, config):
-        verify_ssl = False
+        verify_ssl = True
 
         self._url = config.get(CONF_URL)
         self._rest = RestData('GET', self._url, '', '', '', verify_ssl)
@@ -73,7 +77,7 @@ class PoolMathClient():
         self._update_sensors()
 
     # FIXME: don't update more frequently than a configured interval
-    
+
     def update():
         self._rest.update()
         if self._rest.data is None:
@@ -82,6 +86,17 @@ class PoolMathClient():
 
         self._raw_data = BeautifulSoup(self._rest.data, 'html.parser')
         self._update_sensors()
+
+    def add_sensor(self, key, name)
+        # FIXME: inject with latest value?
+
+        unit_of_measurement
+
+        sensor = PoolMathSensor(self, name, unit_of_measurement)
+        self._sensors.[key] = sensor
+
+        # insert into Home Assistant sensor entities
+        add_entities([sensor], True)
 
     def _update_sensors():
         most_recent_test_log = raw_data.find('div', class_='testLogCard')
@@ -101,6 +116,10 @@ class PoolMathClient():
             #bold is data... other is which sensor result
             log.info(f"Entry = {entry}")
             sensor_type = 'fc'
+
+            if SENSOR_UNITS[sensor_type]:
+            else:
+                log.info(f"Unknown Pool Math sensor '{sensor_type}' discovered at {self._url}")
 
     def get_name(self):
         return self._name 

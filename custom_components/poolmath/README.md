@@ -40,6 +40,7 @@ This supports [HACS](https://github.com/custom-components/hacs) with the reposit
 * [Trouble Free Pool PoolMath tool](https://www.troublefreepool.com/calc.html)
 * [Pool Math iOS](https://apps.apple.com/us/app/pool-math-by-troublefreepool/id1228819359) 
 * [Pool Math Android](https://play.google.com/store/apps/details?id=com.troublefreepool.poolmath&hl=en_US)
+* [ABC's of Pool Water Chemistry by Trouble Free Pool](https://www.troublefreepool.com/blog/2018/12/12/abcs-of-pool-water-chemistry/)
 
 ## Community Support
 
