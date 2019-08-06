@@ -6,11 +6,16 @@
 
 Creates sensors exposing the most recent test results for pools being tracked with Trouble Free Pools's [Pool Math](https://www.troublefreepool.com/blog/poolmath/) apps including [Pool Math iOS](https://apps.apple.com/us/app/pool-math-by-troublefreepool/id1228819359) and [Pool Math Android](https://play.google.com/store/apps/details?id=com.troublefreepool.poolmath&hl=en_US). 
 
-Note: this **requires a PoolMath Premium subscription** for cloud access to your pools data.
+From the [Trouble Free Pool](https://troublefreepool.com/) website:
 
-Supports Pool Math test results:
+* PoolMath makes swimming pool care, maintenance and management easy by tracking chlorine, pH, alkalinity and other  levels to help calculate how much salt, bleach and other chemicals to add.
+* Pool Math performs all the calculations you need to keep your chlorine, pH, calcium, alkalinity, and stabilizer levels balanced.
+* By following the TroubleFreePool method of caring for your pool, you will spend less time and money chasing crystal clear, algae free water, and more time lounging in the sun.
+* Trouble Free Pool is a registered 501(c)3 non-profit who displays NO advertising on our site nor is our advice compromised by financial incentives.
 
-• pH
+#### Supported Pool Math Data
+
+* pH
 * Free Chlorine (FC)
 * Total Alkalinity (TA)
 * Calcium Hardness (CH)
@@ -18,17 +23,7 @@ Supports Pool Math test results:
 * Salt
 * Borates
 
-### Pool Math description from Trouble Free Pool:
-
-From the [Trouble Free Pool](https://troublefreepool.com/) website:
-
-"By following the TroubleFreePool method of caring for your pool, you will spend less time and money chasing crystal clear, algae free water, and more time lounging in the sun."
-"Trouble Free Pool exists to develop and promote a simple, inexpensive, and effective system of pool care."
-"Trouble Free Pool is a registered 501(c)3 non-profit who displays NO advertising on our site nor is our advice compromised by financial incentives. 
-
-> PoolMath makes swimming pool care, maintenance and management easy by tracking chlorine, pH, alkalinity and other  levels to help calculate how much salt, bleach and other chemicals to add. 
-> Crystal clear algae free pool water is what Trouble Free Pool Math is committed to. Pool Math performs all the calculations you need to keep your chlorine, pH, calcium, alkalinity, and stabilizer levels balanced. 
-
+Note: this **requires a PoolMath Premium subscription** for cloud access to your pools data.
 
 ### Configuration
 
