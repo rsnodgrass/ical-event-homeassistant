@@ -1,8 +1,0 @@
-{
-  "domain": "poolmath",
-  "name": "Pool Math by Trouble Free Pool",
-  "documentation": "https://github.com/rsnodgrass/hass-integrations/custom_components/poolmath/",
-  "requirements": [],
-  "dependencies": [],
-  "codeowners": ["@rsnodgrass"]
-}

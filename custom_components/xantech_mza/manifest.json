@@ -1,8 +1,0 @@
-{
-  "domain": "xantech_mza",
-  "name": "Xantech Multi-Zone Audio Control",
-  "documentation": "https://github.com/rsnodgrass/hass-integrations/custom_components/xantech_mza/",
-  "requirements": [],
-  "dependencies": [],
-  "codeowners": ["@rsnodgrass"]
-}
