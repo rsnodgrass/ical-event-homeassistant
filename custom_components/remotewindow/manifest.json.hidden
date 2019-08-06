@@ -1,0 +1,8 @@
+{
+  "domain": "remotewindow",
+  "name": "Remote Window",
+  "documentation": "https://github.com/rsnodgrass/hass-integrations/remotewindow/",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@rsnodgrass"]
+}

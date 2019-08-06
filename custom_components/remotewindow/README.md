@@ -1,6 +1,7 @@
 Remote control for windows
 
-NOTE: THIS DOES NOT WORK!  STUB ONLY
+***IMPLEMENTATION NOT WORKING YET***
+***NOTE: THIS DOES NOT WORK!  STUB ONLY***
 
 ## Configuration
 
