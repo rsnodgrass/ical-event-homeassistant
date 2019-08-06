@@ -13,6 +13,8 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.exceptions import PlatformNotReady
 import homeassistant.helpers.config_validation as cv
 
+from bs4 import BeautifulSoup
+
 log = logging.getLogger(__name__)
 
 DEFAULT_NAME = 'Pool Math'
@@ -79,10 +81,61 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 #        [PoolMathSensor(rest, name, select, attr, index, value_template, unit)], True
 #    )
 
-class PoolMathUpdator():
-    def __init__(self, url, entities):
-        self._url = url
-        self._entities = entities
+# FIXME: don't update more frequently than a configured interval
+class PoolMathClient():
+    def __init__(self, config):
+        verify_ssl = False
+
+        self._url = config.get(CONF_URL)
+        self._rest = RestData('GET', self._url, '', '', '', verify_ssl)
+        self._rest.update()
+
+        if self._rest.data is None:
+            raise PlatformNotReady
+
+    def update():
+        self._url = config.get(CONF_URL)
+        self._rest = RestData('GET', self._url, '', '', '', verify_ssl)
+        self._rest.update()
+
+        raw_data = BeautifulSoup(self.rest.data, 'html.parser')
+        log.debug(raw_data)
+
+        # FIXME: if Default Name...append the "name" from the URL reply under <a name="NAME"><h1>NAME</h1></a>
+        url_name = raw_data.select('body.h1').string
+        log.info(f"Loaded Pool Math for '{url_name}'")
+
+        self._name = config.get(CONF_NAME)
+        if self._name == None:
+            self._name = DEFAULT_NAME + " " + url_name 
+        log.info(f"Pool Math sensor name: {name}")
+
+        #select_one(".testLogCard")
+        most_recent_test_log = raw_data.find('div', class_='testLogCard')
+        log.info(f"Most recent test log entry: {most_recent_test_log}")
+
+        if most_recent_test_log == None:
+         log.info(f"Couldn't find any test logs at {url}")
+            raise PlatformNotReady
+
+        # capture the time the most recent Pool Math data was collected
+        self._timestamp = most_recent_test_log.find('time', class_='timestamp timereal')
+        log.info(f"Timestamp for most recent test log: {self._timestamp}")
+
+        # iterate through all the data chiclets and dynamically create sensors
+        data_entries = most_recent_test_log.find(class_='chiclet')
+        for entry in data_entries:
+            #bold is data... other is which sensor result
+            log.info(f"Entry = {entry}")
+            sensor_type = 'fc'
+
+        # FIXME: create a sensor for each value?  
+        #    add_entities(
+        #        [UpdatableSensor(self, name, unit)], True
+        #    )
+
+
+        self._entities = []
         self._name = DEFAULT_NAME
 
         self._rest = RestData('GET', url, '', '', '', verify_ssl)
@@ -100,8 +153,6 @@ class PoolMathUpdator():
         if self.rest.data is None:
             log.error("Unable to retrieve data")
             return
-
-        from bs4 import BeautifulSoup
 
         raw_data = BeautifulSoup(self.rest.data, "html.parser")
         log.debug(raw_data)
@@ -128,17 +179,16 @@ class PoolMathUpdator():
         else:
             self._state = value
 
+class UpdatableSensor(Entity):
+    """Representation of a sensor whose state is kept up-to-date by an external data source."""
 
-class PoolMathSensor(Entity):
-    """Representation of a Pool Math scrape sensor."""
+    def __init__(self, data_source, name, unit_of_measurement):
+        """Initialize the sensor."""
+        self._data_source = data_source
 
-    def __init__(self, rest, name, select, attr, index, value_template, unit):
-        """Initialize a web scrape sensor."""
-        self.rest = rest
         self._name = name
+        self._unit_of_measurement = unit_of_measurement
         self._state = None
-        self._select = select
-        self._unit_of_measurement = unit
 
     @property
     def name(self):
@@ -155,26 +205,11 @@ class PoolMathSensor(Entity):
         """Return the state of the device."""
         return self._state
 
+    def inject_state(self, state)
+        self._state = state
+
     def update(self):
         """Get the latest data from the source and updates the state."""
-        self.rest.update()
-        if self.rest.data is None:
-            log.error("Unable to retrieve data")
-            return
 
-        from bs4 import BeautifulSoup
-
-        raw_data = BeautifulSoup(self.rest.data, "html.parser")
-        log.debug(raw_data)
-
-        try:
-            if self._attr is not None:
-                value = raw_data.select(self._select)[self._index][self._attr]
-            else:
-                value = raw_data.select(self._select)[self._index].text
-            log.debug(value)
-        except IndexError:
-            log.error("Unable to extract data from HTML")
-            return
-
-        self._state = value
+        # asynchronously trigger an update of this sensor (and all related sensors)
+        self._data_source.update()
