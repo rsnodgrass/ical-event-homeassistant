@@ -36,7 +36,7 @@ POOL_MATH_SENSOR_SETTINGS = {
     'borate': { 'name': 'Borate', 'units': 'ppm',  'description': 'Borate'           }
 }
 
-TARGET_LEVELS = {
+TFP_RECOMMENDED_TARGET_LEVELS = {
     'fc':     { 'min': 0,    'max': 0    }, # depends on CYA
     'ph':     { 'min': 7.2,  'max': 7.8, 'target': 7.7 },
     'ta':     { 'min': 0,    'max': 0    },
@@ -87,23 +87,30 @@ class PoolMathClient():
         self._raw_data = BeautifulSoup(self._rest.data, 'html.parser')
         self._update_sensors()
 
-    def add_sensor(self, key, name)
-        # FIXME: inject with latest value?
+    def get_sensor(self, sensor_type):
+        sensor = self._sensors[sensor_type]
+        if sensor:
+            return sensor
 
-        unit_of_measurement
+        config = POOL_MATH_SENSOR_SETTINGS[sensor_type]
+        if config is None:
+            log.info(f"Unknown Pool Math sensor '{sensor_type}' discovered at {self._url}")
+            return None
 
-        sensor = PoolMathSensor(self, name, unit_of_measurement)
-        self._sensors.[key] = sensor
+        name = self._name + " " + config['name']
+        sensor = PoolMathSensor(self, name, config['units'])
+        self._sensors[sensor_type] = sensor
 
-        # insert into Home Assistant sensor entities
+        # register sensor with Home Assistant
         add_entities([sensor], True)
+        return sensor
 
     def _update_sensors():
         most_recent_test_log = raw_data.find('div', class_='testLogCard')
         log.info(f"Most recent test log entry: {most_recent_test_log}")
 
         if most_recent_test_log == None:
-         log.info(f"Couldn't find any test logs at {url}")
+            log.info(f"Couldn't find any test logs at {url}")
             raise PlatformNotReady
 
         # capture the time the most recent Pool Math data was collected
@@ -113,13 +120,13 @@ class PoolMathClient():
         # iterate through all the data chiclets and dynamically create sensors
         data_entries = most_recent_test_log.find(class_='chiclet')
         for entry in data_entries:
-            #bold is data... other is which sensor result
-            log.info(f"Entry = {entry}")
-            sensor_type = 'fc'
+            # FIXME: bold is data... other is which sensor result
+            sensor_type = 'pH'
+            state = 7.7
 
-            if SENSOR_UNITS[sensor_type]:
-            else:
-                log.info(f"Unknown Pool Math sensor '{sensor_type}' discovered at {self._url}")
+            sensor = get_sensor(sensor_type)
+            if sensor:
+                sensor.inject_state(state)
 
     def get_name(self):
         return self._name 
