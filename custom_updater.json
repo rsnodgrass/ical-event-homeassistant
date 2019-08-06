@@ -11,29 +11,4 @@
         "/custom_components/flo/switch.py"
       ]
     },
-
-    "ical_status": {
-      "updated_at": "2019-04-07",
-      "version": "0.0.1",
-      "local_location": "/custom_components/ical_status/__init__.py",
-      "remote_location": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/custom_components/ical_status/__init__.py",
-      "visit_repo": "https://github.com/rsnodgrass/hass-integrations/tree/master/custom_components/ical_status",
-      "changelog": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/custom_components/ical_status/changelog.md",
-      "resources": [
-        "/custom_components/ical_status/sensor.py"
-      ]
-    },
-
-    "groupme": {
-      "updated_at": "2019-04-13",
-      "version": "0.0.1",
-      "local_location": "/custom_components/groupme/__init__.py",
-      "remote_location": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/custom_components/groupme/__init__.py",
-      "visit_repo": "https://github.com/rsnodgrass/hass-integrations/tree/master/custom_components/groupme",
-      "changelog": "https://raw.githubusercontent.com/rsnodgrass/hass-integrations/master/custom_components/groupme/changelog.md",
-      "resources": [
-        "/custom_components/groupme/sensor.py"
-      ]
-    }
-
 }
