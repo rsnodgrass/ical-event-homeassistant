@@ -1,6 +1,6 @@
 # Xantech Multi-Zone Audio Control for Home Assistant
 
-[Home Assistant](https://www.home-assistant.io/) support for Xantech, Monoprice, and Dayton Audio multi-zone controllers and amplifiers that can be controlled using the [Multi-Zone Audio Serial Bridge](https://github.com/rsnodgrass/hassio-addons/tree/master/xantech-serial-bridge).
+[Home Assistant](https://www.home-assistant.io/) support for Xantech, Monoprice, and Dayton Audio multi-zone controllers and amplifiers that can be controlled using the [Matrix Audio Bridge](https://github.com/rsnodgrass/hassio-addons/tree/master/matrix-audio-bridge).
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=WREP29UDAMB6G)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -12,7 +12,7 @@ of multiple brands and models of matrix audio amplifiers can be controlled in a 
 single Home Assistant dashboard.
 
 For the full list of supported multi-zone amplifier controllers see the Supported Amplifiers/Controllers
-list on the [Multi-Zone Audio Serial Bridge](https://github.com/rsnodgrass/hassio-addons/tree/master/xantech-serial-bridge).
+list on the [Matrix Audio Bridge](https://github.com/rsnodgrass/hassio-addons/tree/master/matrix-audio-bridge).
 
 ## Installation
 
