@@ -1,8 +1,0 @@
-{
-  "domain": "flo",
-  "name": "Flo Water Control System",
-  "documentation": "https://github.com/rsnodgrass/hass-integrations/custom_components/flo/",
-  "requirements": [],
-  "dependencies": [],
-  "codeowners": ["@rsnodgrass"]
-}
