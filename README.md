@@ -7,6 +7,7 @@ Various custom components for the [Home Assistant](https://home-assistant.io) ho
 | [Flo Water Sensor](https://github.com/rsnodgrass/hass-flo-water/) | support for the Flo water monitoring and control system |
 | [Pool Math](https://github.com/rsnodgrass/hass-poolmath/) | support for data collected in Pool Math by Trouble Free Pool |
 | [Xantech Matrix Audio Control](https://github.com/rsnodgrass/hass-matrix-audio/) | support for Xantech multi-zone audio controllers/amplifiers with RS232 interfaces |
+| [SensorPush](https://github.com/rsnodgrass/hass-sensorpush/) | support for the SensorPush humidity and temperature sensors |
 
 ### See Also
 
